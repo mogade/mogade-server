@@ -1,0 +1,17 @@
+development:
+  store:
+    host: localhost
+    port: 27017
+    name: mogade2_dev
+    
+test:
+  store:
+    host: localhost
+    port: 27017
+    name: mogade2
+    
+production:
+  store:
+    host: localhost
+    port: 27017
+    name: mogade2
