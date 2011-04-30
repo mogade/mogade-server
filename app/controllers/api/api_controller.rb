@@ -7,7 +7,7 @@ class Api::ApiController < ActionController::Base
     return error('the key is not valid') if !Id.valid?(params[:key])
     
     @game = Game.find_by_id(params[:key])
-    return error('the key is not valid') if @app.nil?
+    return error('the key is not valid') if @game.nil?
     
     @version = params[:v].to_i
     return error('unknown version') unless @version == 2
@@ -23,10 +23,7 @@ class Api::ApiController < ActionController::Base
 
   def ensure_params(*keys)
     keys.each do |key|
-      unless params.include?(key)
-        render_error("missing required #{key} value")
-        return false
-      end
+      render_error("missing required #{key} value") and return false unless params.include?(key)
     end
     true
   end
