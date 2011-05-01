@@ -11,4 +11,5 @@ group :development do
 	gem 'spork'
 	gem 'rspec'
 	gem 'rspec-rails'
+	gem 'factory_girl'
 end

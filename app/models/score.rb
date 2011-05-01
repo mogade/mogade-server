@@ -1,5 +1,11 @@
 class Score
   include Document
-  mongo_accessor({:leaderboard_id => :lid, :user_key => :uk, :user_name => :un,
-                  :score => :s, :data => :d, :dated => :dt })
+  mongo_accessor({:leaderboard_id => :lid, :unique => :u, :username => :un,
+                  :points => :p, :data => :d, :dated => :dt })
+
+  class << self
+    def save(leaderboard, player, points, data)
+      #todo
+    end
+  end
 end

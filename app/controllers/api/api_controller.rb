@@ -20,12 +20,34 @@ class Api::ApiController < ActionController::Base
     return error('invalid signature') unless Digest::SHA1.hexdigest(raw) == signature
     @signed = true
   end
+  
+  def ensure_leaderboard
+    lid = Id.from_string(params[:lid])
+    error('missing or invalid lid (leaderboard id) parameter') and return if lid.nil?
+    
+    @leaderboard = Leaderboard.find_by_id(lid)
+    error("id doesn't belong to a leaderboard") and return if @leaderboard.nil?
+  end
+  
+  def ensure_player
+    return unless ensure_params(:username, :userkey)
+    @player = Player.new(params[:username], params[:userkey])
+    
+    unless @player.valid?
+      error('username and userkey are both required, and username must be 30 or less characters') 
+    end
+  end
 
   def ensure_params(*keys)
+    valid = true
     keys.each do |key|
-      render_error("missing required #{key} value") and return false unless params.include?(key)
+      unless params.include?(key)
+        error("missing required #{key} value")
+        valid = false
+        return
+      end
     end
-    true
+    valid
   end
   
   def ok
@@ -36,6 +58,6 @@ class Api::ApiController < ActionController::Base
     payload = {:error => message}
     payload[:data] = data unless data.nil?
     render :status => 400, :json => payload
-    nil
+    true
   end
 end

@@ -5,7 +5,10 @@ module Document
       Store[self.to_s.tableize]
     end
     def find_by_id(id)
-      found = collection.find_one(Id.from_string(id))
+      real_id = Id.from_string(id)
+      return nil if real_id.nil?
+      
+      found = collection.find_one(real_id)
       found.nil? ? nil : self.new(unmap(found))
     end
     def find_one(selector = {})
@@ -32,7 +35,9 @@ module Document
       @map = map
       @unmap = {}
       map.each do |k,v|
-        attr_accessor k
+        #attr_accessor k
+        define_method(k) { @attributes[k] }
+        define_method("#{k}=") {|value| @attributes[k] = value }
         @unmap[v.to_s] = k
       end
     end
@@ -67,6 +72,9 @@ module Document
     def id
       @attributes[:_id] || @attributes['_id']
     end
+    def id=(value)
+      @attributes[:_id] = value
+    end
     def [](name)
       @attributes[name]
     end
@@ -81,6 +89,9 @@ module Document
     end
     def save
       collection.save(self.class.map(@attributes))
+    end
+    def save!
+      collection.save(self.class.map(@attributes), {:safe => true})
     end
   end
 end
