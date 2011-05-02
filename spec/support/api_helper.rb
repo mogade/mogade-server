@@ -65,33 +65,71 @@ module ApiHelper
     end
   end
   
-  def it_ensures_a_valid_leaderboard(verb, action)
+  def it_ensures_a_valid_leaderboard(verb, action, block = nil)
     it "renders an error if the lid is missing" do      
-      self.send verb, action, ApiHelper.signed_params(@game)
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params)
       response.status.should == 400
       json = ActiveSupport::JSON.decode(response.body)
       json['error'].should == 'missing or invalid lid (leaderboard id) parameter'
     end
     it "renders an error if the lid is invalid" do
-      self.send verb, action, ApiHelper.signed_params(@game, {:lid => 'invalid'})
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:lid => 'invalid'}))
       response.status.should == 400
       json = ActiveSupport::JSON.decode(response.body)
       json['error'].should == 'missing or invalid lid (leaderboard id) parameter'
     end
     it "renders an error if the lid doesn't exist" do
-      self.send verb, action, ApiHelper.signed_params(@game, {:lid => Id.new})
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:lid => Id.new}))
       response.status.should == 400
       json = ActiveSupport::JSON.decode(response.body)
       json['error'].should == "id doesn't belong to a leaderboard"
     end
     it "loads a valid leaderboard into the context" do
       leaderboard = Factory.create(:leaderboard)
-      self.send verb, action, ApiHelper.signed_params(@game, {:lid => leaderboard.id})
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:lid => leaderboard.id}))
       assigns[:leaderboard].should == leaderboard
     end
   end
   
-  def it_ensures_a_valid_player(verb, action)
-   
+  def it_ensures_a_valid_player(verb, action, block = nil)
+    it "renders an error if the username is missing" do
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params)
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'missing required username value'
+    end
+    it "renders an error if the username is blank" do
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:username => ''}))
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'missing required username value'
+    end
+    it "renders an error if the userkey is missing" do
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:username => 'paul'}))
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'missing required userkey value'
+    end
+    it "renders an error if the userkey is blank" do
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:username => 'jessica', :userkey => ''}))
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'missing required userkey value'
+    end
+    it "renders an error if the username is too long" do
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:username => 'a' * 31, :userkey => 'two'}))
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'username and userkey are both required, and username must be 30 or less characters'
+    end
   end
 end

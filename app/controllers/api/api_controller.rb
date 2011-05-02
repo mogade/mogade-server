@@ -41,7 +41,7 @@ class Api::ApiController < ActionController::Base
   def ensure_params(*keys)
     valid = true
     keys.each do |key|
-      unless params.include?(key)
+      unless params.include?(key) && !params[key].blank?
         error("missing required #{key} value")
         valid = false
         return

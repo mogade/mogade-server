@@ -1,5 +1,5 @@
 class Api::ScoresController < Api::ApiController
-  #before_filter :ensure_player
+  before_filter :ensure_player
   before_filter :ensure_leaderboard
   
   def create
