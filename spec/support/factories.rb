@@ -10,3 +10,11 @@ Factory.define :leaderboard do |l|
   l.game_id Id.from_string('4dbd4ed9563d8a504000000e')
 end
 
+Factory.define :player do |p|
+  p.username 'leto'
+  p.userkey 'golden path'
+end
+
+Factory.define :high_scores do |h|
+  h.daily 0
+end

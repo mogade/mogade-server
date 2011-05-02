@@ -1,7 +1,7 @@
 class Player
   attr_accessor :username, :userkey
   
-  def initialize(username, userkey)
+  def initialize(username = nil, userkey = nil)
     @username = username
     @userkey = userkey
   end
@@ -15,6 +15,6 @@ class Player
   end
   
   def high_scores(leaderboard)
-    {LeaderboardScope::Daily => 0, LeaderboardScope::Weekly => 0, LeaderboardScope::Overall => 0}
+    HighScores.new(self, leaderboard)
   end
 end

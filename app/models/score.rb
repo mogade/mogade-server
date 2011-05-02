@@ -4,15 +4,16 @@ class Score
                   :points => :p, :data => :d, :dated => :dt })
 
   class << self
-    def save(leaderboard, player, points, data)
+    def save(leaderboard, player, points, data = nil)
       high_scores = player.high_scores(leaderboard)
       
       selector = {:lid => leaderboard.id, :u => player.unique}
-      document = {:un => player.username, :p => points, :d => data }
+      document = selector.merge({:un => player.username, :p => points})
+      document[:d] = data unless data.nil?
       options = {:upsert => true}
       
       if points > high_scores.daily
-        Store.daily_collection.update(selector, document.merge({:dt => leaderboard.daily_start}), options)
+        Score.daily_collection.update(selector, document.merge({:dt => leaderboard.daily_start}), options)
       end
 
     end
