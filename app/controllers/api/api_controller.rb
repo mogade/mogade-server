@@ -26,7 +26,11 @@ class Api::ApiController < ActionController::Base
     error('missing or invalid lid (leaderboard id) parameter') and return if lid.nil?
     
     @leaderboard = Leaderboard.find_by_id(lid)
-    error("id doesn't belong to a leaderboard") and return if @leaderboard.nil?
+    error("id doesn't belong to a leaderboard") if @leaderboard.nil?
+  end
+  
+  def ensures_leaderboard_for_game
+    error('leaderboard does not belong to this game') if @leaderboard.game_id != @game.id
   end
   
   def ensure_player

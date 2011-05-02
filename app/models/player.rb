@@ -13,4 +13,8 @@ class Player
   def unique
     Digest::SHA1.hexdigest(@username +  @userkey)
   end
+  
+  def high_scores(leaderboard)
+    {LeaderboardScope::Daily => 0, LeaderboardScope::Weekly => 0, LeaderboardScope::Overall => 0}
+  end
 end

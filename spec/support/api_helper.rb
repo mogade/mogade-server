@@ -95,6 +95,16 @@ module ApiHelper
     end
   end
   
+  def it_ensures_leaderboard_belongs_to_game(verb, action, block = nil)
+    it "renders an error if the leaderboard's game id isn't correct" do
+      leaderboard = Factory.create(:leaderboard, {:game_id => Id.new})
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:lid => leaderboard.id}))
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == "leaderboard does not belong to this game"
+    end
+  end
+  
   def it_ensures_a_valid_player(verb, action, block = nil)
     it "renders an error if the username is missing" do
       params = block.nil? ? {} : block.call
