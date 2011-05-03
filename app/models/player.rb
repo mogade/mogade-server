@@ -15,6 +15,6 @@ class Player
   end
   
   def high_scores(leaderboard)
-    HighScores.new(self, leaderboard)
+    HighScores.load(leaderboard, self)
   end
 end

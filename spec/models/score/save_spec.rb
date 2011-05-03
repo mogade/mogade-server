@@ -11,7 +11,7 @@ describe Score, :save do
   it "saves a new daily score if the player's current daily is lower than the new one" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:daily => 99}))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:daily_points => 99}))
     create_daily(99)
     
     Score.save(@leaderboard, @player, 100)
@@ -20,7 +20,7 @@ describe Score, :save do
   it "does not save the score if the user's current daily is higher than the new one" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:daily => 150}))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:daily_points => 150}))
     create_daily(150)
     
     Score.save(@leaderboard, @player, 149)
