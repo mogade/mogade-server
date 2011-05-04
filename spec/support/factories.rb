@@ -20,4 +20,6 @@ Factory.define :high_scores do |h|
   h.leaderboard_id Id.from_string('222222222222222222222222')
   h.unique Factory.build(:player).unique
   h.daily_points 0
+  h.weekly_points 0
+  h.overall_points 0
 end
