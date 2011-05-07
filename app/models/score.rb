@@ -8,7 +8,7 @@ class Score
       high_scores = player.high_scores(leaderboard)
       
       selector = {:lid => leaderboard.id, :u => player.unique}
-      document = selector.merge({:un => player.username, :p => points})
+      document = selector.merge({:un => player.username[0..19], :p => points})
       document[:d] = data[0..49] unless data.nil?
       options = {:upsert => true}
       

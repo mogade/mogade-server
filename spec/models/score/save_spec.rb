@@ -17,6 +17,14 @@ describe Score, :save do
     all_scores_have_data('1' * 50)
   end
   
+  it "limits the username to 20 characters" do
+    @player = Factory.build(:player, {:username => 'l' * 25})
+    @leaderboard = Factory.build(:leaderboard)
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores))
+    Score.save(@leaderboard, @player, 100)
+    all_scores_have_username('l' * 20)
+  end
+  
   it "saves no data when none is provide" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
@@ -38,6 +46,15 @@ describe Score, :save do
   def all_scores_have_data(data)
     selector = {:lid => @leaderboard.id}
     selector[:d] = data.nil? ? {'$exists' => false} : data
+    all_scores_have(selector)
+  end
+  def all_scores_have_username(username)
+    selector = {:lid => @leaderboard.id, :un => username}
+    all_scores_have(selector)
+  end
+  def all_scores_have(selector)
+    Score.daily_collection.find(selector).count.should == 1
     Score.weekly_collection.find(selector).count.should == 1
+    Score.overall_collection.find(selector).count.should == 1
   end
 end
