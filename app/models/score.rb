@@ -17,6 +17,9 @@ class Score
       if points > high_scores.overall then Score.overall_collection.update(selector, document, options) end
       high_scores.has_new_score(points)
     end
+    
+    def get(leaderboard, page, records, scope)
+    end
   end
   
   def self.daily_collection

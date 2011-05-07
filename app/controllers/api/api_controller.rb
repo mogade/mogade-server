@@ -1,16 +1,18 @@
 class Api::ApiController < ActionController::Base
+  before_filter :ensure_version
   before_filter :ensure_context
   before_filter :ensure_signed
   
   private
+  def ensure_version
+    @version = params[:v].to_i
+    return error('unknown version') unless @version == 2
+  end
   def ensure_context
     return error('the key is not valid') if !Id.valid?(params[:key])
     
     @game = Game.find_by_id(params[:key])
     return error('the key is not valid') if @game.nil?
-    
-    @version = params[:v].to_i
-    return error('unknown version') unless @version == 2
   end
   
   def ensure_signed
@@ -63,5 +65,11 @@ class Api::ApiController < ActionController::Base
     payload[:data] = data unless data.nil?
     render :status => 400, :json => payload
     true
+  end
+  
+  def params_to_i(name, default)
+    #the way this treats 0 as NaN is going to come back and get us
+    value = params[name].to_i
+    value == 0 ? default : value
   end
 end

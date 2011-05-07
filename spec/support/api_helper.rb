@@ -6,8 +6,11 @@ module ApiHelper
     end
   end
   
+  def self.versioned(params = {})
+    {'v' => 2}.merge(params.stringify_keys!)
+  end
   def self.params(game, params = {})
-    {'key' => game.id, 'v' => 2}.merge(params.stringify_keys!)
+    ApiHelper.versioned({'key' => game.id}.merge(params.stringify_keys!))
   end
   
   def self.signed_params(game, params = {})
@@ -26,19 +29,28 @@ module ApiHelper
     response.status.should == 400
     JSON.parse(response.body)['error'].should == message
   end
-   
-  def it_ensures_a_valid_context(verb, action)
-    it "renders an error if the key is missing" do
+  
+  def it_ensures_a_valid_version(verb, action)
+    it "renders an error if the version is missing" do
       self.send verb, action
       response.status.should == 400
       json = ActiveSupport::JSON.decode(response.body)
-      json['error'].should == 'the key is not valid'
+      json['error'].should == 'unknown version'
     end
     it "renders an error if the version is invalid" do
-      self.send verb, action, {'key' => @game.id}
+      self.send verb, action, {'v' => 1}
       response.status.should == 400
       json = ActiveSupport::JSON.decode(response.body)
       json['error'].should == 'unknown version'
+    end
+  end
+   
+  def it_ensures_a_valid_context(verb, action)
+    it "renders an error if the key is missing" do
+      self.send verb, action, {'v' => 2}
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'the key is not valid'
     end
     it "loads the app in the context" do
       self.send verb, action, {'key' => @game.id, 'v' => 2}

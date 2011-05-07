@@ -1,6 +1,6 @@
 Mogade::Application.routes.draw do  
   namespace 'api' do
-    resources :scores, :only => [:create]
+    resources :scores, :only => [:index, :create]
   end
   
   match '/:controller(/:action(/:id))'
