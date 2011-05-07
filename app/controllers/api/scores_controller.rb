@@ -12,7 +12,13 @@ class Api::ScoresController < Api::ApiController
     scope = params_to_i(:scope, LeaderboardScope::Daily)
     scores = Score.get(@leaderboard, page, records, scope)
     
-    render :json => {:page => page, :scores => scores}
+    payload =  ActiveSupport::JSON.encode({:page => page, :scores => scores})
+    if params.include?(:callback)
+      response.headers['Cache-Control'] = 'public, max-age=300'
+      render :text => "#{params[:callback]}(#{payload});", :content_type => "application/javascript"
+    else
+      render :json => payload
+    end
   end
 
   def create

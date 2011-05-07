@@ -30,4 +30,27 @@ describe Api::ScoresController, :index do
     json['scores'].should == scores
   end
   
+  it "returns the scores within the specific callback" do
+    leaderboard = Factory.create(:leaderboard)
+    scores = [{'blah' => 1}]
+    Score.stub!(:get).and_return(scores)
+    get :index, ApiHelper.versioned({:lid => leaderboard.id, :page => '4', :callback => 'gotScores'})
+    response.status.should == 200
+    response.body.should == 'gotScores({"page":4,"scores":[{"blah":1}]});'
+  end
+  
+  it "sets output cache set when callback is used" do
+    leaderboard = Factory.create(:leaderboard)
+    Score.stub!(:get).and_return({})
+    get :index, ApiHelper.versioned({:lid => leaderboard.id, :page => '4', :callback => 'gotScores'})
+    response.headers['Cache-Control'].should == 'public, max-age=300'
+  end
+  
+  it "does not set output cache set when callback is not used" do
+    leaderboard = Factory.create(:leaderboard)
+    Score.stub!(:get).and_return({})
+    get :index, ApiHelper.versioned({:lid => leaderboard.id, :page => '4'})
+    response.headers['Cache-Control'].should == 'max-age=0, private, must-revalidate'
+  end
+  
 end
