@@ -9,12 +9,12 @@ describe Score, :save do
     all_scores_have_data('i-will-not-fear-over-9000')
   end
 
-  it "limits the data to 25 characters" do
+  it "limits the data to 50 characters" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
     @player.stub!(:high_scores).and_return(Factory.build(:high_scores))
-    Score.save(@leaderboard, @player, 100, '1'* 30)
-    all_scores_have_data('1' * 25)
+    Score.save(@leaderboard, @player, 100, '1'* 55)
+    all_scores_have_data('1' * 50)
   end
   
   it "saves no data when none is provide" do

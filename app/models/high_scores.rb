@@ -7,13 +7,19 @@
 # document.rb doesn't support embedded documents, need to fix that to clean this shit up
 class HighScores
   include Document
+  attr_accessor :leaderboard
   mongo_accessor({:leaderboard_id => :lid, :unique => :u, :daily_points => :dp, :daily_dated => :dd, :weekly_points => :wp, :weekly_dated => :wd, :overall_points => :op, :overall_dated => :od})
   
   class << self
     def load(leaderboard, player)
       scores = find_one({:leaderboard_id => leaderboard.id, :unique => player.unique}) 
-      return scores.scrub(leaderboard) unless scores.nil?
-      HighScores.new({:leaderboard_id => leaderboard.id, :unique => player.unique, :daily_points => 0, :weekly_points => 0, :overall_points => 0})
+      if scores.nil?
+        scores = HighScores.new({:leaderboard_id => leaderboard.id, :unique => player.unique, :daily_points => 0, :weekly_points => 0, :overall_points => 0})
+      else
+        scores.scrub!(leaderboard)
+      end
+      scores.leaderboard = leaderboard
+      scores
     end
   end
   
@@ -29,10 +35,27 @@ class HighScores
     overall_points
   end
   
-  def scrub(leaderboard)
+  def has_new_score(points)
+    changed = {}    
+    changed[:daily] = update_if_better(:daily, points)
+    changed[:weekly] = update_if_better(:weekly, points)
+    changed[:overall] = update_if_better(:overall, points)
+    #TODO..uhhmm..save?
+    changed
+  end
+  
+  
+  def scrub!(leaderboard)
     self.daily_points = 0 if daily_dated.nil? || daily_dated < leaderboard.daily_start
     self.weekly_points = 0 if weekly_dated.nil? || weekly_dated < leaderboard.weekly_start
     self.overall_points = 0 if overall_dated.nil?
     self
+  end
+  
+  def update_if_better(type, points)
+    return false if send(type) > points
+    send("#{type}_points=", points)
+    send("#{type}_dated=", @leaderboard.send("#{type}_start")) if @leaderboard.respond_to?("#{type}_start")
+    return true
   end
 end

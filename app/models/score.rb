@@ -9,21 +9,13 @@ class Score
       
       selector = {:lid => leaderboard.id, :u => player.unique}
       document = selector.merge({:un => player.username, :p => points})
-      document[:d] = data[0..24] unless data.nil?
+      document[:d] = data[0..49] unless data.nil?
       options = {:upsert => true}
       
-      if points > high_scores.daily
-        Score.daily_collection.update(selector, document.merge({:dt => leaderboard.daily_start}), options)
-      end
-      
-      if points > high_scores.weekly
-        Score.weekly_collection.update(selector, document.merge({:dt => leaderboard.weekly_start}), options)
-      end
-      
-      if points > high_scores.overall
-        Score.overall_collection.update(selector, document, options)
-      end
-
+      if points > high_scores.daily then Score.daily_collection.update(selector, document.merge({:dt => leaderboard.daily_start}), options) end
+      if points > high_scores.weekly then Score.weekly_collection.update(selector, document.merge({:dt => leaderboard.weekly_start}), options) end
+      if points > high_scores.overall then Score.overall_collection.update(selector, document, options) end
+      high_scores.has_new_score(points)
     end
   end
   
