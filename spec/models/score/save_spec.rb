@@ -25,6 +25,16 @@ describe Score, :save do
     all_scores_have_data(nil)
   end
   
+  it "informs the high score about the new score" do
+    player = Factory.build(:player)
+    leaderboard = Factory.build(:leaderboard)
+    scores = Factory.build(:high_scores)
+    player.stub!(:high_scores).and_return(scores)
+    changed = {:daily => true}
+    scores.should_receive(:has_new_score).with(100).and_return(changed)
+    Score.save(leaderboard, player, 100).should == changed
+  end
+  
   def all_scores_have_data(data)
     selector = {:lid => @leaderboard.id}
     selector[:d] = data.nil? ? {'$exists' => false} : data
