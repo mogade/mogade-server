@@ -17,4 +17,12 @@ class Player
   def high_scores(leaderboard)
     HighScores.load(leaderboard, self)
   end
+  
+  def eql?(other)
+    other.is_a?(Player) && unique == other.unique
+  end
+  alias :== :eql?
+  def hash
+    unique
+  end
 end

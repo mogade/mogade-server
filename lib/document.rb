@@ -69,6 +69,13 @@ module Document
         send("#{k}=", v)  unless k == :_id || k == '_id' 
       end
     end
+    def eql?(other)
+      other.is_a?(self.class) && id == other.id
+    end
+    alias :== :eql?
+    def hash
+      id.hash
+    end
     def id
       @attributes[:_id] || @attributes['_id']
     end

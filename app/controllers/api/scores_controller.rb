@@ -5,8 +5,6 @@ class Api::ScoresController < Api::ApiController
   
   def create
     ensure_params(:points) || return
-    Score.save(@leaderboard, @player, params[:points], params[:data])
-    
-    render :nothing => true
+    render :json => Score.save(@leaderboard, @player, params[:points].to_i, params[:data])
   end
 end
