@@ -17,7 +17,7 @@ Spork.each_run do
 end
 RSpec.configure do |config|
   config.before(:each) do
-    Store.database.collections.each do |collection|
+    Store.mongo_collections.each do |collection|
       unless collection.name.match(/^system\./)
         collection.remove
       end

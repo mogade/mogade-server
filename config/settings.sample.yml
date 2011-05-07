@@ -1,17 +1,17 @@
 development:
-  store:
+  mongo:
     host: localhost
     port: 27017
     name: mogade2_dev
     
 test:
-  store:
+  mongo:
     host: localhost
     port: 27017
     name: mogade2
     
 production:
-  store:
+  mongo:
     host: localhost
     port: 27017
     name: mogade2

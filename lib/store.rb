@@ -4,35 +4,31 @@ require 'settings'
 
 module Store  
   def self.setup
-    if Settings.store['replica_set']
-      @@connection = Mongo::ReplSetConnection.new([Settings.store['host'], Settings.store['port']], 
+    if Settings.mongo['replica_set']
+      @@mongo_connection = Mongo::ReplSetConnection.new([Settings.mongo['host'], Settings.mongo['port']], 
       {
         :read_secondary => true,
-        :rs_name => Settings.store['replica_set']
+        :rs_name => Settings.mongo['replica_set']
       })
     else
-      @@connection = Mongo::Connection.new(Settings.store['host'], Settings.store['port'])
+      @@mongo_connection = Mongo::Connection.new(Settings.mongo['host'], Settings.mongo['port'])
     end
-    @@database = @@connection.db(Settings.store['name'])
+    @@mongo_database = @@mongo_connection.db(Settings.mongo['name'])
     handle_passenger_forking
   end
   
-  def self.connection
-    @@connection
-  end
-  
-  def self.database
-    @@database
+  def self.mongo_collections
+    @@mongo_database.collections
   end
   
   def self.[](collection_name)
-    database.collection(collection_name)
+    @@mongo_database.collection(collection_name)
   end
   
   def self.handle_passenger_forking
     if defined?(PhusionPassenger)
       PhusionPassenger.on_event(:starting_worker_process) do |forked|
-        @@connection.connect if forked
+        @@mongo_connection.connect if forked
       end
     end
   end
