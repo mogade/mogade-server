@@ -22,8 +22,11 @@ module Document
     def create!(attributes)
       create(attributes, {:safe => true})
     end
-    def find(selector={}, opts={})
-      collection.find(map(selector), opts)
+    def find(selector={}, opts={}, collection = nil)
+      raw = opts.delete(:raw) || false
+      opts[:transformer] = Proc.new{|data| raw ? unmap(data) : self.new(unmap(data)) }
+      c = collection || self.collection
+      c.find(map(selector), map_options(opts))
     end
     def remove(selector={})
       collection.remove(map(selector))
@@ -35,7 +38,6 @@ module Document
       @map = map
       @unmap = {}
       map.each do |k,v|
-        #attr_accessor k
         define_method(k) { @attributes[k] }
         define_method("#{k}=") {|value| @attributes[k] = value }
         @unmap[v.to_s] = k
@@ -45,10 +47,15 @@ module Document
       return {} if raw.blank? || !raw.is_a?(Hash)
       hash = {}
       raw.each do |key, value|
-        real_key = @map.include?(key) ? @map[key] : key
+        real_key = map_key(key)
         hash[real_key] = value.is_a?(Hash) ? map(value) : value
       end
       return hash
+    end
+    def map_options(options)
+      options[:fields] = map(options[:fields]) if options.include?(:fields)
+      options[:sort][0] = map_key(options[:sort][0]) if options.include?(:sort)
+      options
     end
     def unmap(raw)
       return {} if raw.blank? || !raw.is_a?(Hash)
@@ -58,7 +65,10 @@ module Document
         hash[real_key] = value
         hash.merge!(unmap(value)) if value.is_a?(Hash)
       end
-      return hash
+      hash
+    end
+    def map_key(key)
+      @map.include?(key) ? @map[key] : key
     end
   end
   module InstanceMethods

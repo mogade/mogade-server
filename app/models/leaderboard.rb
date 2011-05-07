@@ -8,6 +8,10 @@ class Leaderboard
     return time > now ? time - 86400 : time
   end
   
+  def yesterday_start
+    daily_start - 86400
+  end
+  
   def weekly_start
     now = Time.now.utc
     time = now.at_beginning_of_week + -3600 * offset
