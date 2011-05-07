@@ -18,6 +18,7 @@ describe HighScores, :load do
     scores = HighScores.load(leaderboard, player)
     scores.leaderboard_id.should == leaderboard.id
     scores.unique.should == player.unique
+    scores.userkey.should == player.userkey
     scores.daily_points.should == 0
     scores.weekly_points.should == 0
   end

@@ -8,13 +8,13 @@
 class HighScores
   include Document
   attr_accessor :leaderboard
-  mongo_accessor({:leaderboard_id => :lid, :unique => :u, :daily_points => :dp, :daily_dated => :dd, :weekly_points => :wp, :weekly_dated => :wd, :overall_points => :op})
+  mongo_accessor({:leaderboard_id => :lid, :unique => :u, :userkey => :uk, :daily_points => :dp, :daily_dated => :dd, :weekly_points => :wp, :weekly_dated => :wd, :overall_points => :op})
   
   class << self
     def load(leaderboard, player)
       scores = find_one({:leaderboard_id => leaderboard.id, :unique => player.unique}) 
       if scores.nil?
-        scores = HighScores.new({:leaderboard_id => leaderboard.id, :unique => player.unique, :daily_points => 0, :weekly_points => 0, :overall_points => 0})
+        scores = HighScores.new({:leaderboard_id => leaderboard.id, :unique => player.unique, :userkey => player.userkey, :daily_points => 0, :weekly_points => 0, :overall_points => 0})
       else
         scores.scrub!(leaderboard)
       end
