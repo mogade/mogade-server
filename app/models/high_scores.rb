@@ -8,7 +8,7 @@
 class HighScores
   include Document
   attr_accessor :leaderboard
-  mongo_accessor({:leaderboard_id => :lid, :unique => :u, :daily_points => :dp, :daily_dated => :dd, :weekly_points => :wp, :weekly_dated => :wd, :overall_points => :op, :overall_dated => :od})
+  mongo_accessor({:leaderboard_id => :lid, :unique => :u, :daily_points => :dp, :daily_dated => :dd, :weekly_points => :wp, :weekly_dated => :wd, :overall_points => :op})
   
   class << self
     def load(leaderboard, player)
@@ -39,8 +39,8 @@ class HighScores
     changed = {}    
     changed[:daily] = update_if_better(:daily, points)
     changed[:weekly] = update_if_better(:weekly, points)
-    changed[:overall] = update_if_better(:overall, points)
-    #TODO..uhhmm..save?
+    changed[:overall] = update_if_better(:overall, points)    
+    save unless changed.blank?
     changed
   end
   
@@ -48,7 +48,7 @@ class HighScores
   def scrub!(leaderboard)
     self.daily_points = 0 if daily_dated.nil? || daily_dated < leaderboard.daily_start
     self.weekly_points = 0 if weekly_dated.nil? || weekly_dated < leaderboard.weekly_start
-    self.overall_points = 0 if overall_dated.nil?
+    self.overall_points = 0 if overall_points.nil?
     self
   end
   
