@@ -22,5 +22,6 @@ RSpec.configure do |config|
         collection.remove
       end
     end
+    Store.redis.flushdb
   end
 end

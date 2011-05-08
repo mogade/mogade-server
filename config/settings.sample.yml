@@ -3,15 +3,27 @@ development:
     host: localhost
     port: 27017
     name: mogade2_dev
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
     
 test:
   mongo:
     host: localhost
     port: 27017
     name: mogade2
+  redis:
+    host: localhost
+    port: 6379
+    database: 1
     
 production:
   mongo:
     host: localhost
     port: 27017
     name: mogade2
+  redis:
+    host: localhost
+    port: 6379
+    database: 0

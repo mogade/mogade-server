@@ -1,3 +1,4 @@
+require 'redis'
 require 'mongo'
 require 'mongo_extension'
 require 'settings'
@@ -15,12 +16,18 @@ module Store
     end
     @@mongo_database = @@mongo_connection.db(Settings.mongo['name'])
     handle_passenger_forking
+    
+    @@redis = Redis.new(:host => Settings.redis['host'], :port => Settings.redis['port'])
+    @@redis.select(Settings.redis['database'])
   end
   
   def self.mongo_collections
     @@mongo_database.collections
   end
   
+  def self.redis
+    @@redis
+  end
   def self.[](collection_name)
     @@mongo_database.collection(collection_name)
   end

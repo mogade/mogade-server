@@ -4,7 +4,7 @@ describe Score, :save do
   it "saves the data with the scores" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:leaderboard => @leaderboard}))
     Score.save(@leaderboard, @player, 100, "i-will-not-fear-over-9000")
     all_scores_have_data('i-will-not-fear-over-9000')
   end
@@ -12,7 +12,7 @@ describe Score, :save do
   it "limits the data to 50 characters" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:leaderboard => @leaderboard}))
     Score.save(@leaderboard, @player, 100, '1'* 55)
     all_scores_have_data('1' * 50)
   end
@@ -20,7 +20,7 @@ describe Score, :save do
   it "limits the username to 20 characters" do
     @player = Factory.build(:player, {:username => 'l' * 25})
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:leaderboard => @leaderboard}))
     Score.save(@leaderboard, @player, 100)
     all_scores_have_username('l' * 20)
   end
@@ -28,7 +28,7 @@ describe Score, :save do
   it "saves no data when none is provide" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:leaderboard => @leaderboard}))
     Score.save(@leaderboard, @player, 100)
     all_scores_have_data(nil)
   end
@@ -36,7 +36,7 @@ describe Score, :save do
   it "informs the high score about the new score" do
     player = Factory.build(:player)
     leaderboard = Factory.build(:leaderboard)
-    scores = Factory.build(:high_scores)
+    scores = Factory.build(:high_scores, {:leaderboard => @leaderboard})
     player.stub!(:high_scores).and_return(scores)
     changed = {:daily => true}
     scores.should_receive(:has_new_score).with(100).and_return(changed)

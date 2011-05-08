@@ -4,14 +4,14 @@ describe Score, 'save overall' do
   it "saves a new weekly score if the player doesn't have a score for this leaderboard" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:leaderboard => @leaderboard}))
     Score.save(@leaderboard, @player, 22)
     overall_should_exist(22)
   end
   it "saves a new overall score if the player's current overall is lower than the new one" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:overall_points => 88}))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:overall_points => 88, :leaderboard => @leaderboard}))
     create_overall(88)
     
     Score.save(@leaderboard, @player, 101)
@@ -20,7 +20,7 @@ describe Score, 'save overall' do
   it "does not save the score if the user's current overall is higher than the new one" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:overall_points => 152}))
+    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:overall_points => 152, :leaderboard => @leaderboard}))
     create_overall(152)
     
     Score.save(@leaderboard, @player, 151)

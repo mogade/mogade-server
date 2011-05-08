@@ -37,9 +37,9 @@ class HighScores
   
   def has_new_score(points)
     changed = {}    
-    changed[:daily] = update_if_better(:daily, points)
-    changed[:weekly] = update_if_better(:weekly, points)
-    changed[:overall] = update_if_better(:overall, points)    
+    changed[:daily] = update_if_better(LeaderboardScope::Daily, points)
+    changed[:weekly] = update_if_better(LeaderboardScope::Weekly, points)
+    changed[:overall] = update_if_better(LeaderboardScope::Overall, points)    
     save unless changed.blank?
     changed
   end
@@ -52,10 +52,25 @@ class HighScores
     self
   end
   
-  def update_if_better(type, points)
-    return false if send(type) > points
-    send("#{type}_points=", points)
-    send("#{type}_dated=", @leaderboard.send("#{type}_start")) if @leaderboard.respond_to?("#{type}_start")
+  def update_if_better(scope, points)
+    name = HighScores.scope_to_name(scope)
+    return false if send(name) > points
+
+    Rank.save(@leaderboard, scope, unique, points)
+    send("#{name}_points=", points)
+    send("#{name}_dated=", @leaderboard.send("#{name}_start")) if @leaderboard.respond_to?("#{name}_start")
     return true
+  end
+  
+  private
+  def self.scope_to_name(scope)
+    case scope
+    when LeaderboardScope::Weekly
+      return :weekly
+    when LeaderboardScope::Overall
+      return :overall
+    else
+      return :daily
+    end
   end
 end

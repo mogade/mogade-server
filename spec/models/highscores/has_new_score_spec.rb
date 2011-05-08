@@ -51,6 +51,26 @@ describe HighScores, :has_new_score do
       :overall_points => 122}).should == 1
   end
   
+  it "saves a new rank for a new high score for each scope" do
+    leaderboard = Factory.build(:leaderboard)
+    player = Factory.build(:player)
+    scores = HighScores.load(leaderboard, player)
+    Rank.should_receive(:save).with(leaderboard, LeaderboardScope::Daily, player.unique, 122)
+    Rank.should_receive(:save).with(leaderboard, LeaderboardScope::Weekly, player.unique, 122)
+    Rank.should_receive(:save).with(leaderboard, LeaderboardScope::Overall, player.unique, 122)
+    scores.has_new_score(122)
+  end
+  
+  it "does not save new ranks if they are worse" do
+    leaderboard = Factory.build(:leaderboard)
+    Factory.create(:high_scores, {:daily_points => 200, :daily_dated => leaderboard.daily_start, :weekly_points => 505, :weekly_dated => leaderboard.weekly_start, :overall_points => 999})
+    player = Factory.build(:player)
+    scores = HighScores.load(leaderboard, player)
+    Rank.should_not_receive(:save).with(any_args())
+    scores.has_new_score(122)
+  end
+  
+  
   it "saves the high score when with partial new scores" do
     leaderboard = Factory.build(:leaderboard)
     Factory.create(:high_scores, {:daily_points => 300, :daily_dated => leaderboard.daily_start - 1000000, :weekly_points => 300, :weekly_dated => leaderboard.weekly_start, :overall_points => 400})
