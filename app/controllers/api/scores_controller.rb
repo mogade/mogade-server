@@ -1,7 +1,6 @@
 class Api::ScoresController < Api::ApiController
-  #uhmm..this is getting a bit stupid
-  skip_before_filter :ensure_context, :only => :index
-  skip_before_filter :ensure_signed, :only => :index
+  before_filter :ensure_context, :only => :create
+  before_filter :ensure_signed, :only => :create
   before_filter :ensure_player, :only => :create
   before_filter :ensure_leaderboard
   before_filter :ensures_leaderboard_for_game, :only => :create

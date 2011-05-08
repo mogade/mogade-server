@@ -1,7 +1,5 @@
 class Api::ApiController < ActionController::Base
   before_filter :ensure_version
-  before_filter :ensure_context
-  before_filter :ensure_signed
   
   private
   def ensure_version
