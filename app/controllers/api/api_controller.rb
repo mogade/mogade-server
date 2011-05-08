@@ -65,6 +65,16 @@ class Api::ApiController < ActionController::Base
     true
   end
   
+  def render_payload(payload, params, cache_duration = 0)
+    payload = ActiveSupport::JSON.encode(payload)
+    if params.include?(:callback)
+      response.headers['Cache-Control'] = 'public, max-age=' + cache_duration.to_s unless cache_duration == 0
+      render :text => "#{params[:callback]}(#{payload});", :content_type => 'application/javascript'
+    else
+      render :json => payload
+    end
+  end
+  
   def params_to_i(name, default)
     #the way this treats 0 as NaN is going to come back and get us
     value = params[name].to_i
