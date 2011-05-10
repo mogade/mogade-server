@@ -8,11 +8,18 @@ describe Api::RanksController, :index do
   it_ensures_a_valid_player :get, :index
   it_ensures_a_valid_leaderboard :get, :index, Proc.new { {:username => 'paul', :userkey => 'fail'} }
   
-  it "gets the ranks" do
+  it "gets the ranks with no specified scope" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    Rank.should_receive(:get).with(leaderboard, player.unique)
+    Rank.should_receive(:get).with(leaderboard, player.unique, nil)
     get :index, ApiHelper.versioned({:lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
+  end
+  
+  it "gets the ranks for the specified scope" do
+    leaderboard = Factory.create(:leaderboard)
+    player = Factory.build(:player)
+    Rank.should_receive(:get).with(leaderboard, player.unique, [LeaderboardScope::Daily, LeaderboardScope::Overall])
+    get :index, ApiHelper.versioned({:lid => leaderboard.id, :username => player.username, :userkey => player.userkey, :scopes => [LeaderboardScope::Daily, LeaderboardScope::Overall]})
   end
   
   it "returns the ranks" do
