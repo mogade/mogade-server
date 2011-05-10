@@ -4,8 +4,7 @@ require 'store'
 
 Store.setup
 
-[Score.daily_collection, Score.weekly_collection, Score.overall_collection].each do |collection|
-  collection.ensure_index([['lid', Mongo::ASCENDING], ['u', Mongo::ASCENDING]], {:unique => true})
-end
-
+Score.daily_collection.ensure_index([['lid', Mongo::ASCENDING], ['cat', Mongo::ASCENDING], ['p', Mongo::DESCENDING]])
+Score.weekly_collection.ensure_index([['lid', Mongo::ASCENDING], ['cat', Mongo::ASCENDING], ['p', Mongo::DESCENDING]])
+Score.overall_collection.ensure_index([['lid', Mongo::ASCENDING], ['p', Mongo::DESCENDING]])
 HighScores.collection.ensure_index([['lid', Mongo::ASCENDING], ['u', Mongo::ASCENDING]], {:unique => true})
