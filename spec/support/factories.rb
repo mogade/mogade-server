@@ -16,9 +16,14 @@ Factory.define :player do |p|
   p.userkey 'golden path'
 end
 
+Factory.sequence :unique do |n|
+  "unique-#{n}"
+end
+
 Factory.define :high_scores do |h|
   h.leaderboard_id Id.from_string('222222222222222222222222')
-  h.unique Factory.build(:player).unique
+  h.unique {Factory.next(:unique)}
+  #h.unique Factory.build(:player).unique
   h.daily_points 0
   h.daily_dated nil
   h.weekly_points 0
