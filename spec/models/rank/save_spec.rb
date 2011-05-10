@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Rank, :save do
   it "saves a daily rank" do
     leaderboard = Factory.build(:leaderboard)
-    key = "#{leaderboard.id}_d_#{leaderboard.daily_start.strftime("%Y%m%d%H")}"
+    key = "#{leaderboard.id}_d_#{leaderboard.daily_start.strftime("%y%m%d%H")}"
     
     Rank.save(leaderboard, LeaderboardScope::Daily, "leto-one", 200)
     
@@ -15,7 +15,7 @@ describe Rank, :save do
   
   it "saves a weekly rank" do
     leaderboard = Factory.build(:leaderboard, {:offset => -4})
-    key = "#{leaderboard.id}_w_#{leaderboard.weekly_start.strftime("%Y%m%d%H")}"
+    key = "#{leaderboard.id}_w_#{leaderboard.weekly_start.strftime("%y%m%d%H")}"
     
     Rank.save(leaderboard, LeaderboardScope::Weekly, "paul-d", 328)
     
