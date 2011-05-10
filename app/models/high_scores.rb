@@ -37,9 +37,9 @@ class HighScores
   
   def has_new_score(points)
     changed = {}    
-    changed[:daily] = update_if_better(LeaderboardScope::Daily, points)
-    changed[:weekly] = update_if_better(LeaderboardScope::Weekly, points)
-    changed[:overall] = update_if_better(LeaderboardScope::Overall, points)    
+    changed[LeaderboardScope::Daily] = update_if_better(LeaderboardScope::Daily, points)
+    changed[LeaderboardScope::Weekly] = update_if_better(LeaderboardScope::Weekly, points)
+    changed[LeaderboardScope::Overall] = update_if_better(LeaderboardScope::Overall, points)    
     save unless changed.blank?
     changed
   end

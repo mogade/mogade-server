@@ -89,8 +89,8 @@ describe HighScores, :has_new_score do
     player = Factory.build(:player)
     scores = HighScores.load(leaderboard, player)
     changed = scores.has_new_score(250)
-    changed[:daily].should be_true
-    changed[:weekly].should be_false
-    changed[:overall].should be_false
+    changed[LeaderboardScope::Daily].should be_true
+    changed[LeaderboardScope::Weekly].should be_false
+    changed[LeaderboardScope::Overall].should be_false
   end
 end

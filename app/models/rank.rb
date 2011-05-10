@@ -25,7 +25,6 @@ class Rank
       case scope
       when LeaderboardScope::Yesterday
         return "#{leaderboard.id}_yesterday_#{leaderboard.yesterday_start.strftime("%Y%m%d%H")}"
-      when LeaderboardScope::Overall
       when LeaderboardScope::Weekly
         return "#{leaderboard.id}_weekly_#{leaderboard.weekly_start.strftime("%Y%m%d%H")}"
       when LeaderboardScope::Overall

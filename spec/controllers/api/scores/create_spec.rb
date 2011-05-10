@@ -23,19 +23,23 @@ describe Api::ScoresController, :create do
   it "saves the score" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    Score.should_receive(:save).with(leaderboard, player, 323, 'dta')
+    Score.should_receive(:save).with(leaderboard, player, 323, 'dta').and_return({})
     post :create, ApiHelper.signed_params(@game, {:points => '323', :data => 'dta', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
   end
   
   
-  it "renders the changed data" do
+  it "renders the new rank for better scores" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    Score.stub!(:save).and_return({:weekly => true, :overall => false})
+    Score.stub!(:save).and_return({LeaderboardScope::Daily => true, LeaderboardScope::Weekly => true, LeaderboardScope::Overall => false})
+    Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Daily]).and_return(985)
+    Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Weekly]).and_return(455)
+    
     post :create, ApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
-    json['weekly'].should be_true
-    json['overall'].should be_false
+    json[LeaderboardScope::Daily.to_s].should == 985
+    json[LeaderboardScope::Weekly.to_s].should == 455
+    json[LeaderboardScope::Overall.to_s].should == 0
   end
 end
