@@ -92,7 +92,7 @@ describe Score, 'get scores' do
   end
   def create_scores(count, collection, dated = nil)
     count.times do |i|
-      params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :unique => "unique_#{@created}", :points => @created, :data => "data#{@created}"}
+      params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :points => @created, :data => "data#{@created}"}
       params[:dated] = dated unless dated.nil?
       score = Score.new(params)
       collection.save(Score.map(score.attributes)) #fugly

@@ -8,7 +8,10 @@
 class HighScores
   include Document
   attr_accessor :leaderboard
-  mongo_accessor({:leaderboard_id => :lid, :unique => :u, :userkey => :uk, :daily_points => :dp, :daily_dated => :dd, :weekly_points => :wp, :weekly_dated => :wd, :overall_points => :op})
+  mongo_accessor({:leaderboard_id => :lid, :unique => :u, :userkey => :uk, 
+    :daily_points => :dp, :daily_dated => :dd, :daily_id => :di,
+    :weekly_points => :wp, :weekly_dated => :wd, :weekly_id => :wi, 
+    :overall_points => :op, :overall_id => :oi})
   
   class << self
     def load(leaderboard, player)
@@ -39,7 +42,7 @@ class HighScores
     changed = {}    
     changed[LeaderboardScope::Daily] = update_if_better(LeaderboardScope::Daily, points)
     changed[LeaderboardScope::Weekly] = update_if_better(LeaderboardScope::Weekly, points)
-    changed[LeaderboardScope::Overall] = update_if_better(LeaderboardScope::Overall, points)    
+    changed[LeaderboardScope::Overall] = update_if_better(LeaderboardScope::Overall, points)
     save unless changed.blank?
     changed
   end
