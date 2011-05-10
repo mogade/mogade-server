@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Score, 'get scores' do
+describe Score, :get_by_page do
   before :each do
     @created = 0
   end
@@ -8,7 +8,7 @@ describe Score, 'get scores' do
   it "should start at the specified page" do
     @leaderboard = Factory.create(:leaderboard)
     create_daily_scores(6)
-    scores = Score.get(@leaderboard, 2, 4, LeaderboardScope::Daily).to_a
+    scores = Score.get_by_page(@leaderboard, 2, 4, LeaderboardScope::Daily)[:scores].to_a
     scores[0][:points].should == 1
     scores[1][:points].should == 0
   end
@@ -16,21 +16,21 @@ describe Score, 'get scores' do
   it "should limit the results to the specified number" do
     @leaderboard = Factory.create(:leaderboard)
     create_weekly_scores(4)
-    scores = Score.get(@leaderboard, 1, 2, LeaderboardScope::Weekly).to_a
+    scores = Score.get_by_page(@leaderboard, 1, 2, LeaderboardScope::Weekly)[:scores].to_a
     scores.length.should == 2
   end
 
   it "should limit to 50 records regardless of what was specified" do
     @leaderboard = Factory.create(:leaderboard)
     create_yesterday_scores(60)
-    scores = Score.get(@leaderboard, 1, 75, LeaderboardScope::Yesterday).to_a
+    scores = Score.get_by_page(@leaderboard, 1, 75, LeaderboardScope::Yesterday)[:scores].to_a
     scores.length.should == 50
   end
     
   it "should get the scores ordered by points from high to low" do
     @leaderboard = Factory.create(:leaderboard)
     create_overall_scores(3)
-    scores = Score.get(@leaderboard, 1, 10, LeaderboardScope::Overall).to_a
+    scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Overall)[:scores].to_a
     scores[0][:points].should == 2
     scores[1][:points].should == 1
     scores[2][:points].should == 0
@@ -39,7 +39,7 @@ describe Score, 'get scores' do
   it "should get all the fields" do
     @leaderboard = Factory.create(:leaderboard)
     create_overall_scores(1)
-    scores = Score.get(@leaderboard, 1, 1, LeaderboardScope::Overall).to_a
+    scores = Score.get_by_page(@leaderboard, 1, 1, LeaderboardScope::Overall)[:scores].to_a
     scores[0][:points].should == 0
     scores[0][:username].should == 'player_0'
     scores[0][:data].should == 'data0'
@@ -50,7 +50,7 @@ describe Score, 'get scores' do
     @leaderboard = Factory.create(:leaderboard)
     create_daily_scores(2)
     create_daily_scores(2, @leaderboard.daily_start - 86400)
-    scores = Score.get(@leaderboard, 1, 10, LeaderboardScope::Daily).to_a
+    scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Daily)[:scores].to_a
     scores.length.should == 2
     scores[0][:points].should == 1
     scores[1][:points].should == 0
@@ -60,7 +60,7 @@ describe Score, 'get scores' do
     @leaderboard = Factory.create(:leaderboard)
     create_daily_scores(2)
     create_daily_scores(2, @leaderboard.daily_start - 86400)
-    scores = Score.get(@leaderboard, 1, 10, LeaderboardScope::Yesterday).to_a
+    scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Yesterday)[:scores].to_a
     scores.length.should == 2
     scores[0][:points].should == 3
     scores[1][:points].should == 2
@@ -70,10 +70,15 @@ describe Score, 'get scores' do
     @leaderboard = Factory.create(:leaderboard)
     create_weekly_scores(4, @leaderboard.weekly_start - 2)
     create_weekly_scores(2)
-    scores = Score.get(@leaderboard, 1, 10, LeaderboardScope::Weekly).to_a
+    scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Weekly)[:scores].to_a
     scores.length.should == 2
     scores[0][:points].should == 5
     scores[1][:points].should == 4
+  end
+  
+  it "should set the page" do
+    @leaderboard = Factory.create(:leaderboard)
+    Score.get_by_page(@leaderboard, 32, 10, LeaderboardScope::Weekly)[:page].should == 32
   end
   
   

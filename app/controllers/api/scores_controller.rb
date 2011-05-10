@@ -6,12 +6,16 @@ class Api::ScoresController < Api::ApiController
   before_filter :ensures_leaderboard_for_game, :only => :create
   
   def index
-    page = params_to_i(:page, 1)
     records = params_to_i(:records, 10)
     scope = params_to_i(:scope, LeaderboardScope::Daily)
-    scores = Score.get(@leaderboard, page, records, scope)
     
-    payload = {:page => page, :scores => scores}
+    player = load_player
+    if player.nil?
+      payload = Score.get_by_page(@leaderboard, params_to_i(:page, 1), records, scope)
+    else
+      payload = Score.get_by_player(@leaderboard, player, records, scope)
+    end
+    
     render_payload(payload, params, 300)
   end
 

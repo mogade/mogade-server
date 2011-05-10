@@ -6,17 +6,8 @@ class Rank
     
     def get(leaderboard, unique, scopes = nil)
       ranks = {}
-      if scopes.nil? || scopes.include?(LeaderboardScope::Yesterday)
-        ranks[:yesterday] = Store.redis.zrevrank(Rank.get_key(leaderboard, LeaderboardScope::Yesterday), unique) || -1
-      end
-      if scopes.nil? || scopes.include?(LeaderboardScope::Daily)
-        ranks[:daily] = Store.redis.zrevrank(Rank.get_key(leaderboard, LeaderboardScope::Daily), unique) || -1
-      end
-      if scopes.nil? || scopes.include?(LeaderboardScope::Weekly)
-        ranks[:weekly] = Store.redis.zrevrank(Rank.get_key(leaderboard, LeaderboardScope::Weekly), unique) || -1
-      end
-      if scopes.nil? || scopes.include?(LeaderboardScope::Overall)
-        ranks[:overall] = Store.redis.zrevrank(Rank.get_key(leaderboard, LeaderboardScope::Overall), unique) || -1
+      (scopes || [LeaderboardScope::Yesterday, LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall]).each do |scope|
+        ranks[scope] = Store.redis.zrevrank(Rank.get_key(leaderboard, scope), unique) || -1
       end
       ranks.each{|k, v| ranks[k] = v + 1 }
     end

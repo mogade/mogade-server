@@ -35,11 +35,16 @@ class Api::ApiController < ActionController::Base
   
   def ensure_player
     return unless ensure_params(:username, :userkey)
-    @player = Player.new(params[:username], params[:userkey])
+    @player = load_player
     
     unless @player.valid?
       error('username and userkey are both required, and username must be 30 or less characters') 
     end
+  end
+  
+  def load_player
+    return nil if params[:username].blank? || params[:userkey].blank?
+    Player.new(params[:username], params[:userkey])
   end
 
   def ensure_params(*keys)

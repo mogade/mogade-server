@@ -20,7 +20,7 @@ class Score
       high_scores.has_new_score(points)
     end
     
-    def get(leaderboard, page, records, scope)
+    def get_by_page(leaderboard, page, records, scope)
       records = 50 if records > 50
       offset = ((page-1) * records).floor
       offset = 0 if offset < 0
@@ -28,7 +28,14 @@ class Score
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
       options = {:fields => {:points => 1, :username => 1, :data => 1, :_id => 0}, :sort => [:points, :desc], :skip => offset, :limit => records, :raw => true}
-      find(conditions, options, Score.collection(scope))
+      {:scores => find(conditions, options, Score.collection(scope)), :page => page}
+    end
+    
+    def get_by_player(leaderboard, player, records, scope)
+      records = 50 if records > 50
+      rank = Rank.get(leaderboard, player.unique, [scope])[scope]
+      page = rank == 0 ? 1 : (rank / records.to_f).ceil
+      get_by_page(leaderboard, page, records, scope)
     end
     
     def time_condition(leaderboard, scope)
