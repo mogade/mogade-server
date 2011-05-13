@@ -9,6 +9,7 @@ Factory.define :leaderboard do |l|
   l.id Id.from_string('222222222222222222222222')
   l.offset 0
   l.game_id Id.from_string('111111111111111111111111')
+  l.type LeaderboardType::HighToLow
 end
 
 Factory.define :player do |p|

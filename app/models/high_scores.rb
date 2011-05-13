@@ -57,7 +57,7 @@ class HighScores
   
   def update_if_better(scope, points)
     name = HighScores.scope_to_name(scope)
-    return false if send(name) > points
+    return false if @leaderboard.score_is_better?(send(name), points)
 
     Rank.save(@leaderboard, scope, unique, points)
     send("#{name}_points=", points)

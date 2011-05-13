@@ -8,13 +8,13 @@ class Score
       document = {:lid => leaderboard.id, :un => player.username[0..19], :p => points}
       document[:d] = data[0..49] unless data.nil?
       
-      if points > high_scores.daily then
+      if leaderboard.score_is_better?(points, high_scores.daily)
         high_scores.daily_id = save_or_update(Score.daily_collection, high_scores.daily_id, document.merge({:dt => leaderboard.daily_start}))
       end
-      if points > high_scores.weekly
+      if leaderboard.score_is_better?(points, high_scores.weekly)
         high_scores.weekly_id = save_or_update(Score.weekly_collection, high_scores.weekly_id, document.merge({:dt => leaderboard.weekly_start}))
       end
-      if points > high_scores.overall
+      if leaderboard.score_is_better?(points, high_scores.overall)
         high_scores.overall_id = save_or_update(Score.overall_collection, high_scores.overall_id, document)
       end
       high_scores.has_new_score(points)
@@ -27,7 +27,7 @@ class Score
     
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
-      options = {:fields => {:points => 1, :username => 1, :data => 1, :_id => 0}, :sort => [:points, :desc], :skip => offset, :limit => records, :raw => true}
+      options = {:fields => {:points => 1, :username => 1, :data => 1, :_id => 0}, :sort => [:points, leaderboard.sort], :skip => offset, :limit => records, :raw => true}
       {:scores => find(conditions, options, Score.collection(scope)), :page => page}
     end
     

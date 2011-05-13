@@ -36,6 +36,15 @@ describe Score, :get_by_page do
     scores[2][:points].should == 0
   end
   
+  it "should get the scores ordered by points from low to high" do
+    @leaderboard = Factory.create(:leaderboard, {:type => LeaderboardType::LowToHigh})
+    create_overall_scores(3)
+    scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Overall)[:scores].to_a
+    scores[0][:points].should == 0
+    scores[1][:points].should == 1
+    scores[2][:points].should == 2
+  end
+  
   it "should get all the fields" do
     @leaderboard = Factory.create(:leaderboard)
     create_overall_scores(1)
@@ -75,6 +84,7 @@ describe Score, :get_by_page do
     scores[0][:points].should == 5
     scores[1][:points].should == 4
   end
+  
   
   it "should set the page" do
     @leaderboard = Factory.create(:leaderboard)

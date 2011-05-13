@@ -1,6 +1,14 @@
 class Leaderboard
   include Document
-  mongo_accessor({:game_id => :gid, :name => :name, :offset => :offset})
+  mongo_accessor({:game_id => :gid, :name => :name, :offset => :offset, :type => :t})
+  
+  def score_is_better?(new_score, old_score)
+    type == LeaderboardType::LowToHigh ? new_score < old_score : new_score > old_score
+  end
+  
+  def sort
+    type == LeaderboardType::LowToHigh ? :asc : :desc
+  end
   
   def daily_start
     now = Time.now.utc
