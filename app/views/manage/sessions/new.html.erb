@@ -1,0 +1,27 @@
+<% content_for :title, 'login' -%>
+<% content_for :section_title, 'Login' -%>
+<h2>Please enter your email and password</h2>
+<%= form_for :developer, :url => {:action => 'create'} do |f| %>	
+  <div class="field">
+    <label for="email">email</label>
+    <input type="text" id="email" name="email" class="focus" />
+  </div>
+  <div class="field">
+    <label for="password">password</label>
+    <input type="password" id="password" name="password" />
+  </div>
+  <div class="buttons">
+    <input type="submit" class="button" value="login" />
+  </div>
+  <div class="links">
+    <a href="/account/new">register an account</a>
+    <a href="/account/forgot">forgot your password</a>
+  </div>
+<% end -%>
+
+
+<% content_for :right do -%>
+<h2>Let's succeed together</h2>
+<p>We want to help you build the most successful and engaging games possible. We hope you'll help us build the most compelling platform. We're <a href="http://groups.google.com/group/mogadedev">eager to hear from you</a>.</p>
+<p>Don't forget that <a href="https://github.com/mogade">mogade is open source</a>. New features and improvement can be contributed to the drivers or even to the core mogade.com service.</p>
+<% end -%>

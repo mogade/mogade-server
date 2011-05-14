@@ -6,8 +6,11 @@ Mogade::Application.routes.draw do
   end
   
   namespace 'manage' do
-    match '/signups/activate/:key' => 'signups#activate'
-    resource :signups, :only => [:new, :create]
+    match '/account/activate/:key' => 'accounts#activate'
+    resource :account, :only => [:new, :create]
+    
+    match '/session/logout' => 'sessions#logout'
+    resource :session, :only => [:new, :create]
   end
   
   

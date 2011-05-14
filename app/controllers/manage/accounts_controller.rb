@@ -1,4 +1,4 @@
-class Manage::SignupsController < Manage::ManageController
+class Manage::AccountsController < Manage::ManageController
   
   def new
     @signup = Signup.new
