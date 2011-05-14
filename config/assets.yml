@@ -1,0 +1,13 @@
+---
+js:
+  all:
+    - jquery.tip
+    - jquery.validator
+    - mogade
+
+css:
+  all:
+    - reset
+    - mogade
+  manage:
+    - manage

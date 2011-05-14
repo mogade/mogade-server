@@ -1,0 +1,21 @@
+#content{overflow:auto;background:url('../images/manage_back.png') repeat-y;}
+#left{float:left;}
+#right{float:right;width:220px;}
+
+/* form stuff */
+.field{margin-bottom:25px;position:relative;}
+.field label{display:block;float:left;width:100px;margin-top:10px;padding-left:10px;}
+.field label.tip{color:#aaa;width:300px;position:absolute;left:420px;top:0;}
+.field label.error{display:block;position:absolute;top:27px;left:100px;width:400px;color:#f66;}
+.field input, .field textarea{border:1px solid #ccc;padding:7px;width:300px;font-size:1.2em;}
+.field input.error{border-color:#f66;}
+.buttons{margin-left:110px;}
+.button{cursor:pointer;border:1px solid #bbb;padding:10px 20px;color:#000;font-weight:bold;margin-right:10px;font-size:1em;
+  background: #e6e6e6;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
+  background: -moz-linear-gradient(-90deg, #e6e6e6, #ccc);}
+.button:hover{background:#ccc;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#aaa));
+  background: -moz-linear-gradient(-90deg, #ccc, #aaa);}
+.links{margin-bottom:15px;}
+.links a{margin-left:110px;display:block;padding:5px;}

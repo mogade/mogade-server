@@ -1,4 +1,6 @@
 development:
+  cdn_url: http://0.0.0.0:3000
+  ssl_cdn_url: http://0.0.0.0:3000
   mongo:
     host: localhost
     port: 27017
@@ -9,6 +11,8 @@ development:
     database: 0
     
 test:
+  cdn_url: http://0.0.0.0:3000
+  ssl_cdn_url: http://0.0.0.0:3000
   mongo:
     host: localhost
     port: 27017
@@ -19,6 +23,8 @@ test:
     database: 1
     
 production:
+  cdn_url: http://0.0.0.0:3000
+  ssl_cdn_url: http://0.0.0.0:3000
   mongo:
     host: localhost
     port: 27017

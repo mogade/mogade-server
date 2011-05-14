@@ -6,4 +6,7 @@ Mogade::Application.configure do
   config.serve_static_assets = false
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
+  ActionController::Base.asset_host = Proc.new { |source, request|
+    request.ssl? ? Settings.ssl_cdn_url : Settings.cdn_url
+  }
 end

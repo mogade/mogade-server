@@ -6,4 +6,7 @@ Mogade::Application.configure do
   config.action_controller.perform_caching = false
   config.active_support.deprecation = :log
   config.action_dispatch.best_standards_support = :builtin
+  ActionController::Base.asset_host = Proc.new { |source, request|
+    request.ssl? ? Settings.ssl_cdn_url : Settings.cdn_url
+  }
 end
