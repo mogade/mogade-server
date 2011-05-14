@@ -18,4 +18,13 @@ class Manage::SignupsController < Manage::ManageController
     end
     render :action => 'new'
   end
+  
+  def activate
+    id = Id.from_string(params[:key])
+    return if id.nil? || Id.expired?(id, 2) 
+    
+    developer = Developer.find_by_action(id)
+    return if developer.nil?
+    return signin(developer.activate!)
+  end
 end

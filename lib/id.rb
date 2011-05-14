@@ -12,4 +12,7 @@ module Id
     return id if id.class == BSON::ObjectId
     BSON::ObjectId.from_string(id)
   end
+  def self.expired?(id, days)
+    ((Time.now - id.generation_time) / 86400).floor > days
+  end
 end

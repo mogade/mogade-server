@@ -9,3 +9,4 @@ Score.weekly_collection.ensure_index([['lid', Mongo::ASCENDING], ['cat', Mongo::
 Score.overall_collection.ensure_index([['lid', Mongo::ASCENDING], ['p', Mongo::DESCENDING]])
 HighScores.collection.ensure_index([['lid', Mongo::ASCENDING], ['u', Mongo::ASCENDING]], {:unique => true})
 Developer.collection.ensure_index([['e', Mongo::ASCENDING]], {:unique => true})
+Developer.collection.ensure_index([['a', Mongo::ASCENDING]], {:unique => true})

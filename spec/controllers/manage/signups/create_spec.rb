@@ -15,9 +15,9 @@ describe Manage::SignupsController, :create do
     assigns[:signup].errors[:email][0].should == 'email is already taken'
   end
   
-  it "registers the user" do
+  it "registers the player" do
     Id.stub!(:new).and_return('the_id')
-    Notifier.should_receive(:welcome).with(anything(), 'http://test.host/manage/signups/activate?key=the_id')
+    Notifier.should_receive(:welcome).with(anything(), 'http://test.host/manage/signups/activate/the_id')
     post :create, {:email => 'my@email.com', :name => 'my name', :password => 'pass1234', :confirm_password => 'pass1234', :human => 'luigi'}
     response.should render_template('manage/signups/create')
     

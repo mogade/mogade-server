@@ -1,0 +1,10 @@
+<% content_for :title, 'error activating' -%>
+<% content_for :section_title, 'Something bad happened'%>
+<h2>Activation Error</h2>
+<p>There was a problem activating your account. Please <a href="mailto:<%=Settings.admin_email%>">contact us</a> if the problem persists.</p>
+
+
+<% content_for :right do -%>
+<h2>Maybe you can try...</h2>
+<p>If you continue having problems activating your account, maybe you can try copy and pasting the link from the email into your browser.</p>
+<% end -%>

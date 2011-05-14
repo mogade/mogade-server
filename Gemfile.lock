@@ -88,7 +88,6 @@ GEM
       rspec (~> 2.5.0)
     spork (0.8.4)
     thor (0.14.6)
-    tmail (1.2.7.1)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.27)
@@ -103,6 +102,7 @@ DEPENDENCIES
   factory_girl
   hiredis (~> 0.3.1)
   hoptoad_notifier
+  mail
   mongo
   mongo_ext
   postmark
@@ -111,4 +111,3 @@ DEPENDENCIES
   rspec
   rspec-rails
   spork
-  tmail

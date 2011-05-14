@@ -44,4 +44,6 @@ Factory.define :developer do |d|
   d.name {Factory.next(:name)}
   d.email {Factory.next(:email)}
   d.password {BCrypt::Password.create('shhh')}
+  d.status DeveloperStatus::Enabled
+  d.action 'the_action'
 end

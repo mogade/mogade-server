@@ -1,4 +1,8 @@
+defaults: &defaults
+  admin_email: mogade@mogade.com
+  
 development:
+  <<: *defaults
   cdn_url: http://0.0.0.0:3000
   ssl_cdn_url: http://0.0.0.0:3000
   postmark_key: postmark_api_key
@@ -12,9 +16,7 @@ development:
     database: 0
     
 test:
-  cdn_url: http://0.0.0.0:3000
-  ssl_cdn_url: http://0.0.0.0:3000
-  postmark_key: postmark_api_key
+  <<: *development
   mongo:
     host: localhost
     port: 27017
@@ -25,6 +27,7 @@ test:
     database: 1
     
 production:
+  <<: *defaults
   cdn_url: http://0.0.0.0:3000
   ssl_cdn_url: http://0.0.0.0:3000
   #hoptoad_key: optional_hoptoad_key
