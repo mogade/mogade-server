@@ -16,8 +16,8 @@
     <div id="menu">
       <a href="/">home</a>
       <% if @current_developer == nil -%>
-        <a href="<%= ssl_url('/manage/signup/')%>">login</a>
-        <a href="<%= ssl_url('/manage/signup/new')%>">register</a>
+        <a href="<%= ssl_url('/manage/signups/index')%>">login</a>
+        <a href="<%= ssl_url('/manage/signups/new')%>">register</a>
       <% end -%>
       <a href="http://groups.google.com/group/mogadedev">help</a>
     </div>

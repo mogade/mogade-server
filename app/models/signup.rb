@@ -17,14 +17,14 @@ class Signup
     @human = params[:human]
   end
   
-  def to_user
+  def to_developer
     return nil unless valid?
-    User.new({
+    Developer.new({
       :name => name, 
       :email => email, 
       :password => BCrypt::Password.create(password),
-      :status => UserStatus::Pending,
-      :action => IdGenerator.new
+      :status => DeveloperStatus::Pending,
+      :action => Id.new
     })
   end
 end

@@ -31,3 +31,17 @@ Factory.define :high_scores do |h|
   h.weekly_dated nil
   h.overall_points 0
 end
+
+Factory.sequence :name do |n|
+  "duncan-#{n}"
+end
+
+Factory.sequence :email do |n|
+  "duncan#{n}@dune.gov"
+end
+
+Factory.define :developer do |d|
+  d.name {Factory.next(:name)}
+  d.email {Factory.next(:email)}
+  d.password {BCrypt::Password.create('shhh')}
+end

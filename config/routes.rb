@@ -6,7 +6,7 @@ Mogade::Application.routes.draw do
   end
   
   namespace 'manage' do
-    resource :signup, :only => [:index, :new]
+    resource :signups, :only => [:activate, :new, :create]
   end
   
   

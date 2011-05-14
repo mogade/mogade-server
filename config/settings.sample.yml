@@ -1,6 +1,7 @@
 development:
   cdn_url: http://0.0.0.0:3000
   ssl_cdn_url: http://0.0.0.0:3000
+  postmark_key: postmark_api_key
   mongo:
     host: localhost
     port: 27017
@@ -13,6 +14,7 @@ development:
 test:
   cdn_url: http://0.0.0.0:3000
   ssl_cdn_url: http://0.0.0.0:3000
+  postmark_key: postmark_api_key
   mongo:
     host: localhost
     port: 27017
@@ -26,6 +28,7 @@ production:
   cdn_url: http://0.0.0.0:3000
   ssl_cdn_url: http://0.0.0.0:3000
   #hoptoad_key: optional_hoptoad_key
+  postmark_key: postmark_api_key
   mongo:
     host: localhost
     port: 27017
