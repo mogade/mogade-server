@@ -17,7 +17,7 @@ describe Manage::AccountsController, :create do
   
   it "registers the player" do
     Id.stub!(:new).and_return('the_id')
-    Notifier.should_receive(:welcome).with(anything(), 'http://test.host/manage/account/activate/the_id')
+    Notifier.should_receive(:welcome).with(anything(), 'http://test.host/manage/accounts/activate/the_id')
     post :create, {:email => 'my@email.com', :name => 'my name', :password => 'pass1234', :confirm_password => 'pass1234', :human => 'luigi'}
     response.should render_template('manage/accounts/create')
     

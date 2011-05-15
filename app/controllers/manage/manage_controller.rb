@@ -1,9 +1,7 @@
 class Manage::ManageController < ActionController::Base
   protect_from_forgery
   layout 'manage_dual'
-  
-  def index
-  end
+
   
   def faq
     render :layout => 'manage_single'
@@ -15,7 +13,7 @@ class Manage::ManageController < ActionController::Base
   private 
   def signin(developer)
     session[:dev_id] = developer.id.to_s
-    redirect_to '/manage/index'
+    redirect_to '/manage/games/'
   end
   
   def set_error(msg, now = true)

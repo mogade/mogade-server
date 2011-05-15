@@ -6,12 +6,14 @@ Mogade::Application.routes.draw do
   end
   
   namespace 'manage' do
-    match '/account/:action/(:key)', :controller => 'accounts'
-    resource :account, :only => [:new, :create]
+    match '/accounts/:action/(:key)', :controller => 'accounts'
+    resources :accounts, :only => [:new, :create]
     
     match '/session/logout' => 'sessions#logout'
-    resource :session, :only => [:new, :create]
+    resources :sessions, :only => [:new, :create]
     
+    resources :games, :only => [:index]
+      
     match '/:action', :controller => 'manage'
   end
   match '/manage/:controller(/:action(/:id))', :controller => /manage\/[^\/]+/

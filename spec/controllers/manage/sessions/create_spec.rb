@@ -21,7 +21,7 @@ describe Manage::SessionsController, :create do
     Developer.should_receive(:find_by_credential).with('duncan@sword.org', 'ghola').and_return(developer)
     
     get :create, {:email => 'duncan@sword.org', :password => 'ghola'}
-    response.should redirect_to('http://test.host/manage/index')
+    response.should redirect_to('http://test.host/manage/games/')
     session[:dev_id].should == developer.id.to_s
   end
 

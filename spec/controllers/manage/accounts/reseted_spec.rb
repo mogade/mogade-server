@@ -25,7 +25,7 @@ describe Manage::AccountsController, :reseted do
     developer.should_receive(:reset_password).with('new_pass').and_return(true)
     get :reseted, {:key => id.to_s, :password => 'new_pass'}
     
-    response.should redirect_to('http://test.host/manage/index')
+    response.should redirect_to('http://test.host/manage/games/')
     session[:dev_id].should == developer.id.to_s 
   end
   

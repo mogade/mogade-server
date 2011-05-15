@@ -33,7 +33,7 @@ describe Manage::AccountsController, :activate do
     Id.stub!(:expired?).and_return(false)
     get :activate, {:key => action.to_s }
     
-    response.should redirect_to('http://test.host/manage/index')
+    response.should redirect_to('http://test.host/manage/games/')
     session[:dev_id].should == developer.id.to_s
   end
 end
