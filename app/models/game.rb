@@ -15,4 +15,9 @@ class Game
       find({:_id => {'$in' =>  list}}, {:sort => [:name, :ascending]})
     end
   end
+  
+  def destroy
+    Store.redis.sadd('cleanup:games', self.id)
+    Game.remove({:_id => self.id})
+  end
 end

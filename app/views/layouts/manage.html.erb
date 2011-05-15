@@ -5,6 +5,7 @@
 <% content_for :content do -%>
 <h1><%= yield :section_title %></h1>
 <% unless flash[:error].nil? %><div id="error"><%=flash[:error]%></div><% end %>
+<% unless flash[:info].nil? %><div id="info"><%=flash[:info]%></div><% end %>
 
 <%= yield :inner %>
 

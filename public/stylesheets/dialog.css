@@ -1,0 +1,8 @@
+.dialogOverlay{position:fixed;left:0px;top:0px;display:none;background:#000;}
+.dialog{background:#f6f6f6;padding:2px;}
+.dialog .controls{float:right;}
+.dialog .controls input{margin:0px 0px 0px 20px;}
+.dialog h1{margin-bottom:10px;}
+.dialog .buttons{position:absolute;bottom:10px;right:10px;}
+h1 a{cursor:pointer;display:block;width:20px;height:20px;background:url('../images/close.png?f074bfac') no-repeat;float:right;margin:2px 2px 0px 0px;}
+h1 a:hover{background:url('../images/close_o.png?79cd8b76') no-repeat}

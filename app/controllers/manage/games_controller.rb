@@ -15,6 +15,13 @@ class Manage::GamesController < Manage::ManageController
   end
   
   def show
-    load_game_as_owner and return if @game == nil
+    return unless load_game_as_owner
+  end
+  
+  def destroy
+    return unless load_game_as_owner
+    @game.destroy
+    set_info("#{@game.name} was successfully deleted", false)
+    redirect_to :action => 'index'
   end
 end

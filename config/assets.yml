@@ -4,6 +4,7 @@ js:
     - jquery.tip
     - jquery.validator
     - jquery.simpleList
+    - jquery.dialog
     - mogade
 
 css:
@@ -12,3 +13,4 @@ css:
     - mogade
   manage:
     - manage
+    - dialog

@@ -21,9 +21,13 @@ class Manage::ManageController < ActionController::Base
     now ? flash.now[:error] = msg : flash[:error] = msg
   end
   
+  def set_info(msg, now = true)
+    now ? flash.now[:info] = msg : flash[:info] = msg
+  end
+  
   def ensure_logged_in
     load_developer
-    redirect_to url_for :controller => 'sessions', :action => 'new' if @current_developer == nil
+    redirect_to url_for :controller => 'sessions', :action => 'new' if @current_developer.nil?
   end
   
   def load_developer
@@ -37,8 +41,9 @@ class Manage::ManageController < ActionController::Base
 
   def load_game_as_owner
     load_game
-    return if @game.nil?
+    return false if @game.nil?
     return handle_access_denied unless !@current_developer.nil? && @current_developer.owns?(@game)
+    true
   end
   def load_game
     id = params.include?(:game_id) ? params[:game_id] : params[:id]
@@ -52,5 +57,6 @@ class Manage::ManageController < ActionController::Base
     @game = nil
     set_error('you do not have access to perform that action', false)
     redirect_to url_for :controller => 'games', :action => 'index'
+    false
   end
 end

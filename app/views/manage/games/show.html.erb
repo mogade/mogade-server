@@ -20,6 +20,15 @@
   </div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function()
+{
+  $('#delete').confirm('Delete this game?', 'This game will be permanently deleted and cannot be recovered. Are you sure?', function()
+  {
+    return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
+  });
+});
+</script>
 
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu' %>
