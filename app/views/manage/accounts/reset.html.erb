@@ -1,0 +1,27 @@
+<% content_for :title, 'reset your password' %>
+<% content_for :section_title, 'Password Reset'%>
+  <h2>Enter Your New Password</h2>
+<%= form_for :signup, :url => {:action => 'reseted'}, :html => {:id => 'reset'} do |f| -%>
+  <input type="hidden" name="key" value="<%= @key %>" />
+  <div class="field">
+    <label for="password">password</label>
+    <input type="password" id="password" name="password" class="focus" />
+    <label for="password" class="tip">8 characters incl 2+ non-letters</label>
+  </div>
+  <div class="field">
+    <label for="confirm">confirm</label>
+    <input type="password" id="confirm_password" name="confirm_password" />
+    <label for="confirm" class="tip">retype your password</label>
+  </div>
+  <div class="buttons">
+    <input type="submit" class="button" value="reset password" />
+  </div>
+<% end -%>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	var rules = <%= validation_of(Signup).html_safe%>;
+	$('#reset').validator({rules: rules});
+});
+</script>

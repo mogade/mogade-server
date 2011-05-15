@@ -1,0 +1,16 @@
+<% content_for :title, 'lost password' %>
+<% content_for :section_title, 'Lost Password'%>
+<h2>Forget something?</h2>
+<%= form_for :user, :url => {:action => 'send_reset'} do |f| -%>
+  <div class="field">
+    <label for="email">email</label>
+    <input type="text" id="email" name="email" class="focus" />
+  </div>
+  <div class="buttons">
+    <input type="submit" class="button" value="reset password" />
+  </div>
+  <div class="links">
+    <a href="/manage/account/new">register an account</a>
+    <a href="/manage/session/new">log into an existing account</a>
+  </div>
+<% end -%>

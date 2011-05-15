@@ -19,7 +19,7 @@ class Notifier
     message.deliver
    end
    
-   def self.send_password(developer, url)
+   def self.reset_password(developer, url)
      message = Mail.new do
        from Settings.admin_email
        to developer.email

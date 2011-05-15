@@ -18,6 +18,20 @@ class Developer
     def find_by_action(action)
       find_one({:action => action})
     end
+    
+    def set_new_action(email)
+      developer = Developer.find_by_email(email)
+      return nil if developer.nil?
+      developer.action = Id.new
+      developer.save!
+      return developer
+    end
+  end
+  
+  def reset_password(password)
+    self.password = BCrypt::Password.create(password)
+    activate!
+    return true
   end
   
   def activate!

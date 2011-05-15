@@ -27,4 +27,41 @@ class Manage::AccountsController < Manage::ManageController
     return if developer.nil?
     return signin(developer.activate!)
   end
+  
+  def forgot
+  end
+
+  def send_reset
+    developer = Developer.set_new_action(params[:email])   
+    if developer.nil? 
+      set_error('the email could not be found') 
+      render :action => :forgot 
+      return
+    end
+    
+    url = url_for :action => 'reset', :key => developer.action, :only_path => false
+    Notifier.reset_password(developer, url)
+  end
+  
+  def reset
+    @key = params[:key]
+  end
+
+  def reseted
+    key = Id.from_string(params[:key])
+    @key = key.to_s unless key.nil?
+    if key.nil? || Id.expired?(key, 1) 
+      set_error('there was a problem loading your account, please try again (1)')
+      render :reset and return
+    end
+    developer = Developer.find_by_action(key)
+    if developer.nil?
+      set_error('there was a problem loading your account, please try again (2)')
+      render :reset and return
+    end
+    if developer.reset_password(params[:password]) 
+      return signin(developer)
+    end
+    render :reset
+  end
 end
