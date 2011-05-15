@@ -1,6 +1,7 @@
 <% content_for :head do -%><%= include_css_bundle 'manage' %><% end -%>
 <% content_for :content do -%>
 <h1><%= yield :section_title %></h1>
+<% unless flash[:error].nil? %><div id="error"><%=flash[:error]%></div><% end %>
 <div id="content" class="rb">  
   <div id="left"><%= yield  %></div>
   <div id="right"><%= yield :right%></div>

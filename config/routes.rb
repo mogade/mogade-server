@@ -11,6 +11,8 @@ Mogade::Application.routes.draw do
     
     match '/session/logout' => 'sessions#logout'
     resource :session, :only => [:new, :create]
+    
+    match '/tos' => 'manage#tos'
   end
   
   
