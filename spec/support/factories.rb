@@ -47,4 +47,5 @@ Factory.define :developer do |d|
   d.password {BCrypt::Password.create('shhh')}
   d.status DeveloperStatus::Enabled
   d.action 'the_action'
+  d.game_ids {[]}
 end

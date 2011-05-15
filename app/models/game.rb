@@ -9,5 +9,10 @@ class Game
     def create(name)
       Game.new({:name => name, :secret => Id.secret})
     end
+    
+    def find_by_ids(list)
+      return [] if list.blank?
+      find({:_id => {'$in' =>  list}}, {:sort => [:name, :ascending]})
+    end
   end
 end

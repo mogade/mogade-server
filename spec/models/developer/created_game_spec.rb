@@ -17,8 +17,8 @@ describe Developer, :created_game do
   end
   
   it "saves multiple games for the developer" do
-    game1 = Factory.build(:game)
-    game2 = Factory.build(:game)
+    game1 = Factory.build(:game, {:id => Id.new})
+    game2 = Factory.build(:game, {:id => Id.new})
     developer = Factory.build(:developer)
     developer.created_game!(game1)
     developer.created_game!(game2)
