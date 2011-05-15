@@ -1,7 +1,8 @@
 h3{font-size:1.2em;font-weight:bold;margin:5px 0 5px 0}
 ol{margin-bottom:20px;}
 li{line-height:1.3em;margin-bottom:5px;padding:5px;}
-#content{overflow:auto;background:url('../images/manage_back.png') repeat-y;}
+#content{overflow:auto;}
+#content_dual{overflow:auto;background:url('../images/manage_back.png') repeat-y;}
 #left{float:left;width:680px;}
 #left h2{margin-bottom:20px;}
 #right{float:right;width:220px;}

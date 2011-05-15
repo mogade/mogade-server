@@ -29,22 +29,25 @@ class Manage::AccountsController < Manage::ManageController
   end
   
   def forgot
+    render :layout => 'manage_single'
   end
 
   def send_reset
     developer = Developer.set_new_action(params[:email])   
     if developer.nil? 
       set_error('the email could not be found') 
-      render :action => :forgot 
+      render :action => :forgot
       return
     end
     
     url = url_for :action => 'reset', :key => developer.action, :only_path => false
     Notifier.reset_password(developer, url)
+    render :layout => 'manage_single'
   end
   
   def reset
     @key = params[:key]
+    render :layout => 'manage_single'
   end
 
   def reseted

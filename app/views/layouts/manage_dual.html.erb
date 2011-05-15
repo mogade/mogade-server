@@ -1,0 +1,7 @@
+<% content_for :inner do -%>
+<div id="content_dual" class="rb">
+  <div id="left"><%= yield  %></div>
+  <div id="right"><%= yield :right%></div>
+</div>
+<% end -%>
+<%= render :file => 'layouts/manage' %>

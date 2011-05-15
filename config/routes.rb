@@ -12,10 +12,8 @@ Mogade::Application.routes.draw do
     match '/session/logout' => 'sessions#logout'
     resource :session, :only => [:new, :create]
     
-    match '/tos' => 'manage#tos'
+    match '/:action', :controller => 'manage'
   end
-  
-  
-  match '/:controller(/:action(/:id))'
-  root :to => 'home#index'
+  match '/manage/:controller(/:action(/:id))', :controller => /manage\/[^\/]+/
+  root :to => 'manage::Manage#index'
 end

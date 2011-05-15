@@ -1,7 +1,13 @@
 class Manage::ManageController < ActionController::Base
   protect_from_forgery
-  layout 'manage'
+  layout 'manage_dual'
   
+  def index
+  end
+  
+  def faq
+    render :layout => 'manage_single'
+  end
   
   def tos
   end
