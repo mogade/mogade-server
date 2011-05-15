@@ -48,7 +48,7 @@ describe Score, 'save overall' do
   def create_high_score(points)
     score_id = Score.overall_collection.insert({:lid => @leaderboard.id, :p => points, :un => @player.username})
 
-    HighScores.create({:leaderboard_id => @leaderboard.id, :unique => @player.unique,
+    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
                 :userkey => @player.unique, :overall_points => points, :overall_id => score_id})
   end
 end

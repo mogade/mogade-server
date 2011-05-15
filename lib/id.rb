@@ -15,4 +15,7 @@ module Id
   def self.expired?(id, days)
     ((Time.now - id.generation_time) / 86400).floor > days
   end
+  def self.secret
+    (0..(rand(15)+20)).map{48.+(rand(74)).chr}.join
+  end
 end

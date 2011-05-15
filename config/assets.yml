@@ -1,12 +1,13 @@
 ---
 js:
-  all:
+  manage:
     - jquery.tip
     - jquery.validator
+    - jquery.simpleList
     - mogade
 
 css:
-  all:
+  main:
     - reset
     - mogade
   manage:

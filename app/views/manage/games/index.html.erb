@@ -1,0 +1,42 @@
+<% content_for :title, 'your games' -%>
+<% content_for :section_title, 'Manage Your Games' -%>
+
+<div class="list" id="game_list">
+<table>
+ <thead>
+   <th>name</th>
+   <th>key</th>
+ </thead>
+ <tbody class="list">
+   <%= render :partial => 'game_row', :collection => @games, :as => :game unless @games.blank?%>
+ </tbody>
+</table>
+<h3>You don't have any games. Why don't you create one?</h3>
+</div>
+
+
+<h3>Add Game</h3>
+<%= form_for :game_input, :url => {:action => 'create' }, :html => {:id => 'add'} do |f| -%>
+  <div class="field">
+    <label for="name">name</label>
+    <input type="text" name="name" id="name" />
+  </div>
+  <div class="buttons">
+    <%= f.submit 'add', {:class => 'button'} %>
+  </div>
+<% end -%>
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+  $('#game_list').simpleList({viewUrl: '<%= ssl_url(url_for :action => 'view') %>'});
+  var rules = <%= validation_of(Game).html_safe%>;	
+  $('#add').validator({rules: rules});
+});
+</script>
+
+<% content_for :right do -%>
+  <h3>What's New</h3>
+  <p>Welcome to Version 2 of mogade. While not much might have seemed to change, we did <a href="http://github.com/mogade/">open source</a> and rewrite most of the mogade.com service.</p>
+<% end -%>

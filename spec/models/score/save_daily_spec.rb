@@ -49,7 +49,7 @@ describe Score, 'save daily' do
     score_id = Score.daily_collection.insert({:lid => @leaderboard.id,
       :dt => @leaderboard.daily_start, :p => points, :un => @player.username})
 
-    HighScores.create({:leaderboard_id => @leaderboard.id, :unique => @player.unique,
+    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
                 :userkey => @player.unique, :daily_points => points, 
                 :daily_dated => @leaderboard.daily_start, :daily_id => score_id})
   end

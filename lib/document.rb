@@ -15,13 +15,6 @@ module Document
       found = collection.find_one(map(selector))
       found.nil? ? nil : self.new(unmap(found))
     end
-    def create(attributes, opts = {})
-      attributes[:_id] = collection.save(map(attributes), opts)
-      self.new(attributes)
-    end
-    def create!(attributes)
-      create(attributes, {:safe => true})
-    end
     def find(selector={}, opts={}, collection = nil)
       raw = opts.delete(:raw) || false
       opts[:transformer] = Proc.new{|data| raw ? unmap(data) : self.new(unmap(data)) }

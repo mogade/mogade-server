@@ -25,3 +25,5 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
   background: -moz-linear-gradient(-90deg, #ccc, #aaa);}
 .links{margin-bottom:15px;}
 .links a{margin-left:110px;display:block;padding:5px;}
+
+.list h3{display:none;margin-bottom:25px;}

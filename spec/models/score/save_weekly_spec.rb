@@ -49,7 +49,7 @@ describe Score, 'save weekly' do
     score_id = Score.weekly_collection.insert({:lid => @leaderboard.id,
       :dt => @leaderboard.weekly_start, :p => points, :un => @player.username})
 
-    HighScores.create({:leaderboard_id => @leaderboard.id, :unique => @player.unique,
+    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
                 :userkey => @player.unique, :weekly_points => points, 
                 :weekly_dated => @leaderboard.weekly_start, :weekly_id => score_id})
   end

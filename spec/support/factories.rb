@@ -3,6 +3,7 @@ require 'factory_girl'
 Factory.define :game do |g|
   g.id Id.from_string('111111111111111111111111')
   g.secret "it's over 9000"
+  g.name "power level?"
 end
 
 Factory.define :leaderboard do |l|
