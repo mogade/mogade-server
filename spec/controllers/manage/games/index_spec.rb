@@ -15,7 +15,7 @@ describe Manage::GamesController, :index do
     get :index
     
     response.should render_template('manage/games/index')
-    assigns[:games].to_a.should == games
+    assigns[:games].should == games
   end
   
 end

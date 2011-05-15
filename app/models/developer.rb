@@ -28,6 +28,9 @@ class Developer
     end
   end
   
+  def owns?(game)
+    !self.game_ids.nil? && self.game_ids.include?(game.id)
+  end
   def created_game!(game)
     self.game_ids = [] if self.game_ids.nil?
     self.game_ids << game.id 

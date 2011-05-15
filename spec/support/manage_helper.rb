@@ -32,4 +32,30 @@ module ManageHelper
       assigns[:current_developer].should == @developer
     end
   end
+  
+  def it_ensures_developer_owns_the_game(verb, action)
+    it "redirects to home if id isn't present" do
+      self.send verb, action
+      response.should redirect_to('/manage/games')
+      flash[:error].should == 'you do not have access to perform that action'
+    end
+    it "redirect to home if developer doesn't own the game" do
+      game = Factory.create(:game, {:id => Id.new})
+      self.send verb, action, {:id => game.id}
+      response.should redirect_to('/manage/games')
+      flash[:error].should == 'you do not have access to perform that action'
+    end
+    it "loads the game by id" do
+      game = Factory.create(:game, {:id => Id.new})
+      @developer.game_ids = [game.id]
+      self.send verb, action, {:id => game.id}
+      assigns[:game].should == game
+    end
+    it "loads the game by game_id" do
+      game = Factory.create(:game, {:id => Id.new})
+      @developer.game_ids = [game.id]
+      self.send verb, action, {:game_id => game.id}
+      assigns[:game].should == game
+    end
+  end
 end

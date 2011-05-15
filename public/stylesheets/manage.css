@@ -16,7 +16,7 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 .field input, .field textarea{border:1px solid #ccc;padding:7px;width:300px;font-size:1.2em;}
 .field input.error{border-color:#f66;}
 .buttons{margin-left:110px;}
-.button{cursor:pointer;border:1px solid #bbb;padding:10px 20px;color:#000;font-weight:bold;margin-right:10px;font-size:1em;
+.button{cursor:pointer;border:1px solid #bbb;padding:6px 20px;color:#000;font-weight:bold;margin-right:10px;font-size:1em;
   background: #e6e6e6;
   background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc));
   background: -moz-linear-gradient(-90deg, #e6e6e6, #ccc);}
@@ -27,3 +27,19 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 .links a{margin-left:110px;display:block;padding:5px;}
 
 .list h3{display:none;margin-bottom:25px;}
+.list table{margin-bottom:25px;}
+.list table{border-collapse:collapse;width:100%;}
+.list th{text-align:left;font-weight:bold;border-bottom:1px solid #ddd;}
+.list td, .list th{padding:10px;}
+.list tr.over{cursor:pointer;background:#eee;}
+
+ul.menu{list-style: none;padding:0;margin:0 0 30px 0}
+ul.menu li{padding:0;margin:0;}
+ul.menu a{display:block;padding:6px;cursor:pointer;border-bottom:1px solid #ddd;}
+ul.menu a.active{font-weight:bold;}
+ul.menu a:hover{background:#cfeeee;}
+
+
+.info{margin-bottom:20px;}
+.info h4{margin:0;color:#666;}
+.info > div{color:#444;}

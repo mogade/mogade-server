@@ -30,7 +30,7 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
-  $('#game_list').simpleList({viewUrl: '<%= ssl_url(url_for :action => 'view') %>'});
+  $('#game_list').simpleList({viewUrl: '<%= ssl_url('/manage/games') %>'});
   var rules = <%= validation_of(Game).html_safe%>;	
   $('#add').validator({rules: rules});
 });

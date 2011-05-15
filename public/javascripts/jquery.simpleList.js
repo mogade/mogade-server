@@ -19,12 +19,12 @@
           self.setInitialState();
           if (opts.viewUrl) 
           {
-            $tbody.delegate('tr[rel]', 'click', self.rowClicked)
-                .delegate('tr[rel]', 'mouseover', self.rowOver)
-                .delegate('tr[rel]', 'mouseout', self.rowOut);
+            $tbody.delegate('tr[data-id]', 'click', self.rowClicked)
+                .delegate('tr[data-id]', 'mouseover', self.rowOver)
+                .delegate('tr[data-id]', 'mouseout', self.rowOut);
           }
         },
-        rowClicked: function() { top.location = opts.viewUrl + '/' + $(this).attr('rel'); },
+        rowClicked: function() { top.location = opts.viewUrl + '/' + $(this).data('id'); },
         rowOver: function() { $(this).addClass('over'); },
         rowOut: function() { $(this).removeClass('over'); },
         setInitialState: function()

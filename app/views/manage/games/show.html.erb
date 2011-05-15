@@ -1,0 +1,26 @@
+<% content_for :title, 'manage ' + @game.name -%>
+<% content_for :section_title, @game.name + ' .. overview' -%>
+
+<div>
+  <div class="info">
+    <h4>name</h4>
+    <div rel="0"><%= @game.name %></div>
+  </div>
+  <div class="info">
+    <h4>key</h4>
+    <div><%= @game.id %></div>
+  </div>
+  <div class="info">
+    <h4>secret</h4>
+    <div><%= @game.secret %></div>
+  </div>
+  <div style="margin-top:40px"> <!-- that's right-->
+    <a href="#" class="button" id="edit">edit</a>
+    <a href="#" class="button" id="delete">delete</a>
+  </div>
+</div>
+
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu' %>
+<% end -%>

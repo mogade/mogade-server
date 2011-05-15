@@ -2,7 +2,7 @@ class Manage::GamesController < Manage::ManageController
   before_filter :ensure_logged_in
 
   def index
-    @games = Game.find_by_ids(@current_developer.game_ids)
+    @games = Game.find_by_ids(@current_developer.game_ids).to_a
   end
  
   def create
@@ -15,5 +15,6 @@ class Manage::GamesController < Manage::ManageController
   end
   
   def show
+    load_game_as_owner and return if @game == nil
   end
 end

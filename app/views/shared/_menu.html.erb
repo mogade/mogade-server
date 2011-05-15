@@ -1,0 +1,5 @@
+<h3>general settings</h3>
+<ul class="menu">
+  <li><a href="<%= url_for :controller => 'games', :action => 'index' %>">game list</a></li>
+  <li><a href="<%= ssl_url(url_for :controller => 'games', :action => 'show', :id => @game.id) %>">overview</a></li>
+</ul>
