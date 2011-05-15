@@ -28,6 +28,12 @@ class Developer
     end
   end
   
+  def created_game!(game)
+    self.game_ids = [] if self.game_ids.nil?
+    self.game_ids << game.id 
+    save!
+  end
+  
   def reset_password(password)
     self.password = BCrypt::Password.create(password)
     activate!
