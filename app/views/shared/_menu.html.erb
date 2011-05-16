@@ -3,4 +3,5 @@
   <li><a href="<%= url_for(:controller => 'games', :action => 'index') %>">game list</a></li>
   <li><a href="<%= ssl_url(url_for(:controller => 'games', :action => 'show', :id => @game.id))%>">overview</a></li>
   <li><a href="<%= url_for(:controller => 'leaderboards', :action => 'index', :id => @game.id)%>">leaderboards</a></li>
+  <li><a href="<%= url_for(:controller => 'stats', :action => 'index', :id => @game.id)%>">usage statistics</a></li>
 </ul>

@@ -1,0 +1,25 @@
+<% content_for :head do -%>
+<%= include_js_bundle 'stats' %>
+<%= include_css_bundle 'stats' %>
+<% end -%>
+<% content_for :title, @game.name + ' usage statistics' -%>
+<% content_for :section_title,  @game.name + ' .. usage statistics' -%>
+
+<input type="hidden" id="id" value="<%= @game.id%>" />
+<label for="date">date range</label>
+<input type="text" id="date" />
+
+<div id="graph" style="width:675px;height:300px;"></div> 
+<div id="legend"></div>
+
+<table class="list" id="raw">
+  <thead><tr><th>date</th><th>game loads</th><th>unique users</th><th>new users<th></tr></thead>
+  <tbody id="raw"></tobdy>
+</table>
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu'%>
+  <h3>Help</h3>
+  <p><strong>Unique users</strong> are the number of unique users for that day, whereas <strong>new users</strong> are users which are totally new to your game.</p>
+  <p>Note that some platforms keep a &quot;closed&quot; process running in the background. Depending on when you call the log method, this could have an impact on the <strong>game load<strong> statistic.</p>
+<% end -%>

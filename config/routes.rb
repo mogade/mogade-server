@@ -7,14 +7,14 @@ Mogade::Application.routes.draw do
   
   namespace 'manage' do
     match '/accounts/:action/(:key)', :controller => 'accounts'
-    resources :accounts, :only => [:new, :create]
-    
     match '/sessions/logout' => 'sessions#logout'
+    match '/stats/data' => 'stats#data'
+
+    resources :accounts, :only => [:new, :create]
     resources :sessions, :only => [:new, :create]
-    
     resources :games, :only => [:index, :create, :show, :destroy, :update]
-    
     resources :leaderboards, :only => [:index, :create, :destroy, :update]
+    resources :stats, :only => [:index]
       
     match '/:action', :controller => 'manage'
   end

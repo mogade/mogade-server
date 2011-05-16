@@ -13,6 +13,11 @@ js:
     - jquery.editTo
     - jquery.resetForm
     - mogade
+  stats:
+    - excanvas
+    - jquery.dateRange
+    - jquery.flot
+    - statistics
 
 css:
   main:
@@ -21,3 +26,5 @@ css:
   manage:
     - manage
     - dialog
+  stats:
+    - statistics
