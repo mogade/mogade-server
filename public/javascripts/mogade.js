@@ -12,6 +12,6 @@ function do_delete(url)
   $form.append($('<input>', {type: 'hidden', name: '_method', value: 'delete'}));
   $form.append($('<input>', {type: 'hidden', name: 'authenticity_token', value: AUTH_TOKEN}));
   $form.submit();
-  $form.delete();
+  $form.remove();
   return false;
 }

@@ -12,4 +12,19 @@ class Manage::LeaderboardsController < Manage::ManageController
     leaderboard.save! if leaderboard.valid?
     redirect_to :action => 'index', :id => @game.id
   end
+  
+  def destroy
+    return unless load_game_as_owner
+    return unless ensure_leaderboard
+    @leaderboard.destroy
+    set_info("#{@leaderboard.name} was successfully deleted", false)
+    redirect_to :action => 'index', :id => @game.id
+  end
+  
+  private
+  def ensure_leaderboard
+    @leaderboard = Leaderboard.find_by_id(params[:id])
+    return handle_access_denied if @leaderboard.nil? || @leaderboard.game_id != @game.id
+    true
+  end
 end

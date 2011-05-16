@@ -107,16 +107,16 @@ jQuery.fn.center = function()
       var $element = $(this);
       $element.click(function()
       {                
-        $.showConfirm(title, message, onYes);
+        $.showConfirm(title, message, onYes, $(this));
         return false;
       });
     });
   };
 })(jQuery);
 
-jQuery.showConfirm = function(title, message, onYes)
+jQuery.showConfirm = function(title, message, onYes, $element)
 {
-  var $yes = $('<input>').attr({type: 'button', value: 'yes'}).addClass('button r').click(function() { onYes(); $dialog.dialog('close');});
+  var $yes = $('<input>').attr({type: 'button', value: 'yes'}).addClass('button r').click(function() { onYes($element); $dialog.dialog('close');});
   var $no = $('<input>').attr({type: 'button', value: 'no'}).addClass('button r').click(function() { $dialog.dialog('close');});
   var $buttons = $('<div>').addClass('buttons').append($yes).append($no);
   var $content = $('<p>').text(message).append($buttons);                

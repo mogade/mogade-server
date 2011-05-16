@@ -1,12 +1,16 @@
 module ManageHelper
 
+  def self.game_id
+    @@game_id ||= Id.new
+  end
+  
   def setup      
     before :each do
       Rails.cache.clear
       @developer = Factory.create(:developer)
       session[:dev_id] = @developer.id
       
-      @game = Factory.create(:game, {:id => Id.new})
+      @game = Factory.create(:game, {:id => ManageHelper.game_id})
       @developer.game_ids = [@game.id]
       
       Developer.stub!(:find_by_id).with(@developer.id).and_return(@developer)
@@ -39,7 +43,7 @@ module ManageHelper
     end
   end
   
-  def it_ensures_developer_owns_the_game(verb, action)
+  def it_ensures_developer_owns_the_game(verb, action, block = nil)
     it "redirects to home if id isn't present" do
       self.send verb, action
       response.should redirect_to('/manage/games')
@@ -53,11 +57,13 @@ module ManageHelper
       flash[:error].should == 'you do not have access to perform that action'
     end
     it "loads the game by id" do
-      self.send verb, action, {:id => @game.id}
+      params = block.nil? ? {} : block.call
+      self.send verb, action, params.merge({:id => @game.id})
       assigns[:game].should == @game
     end
     it "loads the game by game_id" do
-      self.send verb, action, {:game_id => @game.id}
+      params = block.nil? ? {} : block.call
+      self.send verb, action, params.merge({:game_id => @game.id})
       assigns[:game].should == @game
     end
   end

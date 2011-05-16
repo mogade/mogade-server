@@ -37,4 +37,9 @@ class Leaderboard
     time = now.at_beginning_of_week + -3600 * offset
     return time > now ? time - 604800 : time
   end
+  
+  def destroy
+    Store.redis.sadd('cleanup:leaderboards', self.id)
+    Leaderboard.remove({:_id => self.id})
+  end
 end
