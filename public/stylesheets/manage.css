@@ -18,6 +18,7 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 .field label.error{display:block;position:absolute;top:27px;left:100px;width:400px;color:#f66;}
 .field input, .field textarea{border:1px solid #ccc;padding:7px;width:300px;font-size:1.2em;}
 .field input.error{border-color:#f66;}
+.field select{margin-top:8px;}
 .buttons{margin-left:110px;}
 .button{cursor:pointer;border:1px solid #bbb;padding:6px 20px;color:#000;font-weight:bold;margin-right:10px;font-size:1em;
   background: #e6e6e6;

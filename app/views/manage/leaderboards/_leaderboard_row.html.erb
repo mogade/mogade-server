@@ -1,0 +1,6 @@
+<tr data-id="<%=leaderboard.id%>">
+  <td><%= leaderboard.name %></td>
+  <td><%= leaderboard.id %></td>
+  <td rel="<%=leaderboard.type%>"><%= LeaderboardType::nice(leaderboard.type, true) %></td>
+  <td class="c"><%= leaderboard.offset || 0 %></td>
+</tr>

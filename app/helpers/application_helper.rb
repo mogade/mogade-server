@@ -8,6 +8,10 @@ module ApplicationHelper
     files = Rails.env.development? ? Asset.css(name) : name
     stylesheet_link_tag files
   end
+  
+  def enum_drop_down(name, enum, selected)
+    ("<select name=\"#{name}\">" + options_for_select(enum.local_constants.map {|c| [enum.nice(c), enum.const_get(c)]}, selected) + "</select>").html_safe
+  end
 
   def ssl_url(path)
     return path if request.ssl? || request.local?

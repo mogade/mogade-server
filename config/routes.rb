@@ -13,6 +13,8 @@ Mogade::Application.routes.draw do
     resources :sessions, :only => [:new, :create]
     
     resources :games, :only => [:index, :create, :show, :destroy, :update]
+    
+    resources :leaderboards, :only => [:index, :create]
       
     match '/:action', :controller => 'manage'
   end

@@ -8,6 +8,8 @@ js:
     - jquery.inlineEdit
     - jquery.message
     - genericResponseHandler
+    - jquery.caret
+    - jquery.numeric
     - mogade
 
 css:

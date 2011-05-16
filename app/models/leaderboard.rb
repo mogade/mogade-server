@@ -1,6 +1,18 @@
 class Leaderboard
   include Document
-  mongo_accessor({:game_id => :gid, :name => :name, :offset => :offset, :type => :t})
+  include ActiveModel::Validations
+  mongo_accessor({:game_id => :gid, :name => :n, :offset => :o, :type => :t})
+  
+  validates_length_of :name, :minimum => 1, :maximum => 30, :allow_blank => false, :message => 'please enter a name'
+  
+  class << self
+    def find_for_game(game)
+      find({:game_id => game.id}, {:sort => [:name, :ascending]}).to_a
+    end
+    def create(name, offset, type, game)
+      Leaderboard.new({:name => name, :offset => offset, :type => type, :game_id => game.id})
+    end
+  end
   
   def score_is_better?(new_score, old_score)
     type == LeaderboardType::LowToHigh ? new_score < old_score : new_score > old_score

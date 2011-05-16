@@ -11,7 +11,6 @@
       var $table = $container.children('table')
       var $tbody = $table.find('tbody');
       var $empty = $container.children('h3')
-      var $count = $('#' + this.id + '_count');
       var self =
       {   
         initialize: function()
@@ -33,20 +32,17 @@
           if (rows == 0)
           {
             $empty.show();
-            $count.hide();
-            $table.find('thead').hide();
+            $table.hide();
           }
           else
           {
-            $count.find('.count').text(rows);
             $empty.hide();
-            $count.show();
-            $table.find('thead').show();           
+            $table.show();
           }
         }
       };
       this.simpleList = self;
-      self.initialize();      
+      self.initialize();
     });
   };
 })(jQuery);

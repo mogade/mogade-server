@@ -40,7 +40,7 @@ module Document
       return {} if raw.blank? || !raw.is_a?(Hash)
       hash = {}
       raw.each do |key, value|
-        real_key = map_key(key)
+        real_key = map_key(key.to_sym)
         hash[real_key] = value.is_a?(Hash) ? map(value) : value
       end
       return hash

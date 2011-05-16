@@ -1,0 +1,57 @@
+<% content_for :title, @game.name + ' leaderboards' -%>
+<% content_for :section_title,  @game.name + ' .. leaderboards' -%>
+
+<div class="list" id="leaderboard_list">
+  <table>
+   <thead>
+     <th>name</th>
+     <th>key</th>
+     <th>type</th>
+     <th>offset</th>
+   </thead>
+   <tbody>
+     <%= render :partial => 'leaderboard_row', :collection => @leaderboards, :as => :leaderboard unless @leaderboards.blank?-%>
+   </tbody>
+  </table>
+  <h3>You don't have any leaderboards. That's kinda boring.</h3>
+</div>
+
+<h3>Add Leaderboard</h3>
+<%= form_for :leaderboard, :url => {:action => 'create' }, :html => {:id => 'add'} do |f| -%>
+  <input type="hidden" name="game_id" value="<%=@game.id%>" />
+  <div class="field">
+    <label for="name">name</label>
+    <input type="text" name="name" id="name" />
+  </div>
+  <div class="field">
+    <label for="offset">utc offset</label>
+    <input type="text" name="offset" id="offset" class="numeric" maxlength="2" />
+    <label for="offset" class="tip">use 0 if you aren't sure</label>
+  </div>  
+  <div class="field">
+    <label for="type">type</label>
+    <%= enum_drop_down('type', LeaderboardType, LeaderboardType::HighToLow)%>
+  </div>
+  <div class="buttons">
+    <%= f.submit 'add', {:class => 'button'} %>
+  </div>
+<% end -%>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+  $('#leaderboard_list').simpleList({});
+  var rules = <%= validation_of(Leaderboard).html_safe%>;	
+  $('#add').validator({rules: rules});
+
+});
+</script>
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu', :locals => {:show_leaderboad => true} %>
+  <h3>Tips</h3>
+  <p>Every leaderboard will automatically have a daily, weekly and overall scope.</p>
+  <h3>Less is more</h3>
+  <p>While having a number of leaderboards makes sense for some games, your users will likely appreciate if you make things as simple and straightforward as possible.</p>
+<% end -%>
+
