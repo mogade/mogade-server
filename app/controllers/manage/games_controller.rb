@@ -18,10 +18,17 @@ class Manage::GamesController < Manage::ManageController
     return unless load_game_as_owner
   end
   
+  def update
+    return unless load_game_as_owner
+    @game.update!(params[:name])
+    render :json => {:saved => true}
+  end
+  
   def destroy
     return unless load_game_as_owner
     @game.destroy
     set_info("#{@game.name} was successfully deleted", false)
     redirect_to :action => 'index'
   end
+  
 end

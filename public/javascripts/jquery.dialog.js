@@ -108,6 +108,7 @@ jQuery.fn.center = function()
       $element.click(function()
       {                
         $.showConfirm(title, message, onYes);
+        return false;
       });
     });
   };

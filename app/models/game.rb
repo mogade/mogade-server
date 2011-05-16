@@ -16,6 +16,11 @@ class Game
     end
   end
   
+  def update!(name)
+    self.name = name
+    save!
+  end
+  
   def destroy
     Store.redis.sadd('cleanup:games', self.id)
     Game.remove({:_id => self.id})

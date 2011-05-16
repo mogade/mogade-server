@@ -6,7 +6,8 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 #left{float:left;width:680px;}
 #left h2{margin-bottom:20px;}
 #right{float:right;width:220px;}
-#error, #info{text-align:center;padding:10px;}
+#messages{position:relative;}
+#error, #info{text-align:center;padding:10px 0;}
 #error{border:1px solid #a77;background:#fdd;}
 #info{border:1px solid #7a7;background:#dfd;}
 
@@ -27,6 +28,7 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
   background: -moz-linear-gradient(-90deg, #ccc, #aaa);}
 .links{margin-bottom:15px;}
 .links a{margin-left:110px;display:block;padding:5px;}
+.inline{border:1px solid #ccc;padding:2px;}
 
 .list h3{display:none;margin-bottom:25px;}
 .list table{margin-bottom:25px;}

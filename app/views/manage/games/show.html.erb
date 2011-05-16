@@ -1,10 +1,10 @@
 <% content_for :title, 'manage ' + @game.name -%>
 <% content_for :section_title, @game.name + ' .. overview' -%>
 
-<div>
+<div id="editable">
   <div class="info">
     <h4>name</h4>
-    <div rel="0"><%= @game.name %></div>
+    <div data-edit-id="0"><%= @game.name %></div>
   </div>
   <div class="info">
     <h4>key</h4>
@@ -27,6 +27,12 @@ $(document).ready(function()
   {
     return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
   });
+  $('#edit').inlineEdit({ types: ['text'], names: ['name'], saveUrl: '<%= url_for :action => 'update' %>', saved: function()
+  {
+    $.message.info('you game\'s information has been updated');
+    $('h1').text($('div[data-edit-id=0]').text() + ' .. overview');
+  }});
+  
 });
 </script>
 
