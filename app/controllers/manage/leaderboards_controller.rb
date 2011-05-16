@@ -13,6 +13,13 @@ class Manage::LeaderboardsController < Manage::ManageController
     redirect_to :action => 'index', :id => @game.id
   end
   
+  def update
+    return unless load_game_as_owner
+    return unless ensure_leaderboard
+    @leaderboard.update(params[:name], params[:offset].to_i, params[:type].to_i)
+    redirect_to :action => 'index', :id => @game.id
+  end
+  
   def destroy
     return unless load_game_as_owner
     return unless ensure_leaderboard

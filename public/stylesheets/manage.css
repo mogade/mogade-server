@@ -39,6 +39,7 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 .list tr.over{cursor:pointer;background:#eee;}
 .list td.c, .list th.c{text-align:center;}
 .list td.delete{background:url('../images/delete.png') 0 10px no-repeat;width:16px;cursor:pointer;}
+.list td.edit{background:url('../images/edit.png') 0 10px no-repeat;width:16px;cursor:pointer;}
 
 ul.menu{list-style: none;padding:0;margin:0 0 30px 0}
 ul.menu li{padding:0;margin:0;}

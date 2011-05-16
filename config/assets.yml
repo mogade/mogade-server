@@ -10,6 +10,8 @@ js:
     - genericResponseHandler
     - jquery.caret
     - jquery.numeric
+    - jquery.editTo
+    - jquery.resetForm
     - mogade
 
 css:

@@ -20,7 +20,7 @@ class Manage::GamesController < Manage::ManageController
   
   def update
     return unless load_game_as_owner
-    @game.update!(params[:name])
+    @game.update(params[:name])
     render :json => {:saved => true}
   end
   

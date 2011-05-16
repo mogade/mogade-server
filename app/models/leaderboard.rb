@@ -38,6 +38,13 @@ class Leaderboard
     return time > now ? time - 604800 : time
   end
   
+  def update(name, offset, type)
+    self.name = name
+    self.offset = offset
+    self.type = type
+    save!
+  end
+
   def destroy
     Store.redis.sadd('cleanup:leaderboards', self.id)
     Leaderboard.remove({:_id => self.id})

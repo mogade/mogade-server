@@ -16,7 +16,7 @@ class Game
     end
   end
   
-  def update!(name)
+  def update(name)
     self.name = name
     save!
   end
