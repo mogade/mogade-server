@@ -93,4 +93,15 @@ describe HighScores, :has_new_score do
     changed[LeaderboardScope::Weekly].should be_false
     changed[LeaderboardScope::Overall].should be_false
   end
+  
+  it "does not treat equal scores as better" do
+    leaderboard = Factory.build(:leaderboard)
+    Factory.create(:high_scores, {:daily_points => 300, :daily_dated => leaderboard.daily_start, :weekly_points => 300, :weekly_dated => leaderboard.weekly_start, :overall_points => 300, :unique => Factory.build(:player).unique})
+    player = Factory.build(:player)
+    scores = HighScores.load(leaderboard, player)
+    changed = scores.has_new_score(300)
+    changed[LeaderboardScope::Daily].should be_false
+    changed[LeaderboardScope::Weekly].should be_false
+    changed[LeaderboardScope::Overall].should be_false
+  end
 end

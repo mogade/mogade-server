@@ -15,14 +15,14 @@ class Api::ScoresController < Api::ApiController
     else
       payload = Score.get_by_player(@leaderboard, player, records, scope)
     end
-    
     render_payload(payload, params, 300)
   end
 
   def create
     ensure_params(:points) || return
     high_scores = Score.save(@leaderboard, @player, params[:points].to_i, params[:data])
-    
-    render :json => Hash[high_scores.map{|key, value| [key, value ? Rank.get(@leaderboard, @player, [key]) : 0]}]
+    ranks = {}
+    high_scores.each{|key, value| ranks.merge!(value ? Rank.get(@leaderboard, @player, [key]) : {key => 0})}
+    render :json => ranks
   end
 end

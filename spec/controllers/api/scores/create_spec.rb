@@ -32,8 +32,8 @@ describe Api::ScoresController, :create do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
     Score.stub!(:save).and_return({LeaderboardScope::Daily => true, LeaderboardScope::Weekly => true, LeaderboardScope::Overall => false})
-    Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Daily]).and_return(985)
-    Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Weekly]).and_return(455)
+    Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Daily]).and_return({LeaderboardScope::Daily => 985})
+    Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Weekly]).and_return({LeaderboardScope::Weekly => 455})
     
     post :create, ApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
     response.status.should == 200
