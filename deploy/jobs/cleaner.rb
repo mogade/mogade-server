@@ -22,7 +22,7 @@ class Cleaner
     Store['scores_daily'].remove({:dt => {'$lte' => Time.now.utc - 3 * 86400}}, {:multi => true})
     Store['scores_weekly'].remove({:dt => {'$lte' => Time.now.utc - 10 * 86400}}, {:multi => true})
   end  
-  
+    
   private 
   def delete_stale_keys(keys, ttl, pattern)
     keys.each do |key|
