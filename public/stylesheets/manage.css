@@ -30,6 +30,7 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 .links{margin-bottom:15px;}
 .links a{margin-left:110px;display:block;padding:5px;}
 .inline{border:1px solid #ccc;padding:2px;}
+input.short{width:150px;padding:2px 7px;}
 
 .list h3{display:none;margin-bottom:25px;}
 .list table{margin-bottom:25px;}
@@ -46,6 +47,8 @@ ul.menu li{padding:0;margin:0;}
 ul.menu a{display:block;padding:6px;cursor:pointer;border-bottom:1px solid #ddd;}
 ul.menu a.active{font-weight:bold;}
 ul.menu a:hover{background:#cfeeee;}
+ul.menu ul li{border-bottom:1px solid #ddd;}
+ul.menu ul a{margin-left:10px;border-bottom:none;}
 
 
 .info{margin-bottom:20px;}

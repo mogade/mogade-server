@@ -1,0 +1,56 @@
+<% content_for :head do -%>
+<%= include_js_bundle 'scores' %>
+<% end -%>
+<% content_for :title, @game.name + ' score management' -%>
+<% content_for :section_title,  @game.name + ' .. score management' -%>
+
+ <% if @leaderboards.blank?%><h3>You should probably add a leaderboard first<h3><% else -%>
+  <h3>Find Scores to Delete</h3>
+  <%= form_for :ScoreDeleteFilter, :url => {:action => 'scores_count' } do |f| -%>
+    <input type="hidden" name="game_id" value="<%=@game.id%>" />
+    <div class="field">
+      <label for="id">leaderboard</label>
+      <select name="id" id="id">
+        <% @leaderboards.each do |leaderboard| -%>
+        <option value="<%=leaderboard.id%>"><%=leaderboard.name%> (<%=leaderboard.id%>)</option>
+        <% end -%>
+      </select>
+    </div>
+    <div class="field">
+      <label for="scope">scope</label>
+      <select name="scope" id="scope">
+        <option value="1">Daily</option>
+        <option value="2">Weekly</option>
+        <option value="3">Overall</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>where</label>
+      <select name="filter" id="filter">
+        <option value="1">Username</option>
+        <option value="2">Points</option>
+      </select>
+      <select name="operator" id="operator" style="width:175px">
+        <option value="1">is less than to</option>
+        <option value="2">is less than or equal to</option>
+        <option value="3" selected="selected">equals</option>
+        <option value="4">is greater than or equals to</option>
+        <option value="5">is greater than to</option>
+      </select>
+      <input type="text" name="value" id="value" class="short"/>
+    </div>
+    <div class="buttons">
+      <%= f.submit 'find', {:class => 'button'} %>
+    </div>
+  <% end -%>
+<% end -%>
+
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu', :locals => {:show_leaderboad => true} %>
+  <h3>Scores</h3>
+  <p>Use this page to remove scores from your leaderboards</p>
+  <p>This can be useful while developing, but also to remove suspicious scores.</p>
+  <p>Do be careful, once you've confirmed, the scores are zapped out of existence</p>
+<% end -%>
+

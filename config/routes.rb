@@ -9,6 +9,7 @@ Mogade::Application.routes.draw do
     match '/accounts/:action/(:key)', :controller => 'accounts'
     match '/sessions/logout' => 'sessions#logout'
     match '/stats/data' => 'stats#data'
+    match '/stats/scores' => 'leaderboards#scores'
 
     resources :accounts, :only => [:new, :create]
     resources :sessions, :only => [:new, :create]

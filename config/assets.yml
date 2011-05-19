@@ -18,6 +18,8 @@ js:
     - jquery.dateRange
     - jquery.flot
     - statistics
+  scores:
+    - scores
 
 css:
   main:

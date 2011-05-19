@@ -2,6 +2,10 @@
 {
   $.fn.numeric = function(command) 
   {
+    if (command == 'unload')
+    {
+      return this.each(function() { if (this.numeric) { this.numeric.unload(); } });
+    }
     return this.each(function() 
     {
       if (this.numeric) { return false; }
