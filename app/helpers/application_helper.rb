@@ -9,8 +9,9 @@ module ApplicationHelper
     stylesheet_link_tag files
   end
   
-  def enum_drop_down(name, enum, selected)
-    ("<select name=\"#{name}\">" + options_for_select(enum.local_constants.map {|c| [enum.nice(c), enum.const_get(c)]}, selected) + "</select>").html_safe
+  def enum_drop_down(name, enum, selected, *ignore)
+    values = enum.lookup.reject{|pair| ignore.include?(pair[1])}
+    ("<select name=\"#{name}\" id=\"#{name}\">" + options_for_select(values, selected) + "</select>").html_safe
   end
 
   def ssl_url(path)

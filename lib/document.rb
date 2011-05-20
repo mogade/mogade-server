@@ -21,11 +21,13 @@ module Document
       c = collection || self.collection
       c.find(map(selector), map_options(opts))
     end
-    def remove(selector={})
-      collection.remove(map(selector))
+    def remove(selector={}, collection = nil)
+      c = collection || self.collection
+      c.remove(map(selector))
     end
-    def count(selector={})
-      collection.find(map(selector)).count
+    def count(selector={}, collection = nil)
+      c = collection || self.collection
+      c.find(map(selector)).count
     end
     def mongo_accessor(map)
       @map = map

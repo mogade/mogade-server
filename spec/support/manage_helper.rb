@@ -15,7 +15,6 @@ module ManageHelper
       
       Developer.stub!(:find_by_id).with(@developer.id).and_return(@developer)
       Game.stub(:find_by_id).with(@game.id).and_return(@game)
-      
     end
   end
   

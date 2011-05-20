@@ -10,6 +10,9 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 #error, #info{text-align:center;padding:10px 0;}
 #error{border:1px solid #a77;background:#fdd;}
 #info{border:1px solid #7a7;background:#dfd;}
+#confirm, #confirmNone{margin-top:30px;}
+#confirmNone{border:solid #faa;border-width:1px 0;padding:10px;}
+#confirm > .buttons{margin-top:20px;}
 
 /* form stuff */
 .field{margin-bottom:25px;position:relative;}
@@ -49,7 +52,6 @@ ul.menu a.active{font-weight:bold;}
 ul.menu a:hover{background:#cfeeee;}
 ul.menu ul li{border-bottom:1px solid #ddd;}
 ul.menu ul a{margin-left:10px;border-bottom:none;}
-
 
 .info{margin-bottom:20px;}
 .info h4{margin:0;color:#666;}

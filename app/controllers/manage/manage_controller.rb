@@ -30,6 +30,12 @@ class Manage::ManageController < ActionController::Base
     redirect_to url_for :controller => 'sessions', :action => 'new' if @current_developer.nil?
   end
   
+  def ensure_leaderboard
+    @leaderboard = Leaderboard.find_by_id(params[:id])
+    return handle_access_denied if @leaderboard.nil? || @leaderboard.game_id != @game.id
+    true
+  end
+  
   def load_developer
     return @current_developer if @current_developer != nil
     @current_developer = Developer.find_by_id(session[:dev_id]) if is_logged_in? 
