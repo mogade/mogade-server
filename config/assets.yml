@@ -19,7 +19,7 @@ js:
     - jquery.flot
     - statistics
   scores:
-    - scores
+    - scores_index
 
 css:
   main:
