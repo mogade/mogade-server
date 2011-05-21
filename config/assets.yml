@@ -1,6 +1,6 @@
 ---
 js:
-  manage:
+  m:
     - jquery.tip
     - jquery.validator
     - jquery.simpleList
@@ -18,14 +18,14 @@ js:
     - jquery.dateRange
     - jquery.flot
     - statistics
-  scores:
-    - scores_index
+  s:
+    - scores
 
 css:
   main:
     - reset
     - mogade
-  manage:
+  m:
     - manage
     - dialog
   stats:
