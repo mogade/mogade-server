@@ -1,7 +1,7 @@
 require 'zlib'
 
 class CssBuster  
-  @@styleSheets = ['all']
+  @@styleSheets = ['main', 'm', 'stats']
   
   def initialize(root)
     @cssPath = root + '/stylesheets/'
