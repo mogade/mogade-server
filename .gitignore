@@ -1,4 +1,6 @@
 .bundle
 log/*.log
 config/settings.yml
+Capfile
+deploy/deploy.rb
 tmp/
