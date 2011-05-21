@@ -1,5 +1,7 @@
 class Manage::GamesController < Manage::ManageController
   before_filter :ensure_logged_in
+  skip_before_filter :ensure_not_https, :only => [:show, :update]
+  before_filter :ensure_https, :only => [:show, :update]
 
   def index
     @games = Game.find_by_ids(@current_developer.game_ids).to_a

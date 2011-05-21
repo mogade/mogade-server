@@ -1,7 +1,5 @@
 class Manage::ManageController < ApplicationController
-
   layout 'manage_dual'
-
   
   def faq
     render :layout => 'manage_single'

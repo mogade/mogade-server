@@ -1,8 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :load_developer
+  before_filter :load_developer,  :ensure_not_https
   
   private
+  def ensure_not_https
+    redirect_to :protocol => 'http://' if request.ssl?
+  end
+  def ensure_https
+    redirect_to :protocol => 'https://' unless request.ssl? || request.local?
+  end
+
   def load_developer
     return @current_developer if @current_developer != nil
     @current_developer = Developer.find_by_id(session[:dev_id]) if is_logged_in? 

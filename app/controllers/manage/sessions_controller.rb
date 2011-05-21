@@ -1,5 +1,7 @@
 class Manage::SessionsController < Manage::ManageController
-  
+  skip_before_filter :ensure_not_https
+  before_filter :ensure_https, :except => [:logout]
+    
   def new
   end
   
