@@ -1,0 +1,26 @@
+<% content_for :title, 'helping you build great games' -%>
+<% content_for :head do %><%= include_css_bundle 'h' %><% end -%>
+
+<% content_for :content do -%>
+<div id="homeWrap" class="r">
+  <div id="home">  
+    <%=image_tag('catch.png', {:size => '457x24', :alt=>'Free Solutions for Casual Game Developers'})%>
+    <p>Mogade offers a free and simple to use leaderboard and achievement services for mobile game developers. Manage your game online and integrate our open source libraries in your code, its that easy. Focus on your game, let us worry about the other stuff.</p>
+    <p><a href="/manage/faq">Read our FAQ to learn more</a></p>
+    <div class="steps">
+      <div><a href="/manage/sessions/new"><%=image_tag('account.png', {:size => '59x60', :alt => 'account'})%>sign into your account</a></div>
+      <div><a href="http://github.com/mogade/"><%=image_tag('download.png', {:size => '59x60', :alt => 'download'})%>download our library</a></div>
+      <div><a href="/manage/api"><%=image_tag('code.png', {:size => '59x60', :alt => 'code'})%>integrate the code</a></div>
+      <div><a href="/manage/games"><%= image_tag('configure.png', {:size => '59x60', :alt => 'configure'})%>configure your game</a></div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var $steps = $('#home .steps div');
+  $steps.filter(':first').css('border-left', 'none');
+  $steps.filter(':last').css('border-right', 'none');
+});
+</script>
+<% end -%>

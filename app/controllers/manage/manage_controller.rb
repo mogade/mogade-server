@@ -1,6 +1,5 @@
-class Manage::ManageController < ActionController::Base
-  protect_from_forgery
-  before_filter :load_developer
+class Manage::ManageController < ApplicationController
+
   layout 'manage_dual'
 
   
@@ -34,15 +33,6 @@ class Manage::ManageController < ActionController::Base
     @leaderboard = Leaderboard.find_by_id(params[:id])
     return handle_access_denied if @leaderboard.nil? || @leaderboard.game_id != @game.id
     true
-  end
-  
-  def load_developer
-    return @current_developer if @current_developer != nil
-    @current_developer = Developer.find_by_id(session[:dev_id]) if is_logged_in? 
-  end
-
-  def is_logged_in?
-    session[:dev_id] != nil
   end
 
   def load_game_as_owner

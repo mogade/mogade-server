@@ -21,5 +21,5 @@ Mogade::Application.routes.draw do
     match '/:action', :controller => 'manage'
   end
   match '/manage/:controller(/:action(/:id))', :controller => /manage\/[^\/]+/
-  root :to => 'manage::Manage#index'
+  root :to => 'home#index'
 end

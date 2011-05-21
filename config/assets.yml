@@ -28,5 +28,7 @@ css:
   m:
     - manage
     - dialog
+  h:
+    - home
   stats:
     - statistics
