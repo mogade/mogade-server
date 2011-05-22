@@ -26,6 +26,6 @@ class Achievement
   
   def destroy
     Achievement.remove({:_id => self.id})
-    #todo delete earned achievements
+    EarnedAchievement.remove({:achievement_id => self.id})
   end
 end
