@@ -1,20 +1,11 @@
 class Api::AchievementsController < Api::ApiController
-  before_filter :ensure_context, :only => :create
+  before_filter :ensure_context
   before_filter :ensure_signed, :only => :create
   before_filter :ensure_player
   before_filter :ensure_achievement, :only => :create
   
   def index
-    records = params_to_i(:records, 10)
-    scope = params_to_i(:scope, LeaderboardScope::Daily)
-    
-    player = load_player
-    if player.nil?
-      payload = Score.get_by_page(@leaderboard, params_to_i(:page, 1), records, scope)
-    else
-      payload = Score.get_by_player(@leaderboard, player, records, scope)
-    end
-    render_payload(payload, params, 300)
+    render :json => EarnedAchievement.earned_by_player(@game, @player)
   end
 
   def create
