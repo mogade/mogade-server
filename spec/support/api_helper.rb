@@ -154,4 +154,44 @@ module ApiHelper
       json['error'].should == 'username and userkey are both required, and username must be 30 or less characters'
     end
   end
+  
+  def it_ensures_a_valid_achievement(verb, action, block = nil)
+    it "renders an error if the aid is missing" do      
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params)
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'missing or invalid aid (achievement id) parameter'
+    end
+    it "renders an error if the aid is invalid" do
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:aid => 'invalid'}))
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == 'missing or invalid aid (achievement id) parameter'
+    end
+    it "renders an error if the aid doesn't exist" do
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:aid => Id.new}))
+      response.status.should == 400
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == "id doesn't belong to an achievement"
+    end
+    it "loads a valid achievement into the context" do
+      achievement = Factory.create(:achievement)
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:aid => achievement.id}))
+      assigns[:achievement].should == achievement
+    end
+  end
+  
+  def it_ensures_achievement_belongs_to_game(verb, action, block = nil)
+    it "renders an error if the achievement's game id isn't correct" do
+      achievement = Factory.create(:achievement, {:game_id => Id.new})
+      params = block.nil? ? {} : block.call
+      self.send verb, action, ApiHelper.signed_params(@game, params.merge({:aid => achievement.id}))
+      json = ActiveSupport::JSON.decode(response.body)
+      json['error'].should == "achievement does not belong to this game"
+    end
+  end
 end

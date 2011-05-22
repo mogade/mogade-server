@@ -10,3 +10,4 @@ Score.overall_collection.ensure_index([['lid', Mongo::ASCENDING], ['p', Mongo::D
 HighScores.collection.ensure_index([['lid', Mongo::ASCENDING], ['u', Mongo::ASCENDING]], {:unique => true})
 Developer.collection.ensure_index([['e', Mongo::ASCENDING]], {:unique => true})
 Developer.collection.ensure_index([['a', Mongo::ASCENDING]], {:unique => true})
+EarnedAchievement.collection.ensure_index([['aid', Mongo::ASCENDING], ['u', Mongo::ASCENDING]], {:unique => true})
