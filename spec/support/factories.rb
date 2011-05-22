@@ -49,3 +49,10 @@ Factory.define :developer do |d|
   d.action 'the_action'
   d.game_ids {[]}
 end
+
+Factory.define :achievement do |a|
+  a.name 'My achievement has a first name'
+  a.description 'Its h-o-m-e-r'
+  a.points 200
+  a.game_id Id.from_string('111111111111111111111111')
+end
