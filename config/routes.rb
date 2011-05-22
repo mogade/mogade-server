@@ -15,6 +15,7 @@ Mogade::Application.routes.draw do
     resources :sessions, :only => [:new, :create]
     resources :games, :only => [:index, :create, :show, :destroy, :update]
     resources :leaderboards, :only => [:index, :create, :destroy, :update]
+    resources :achievements, :only => [:index, :create, :destroy, :update]
     resources :stats, :only => [:index]
     resources :scores, :only => [:index, :destroy]
       

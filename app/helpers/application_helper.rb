@@ -50,6 +50,8 @@ module ApplicationHelper
     rule << {:min => options[:minimum]} if options.has_key?(:minimum)
     rule << {:max => options[:maximum]} if options.has_key?(:maximum)
     rule << {:regex => options[:with].source} if options.has_key?(:with)
+    rule << {:digits => true} if options.has_key?(:only_integer)
+    rule << {:binc => [options[:in].begin, options[:in].end]} if options.has_key?(:in)
     rule << options[:message]
   end
 end
