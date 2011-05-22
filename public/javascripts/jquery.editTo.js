@@ -24,12 +24,9 @@
           $row = $(this).parent();
           for(var key in opts.map)
           {
-            var $cell = $row.children(':eq(' + key + ')');
+            var value = self.getValue($row, key);
             var $field = $('#' + opts.map[key]);
-            
-            if ($field.is('select')) { self.setSelect($field, $cell.attr('rel')); }
-            else { $field.val($cell.text()); }
-            
+            $field.val(value);
             if (isFirst){ $field.focus(); isFirst = false; }
           }
           self.swapTitle(/Add/, 'Edit');
@@ -38,6 +35,14 @@
           {
             $to.find('.buttons').append($('<input type="button" class="button r reset" value="cancel" />'));
           }
+        },
+        getValue: function($row, key)
+        {
+          if (key.match(/^data\-/))
+          {
+            return $row.attr(key);
+          } 
+          return $row.children(':eq(' + key + ')').text();
         },
         setSelect: function($field, value)
         {

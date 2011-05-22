@@ -44,7 +44,7 @@
 $(document).ready(function()
 {
   $('#achievement_list').simpleList({})
-    .editTo({ to: '#add', map: {0: 'name', 1: 'points', 3: 'offset'}, url: '<%= url_for :action => 'create' %>' })
+    .editTo({ to: '#add', map: {0: 'name', 1: 'points', 'data-desc': 'description'}, url: '<%= url_for :action => 'create' %>' })
     .find('td.delete').confirm('Delete this achievement?', 'This achievement will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/achievements/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
   var rules = <%= validation_of(Achievement).html_safe%>;	
   $('#add').validator({rules: rules});

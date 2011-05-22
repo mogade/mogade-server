@@ -17,6 +17,13 @@ class Achievement
     end
   end
   
+  def update(name, description, points)
+    self.name = name
+    self.description = description
+    self.points = points
+    save!
+  end
+  
   def destroy
     Achievement.remove({:_id => self.id})
     #todo delete earned achievements
