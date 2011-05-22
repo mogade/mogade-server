@@ -4,15 +4,15 @@ class ApplicationController < ActionController::Base
   
   private
   def ensure_not_https
-    redirect_to :protocol => 'http://' if request.ssl?
+    redirect_to :protocol => 'http://' if request.ssl? && Rails.env == 'production'
   end
   def ensure_https
-    redirect_to :protocol => 'https://' unless request.ssl? || request.local?
+    redirect_to :protocol => 'https://' unless request.ssl? || request.local? || Rails.env != 'production'
   end
 
   def load_developer
     return @current_developer if @current_developer != nil
-    @current_developer = Developer.find_by_id(session[:dev_id]) if is_logged_in? 
+    @current_developer = Developer.find_by_id(session[:dev_id]) if is_logged_in?
   end
 
   def is_logged_in?

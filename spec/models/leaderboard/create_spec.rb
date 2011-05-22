@@ -7,6 +7,6 @@ describe Leaderboard, :create do
     leaderboard.name.should == 'into the sand'
     leaderboard.offset.should == -3
     leaderboard.type.should == LeaderboardType::LowToHigh
-    leaderboard.game_id.should = game.id
+    leaderboard.game_id.should == game.id
   end
 end
