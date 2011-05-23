@@ -1,9 +1,21 @@
 Mogade::Application.routes.draw do  
   namespace 'api' do
-    resources :scores, :only => [:index, :create]
-    resources :achievements, :only => [:index, :create]
-    resources :ranks, :only => [:index]
-    resources :stats, :only => [:create]
+    namespace 'gamma' do
+      resources :scores, :only => [:index, :create]
+      resources :achievements, :only => [:index, :create]
+      resources :ranks, :only => [:index]
+      resources :stats, :only => [:create]
+    end
+  
+    #v1 crap
+    match '/scores' => 'legacy#save_score', :via => :put
+    match '/scores/yesterdays_rank' => 'legacy#yesterdays_rank', :via => :post
+    match '/scores/yesterdays_leaders' => 'legacy#yesterdays_leaders', :via => :post
+    match '/conf/version' => 'legacy#version', :via => :post
+    match '/conf/my' => 'legacy#player_configuration', :via => :post
+    match '/conf' => 'legacy#game_configuration', :via => :post
+    match '/logging/error' => 'legacy#log_error', :via => :put
+    match '/analytics/start' => 'legacy#log_start', :via => :put
   end
   
   namespace 'manage' do

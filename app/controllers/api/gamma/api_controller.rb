@@ -1,11 +1,6 @@
-class Api::ApiController < ActionController::Base
-  before_filter :ensure_version
-  
+class Api::Gamma::ApiController < ActionController::Base
+
   private
-  def ensure_version
-    @version = params[:v].to_i
-    return error('unknown version') unless @version == 2
-  end
   def ensure_context
     return error('the key is not valid') if !Id.valid?(params[:key])
     

@@ -1,10 +1,9 @@
 require 'spec_helper'
 
-describe Api::ScoresController, :create do
-  extend ApiHelper
+describe Api::Gamma::ScoresController, :create do
+  extend GammaApiHelper
   
   setup
-  it_ensures_a_valid_version :post, :create
   it_ensures_a_valid_context :post, :create
   it_ensures_a_signed_request :post, :create
   it_ensures_a_valid_player :post, :create
@@ -14,7 +13,7 @@ describe Api::ScoresController, :create do
   it "renders an error if points are missing" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    post :create, ApiHelper.signed_params(@game, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
+    post :create, GammaApiHelper.signed_params(@game, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
     response.status.should == 400
     json = ActiveSupport::JSON.decode(response.body)
     json['error'].should == 'missing required points value'
@@ -24,7 +23,7 @@ describe Api::ScoresController, :create do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
     Score.should_receive(:save).with(leaderboard, player, 323, 'dta').and_return({})
-    post :create, ApiHelper.signed_params(@game, {:points => '323', :data => 'dta', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
+    post :create, GammaApiHelper.signed_params(@game, {:points => '323', :data => 'dta', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
   end
   
   
@@ -35,7 +34,7 @@ describe Api::ScoresController, :create do
     Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Daily]).and_return({LeaderboardScope::Daily => 985})
     Rank.should_receive(:get).with(leaderboard, player, [LeaderboardScope::Weekly]).and_return({LeaderboardScope::Weekly => 455})
     
-    post :create, ApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
+    post :create, GammaApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
     json[LeaderboardScope::Daily.to_s].should == 985

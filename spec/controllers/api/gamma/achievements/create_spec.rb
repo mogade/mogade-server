@@ -1,10 +1,9 @@
 require 'spec_helper'
 
-describe Api::AchievementsController, :create do
-  extend ApiHelper
+describe Api::Gamma::AchievementsController, :create do
+  extend GammaApiHelper
   
   setup
-  it_ensures_a_valid_version :post, :create
   it_ensures_a_valid_context :post, :create
   it_ensures_a_signed_request :post, :create
   it_ensures_a_valid_player :post, :create
@@ -15,7 +14,7 @@ describe Api::AchievementsController, :create do
     achievement = Factory.create(:achievement)
     player = Factory.build(:player)
     EarnedAchievement.should_receive(:create).with(achievement, player).and_return({})
-    post :create, ApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
+    post :create, GammaApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
   end
   
   
@@ -23,7 +22,7 @@ describe Api::AchievementsController, :create do
     achievement = Factory.create(:achievement, {:points => 123, :id => Id.new})
     player = Factory.build(:player)
     EarnedAchievement.stub!(:create).with(achievement, player).and_return({})
-    post :create, ApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
+    post :create, GammaApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
     
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
@@ -36,7 +35,7 @@ describe Api::AchievementsController, :create do
     player = Factory.build(:player)
     
     EarnedAchievement.stub!(:create).with(achievement, player).and_return(nil)
-    post :create, ApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
+    post :create, GammaApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
     
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)

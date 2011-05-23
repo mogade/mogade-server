@@ -1,4 +1,4 @@
-class Api::StatsController < Api::ApiController
+class Api::Gamma::StatsController < Api::Gamma::ApiController
   before_filter :ensure_context, :only => :create
   before_filter :ensure_signed, :only => :create
   

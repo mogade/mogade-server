@@ -1,4 +1,4 @@
-class Api::AchievementsController < Api::ApiController
+class Api::Gamma::AchievementsController < Api::Gamma::ApiController
   before_filter :ensure_context
   before_filter :ensure_signed, :only => :create
   before_filter :ensure_player

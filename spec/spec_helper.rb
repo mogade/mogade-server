@@ -16,6 +16,7 @@ end
 Spork.each_run do
 end
 RSpec.configure do |config|
+  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.before(:each) do
     Store.mongo_collections.each do |collection|
       unless collection.name.match(/^system\./)

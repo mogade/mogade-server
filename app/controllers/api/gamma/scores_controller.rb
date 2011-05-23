@@ -1,4 +1,4 @@
-class Api::ScoresController < Api::ApiController
+class Api::Gamma::ScoresController < Api::Gamma::ApiController
   before_filter :ensure_context, :only => :create
   before_filter :ensure_signed, :only => :create
   before_filter :ensure_player, :only => :create
@@ -19,7 +19,7 @@ class Api::ScoresController < Api::ApiController
   end
 
   def create
-    ensure_params(:points) || return
+    return unless ensure_params(:points)
     high_scores = Score.save(@leaderboard, @player, params[:points].to_i, params[:data])
     ranks = {}
     high_scores.each{|key, value| ranks.merge!(value ? Rank.get(@leaderboard, @player, [key]) : {key => 0})}

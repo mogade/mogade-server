@@ -1,4 +1,4 @@
-class Api::RanksController < Api::ApiController
+class Api::Gamma::RanksController < Api::Gamma::ApiController
   before_filter :ensure_player
   before_filter :ensure_leaderboard 
   
