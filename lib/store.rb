@@ -1,6 +1,5 @@
 require 'redis'
 require 'mongo'
-require 'mongo_extension'
 require 'settings'
 
 module Store  
