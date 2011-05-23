@@ -5,7 +5,7 @@ class Api::AchievementsController < Api::ApiController
   before_filter :ensure_achievement, :only => :create
   
   def index
-    render :json => EarnedAchievement.earned_by_player(@game, @player)
+    render :json => EarnedAchievement.earned_by_player(@game, @player).map{|a| a.to_s}
   end
 
   def create

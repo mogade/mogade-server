@@ -16,10 +16,8 @@ describe Api::AchievementsController, :index do
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
     json.length.should == 2
-    json[0].should == 1
-    json[1].should == 2
+    json[0].should == "1"
+    json[1].should == "2"
   end
-  
-  
   
 end
