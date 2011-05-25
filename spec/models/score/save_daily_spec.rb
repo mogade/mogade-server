@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Score, 'save daily' do
+  before(:each) do
+    @now = Time.now
+    Time.stub!(:now).and_return(@now)
+  end
+
   it "saves a new daily score if the player doesn't have a score for today" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
@@ -42,12 +47,12 @@ describe Score, 'save daily' do
   
   
   def score_should_exist(points)
-    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :ss => @leaderboard.daily_stamp}
+    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :ss => @leaderboard.daily_stamp, :dt => @now}
     Score.daily_collection.find(selector).count.should == 1
   end
   def create_high_score(points)
     score_id = Score.daily_collection.insert({:lid => @leaderboard.id,
-      :ss => @leaderboard.daily_stamp, :p => points, :un => @player.username})
+      :ss => @leaderboard.daily_stamp, :p => points, :un => @player.username, :dt => @now})
 
     Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
                 :userkey => @player.unique, :daily_points => points, 

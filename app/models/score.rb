@@ -1,11 +1,11 @@
 class Score
   include Document
-  mongo_accessor({:leaderboard_id => :lid, :username => :un, :points => :p, :data => :d, :scope_stamp => :ss})
+  mongo_accessor({:leaderboard_id => :lid, :username => :un, :points => :p, :data => :d, :scope_stamp => :ss, :dated => :dt})
 
   class << self
     def save(leaderboard, player, points, data = nil)
       high_scores = player.high_scores(leaderboard)
-      document = {:lid => leaderboard.id, :un => player.username[0..19], :p => points}
+      document = {:lid => leaderboard.id, :un => player.username[0..19], :p => points, :dt => Time.now.utc}
       document[:d] = data[0..49] unless data.nil?
       
       if leaderboard.score_is_better?(points, high_scores.daily)
@@ -27,7 +27,7 @@ class Score
     
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
-      options = {:fields => {:points => 1, :username => 1, :data => 1, :_id => 0}, :sort => [:points, leaderboard.sort], :skip => offset, :limit => records, :raw => true}
+      options = {:fields => {:points => 1, :username => 1, :data => 1, :dated => 1, :_id => 0}, :sort => [:points, leaderboard.sort], :skip => offset, :limit => records, :raw => true}
       {:scores => find(conditions, options, Score.collection(scope)), :page => page}
     end
     

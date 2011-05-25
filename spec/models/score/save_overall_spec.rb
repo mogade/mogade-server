@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Score, 'save overall' do
+  before(:each) do
+    @now = Time.now
+    Time.stub!(:now).and_return(@now)
+  end
+  
   it "saves a new weekly score if the player doesn't have a score for this leaderboard" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
@@ -42,11 +47,11 @@ describe Score, 'save overall' do
   
   
   def score_should_exist(points)
-    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points}
+    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :dt => @now}
     Score.overall_collection.find(selector).count.should == 1
   end
   def create_high_score(points)
-    score_id = Score.overall_collection.insert({:lid => @leaderboard.id, :p => points, :un => @player.username})
+    score_id = Score.overall_collection.insert({:lid => @leaderboard.id, :p => points, :un => @player.username, :dt => @now})
 
     Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
                 :userkey => @player.unique, :overall_points => points, :overall_id => score_id})

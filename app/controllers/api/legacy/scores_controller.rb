@@ -7,7 +7,10 @@ class Api::Legacy::ScoresController < Api::Legacy::ApiController
     records = params[:leaderboard][:records].to_i  || 10
     scope = params[:leaderboard][:scope].to_i  || 1
     
-    payload = Score.get_by_page(@leaderboard, page, records, scope)
+    scores = Score.get_by_page(@leaderboard, page, records, scope)
+    
+    payload = {:page => page, :scores => scores[:scores].map{|s| s.merge({:cat => s.delete(:dated)})}}
+    payload[:scores].each{|s| p s}
     render :json => payload.merge({:page => page.to_i})
   end
   
