@@ -42,15 +42,15 @@ describe Score, 'save weekly' do
   
   
   def score_should_exist(points)
-    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :dt => @leaderboard.weekly_start}
+    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :ss => @leaderboard.weekly_stamp}
     Score.weekly_collection.find(selector).count.should == 1
   end
   def create_high_score(points)
     score_id = Score.weekly_collection.insert({:lid => @leaderboard.id,
-      :dt => @leaderboard.weekly_start, :p => points, :un => @player.username})
+      :ss => @leaderboard.weekly_stamp, :p => points, :un => @player.username})
 
     Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
                 :userkey => @player.unique, :weekly_points => points, 
-                :weekly_dated => @leaderboard.weekly_start, :weekly_id => score_id})
+                :weekly_stamp => @leaderboard.weekly_stamp, :weekly_id => score_id})
   end
 end

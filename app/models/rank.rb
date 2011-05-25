@@ -20,13 +20,13 @@ class Rank
     def get_key(leaderboard, scope)
       case scope
       when LeaderboardScope::Yesterday
-        return "lb:d:#{leaderboard.id}:#{leaderboard.yesterday_start.strftime("%y%m%d%H")}"
+        return "lb:d:#{leaderboard.id}:#{leaderboard.yesterday_stamp.strftime("%y%m%d%H")}"
       when LeaderboardScope::Weekly
-        return "lb:w:#{leaderboard.id}:#{leaderboard.weekly_start.strftime("%y%m%d%H")}"
+        return "lb:w:#{leaderboard.id}:#{leaderboard.weekly_stamp.strftime("%y%m%d%H")}"
       when LeaderboardScope::Overall
         return "lb:o:#{leaderboard.id}"
       else
-        return "lb:d:#{leaderboard.id}:#{leaderboard.daily_start.strftime("%y%m%d%H")}"
+        return "lb:d:#{leaderboard.id}:#{leaderboard.daily_stamp.strftime("%y%m%d%H")}"
       end
     end
   end

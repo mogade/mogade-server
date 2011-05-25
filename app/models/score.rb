@@ -1,6 +1,6 @@
 class Score
   include Document
-  mongo_accessor({:leaderboard_id => :lid, :username => :un, :points => :p, :data => :d, :dated => :dt})
+  mongo_accessor({:leaderboard_id => :lid, :username => :un, :points => :p, :data => :d, :scope_stamp => :ss})
 
   class << self
     def save(leaderboard, player, points, data = nil)
@@ -9,10 +9,10 @@ class Score
       document[:d] = data[0..49] unless data.nil?
       
       if leaderboard.score_is_better?(points, high_scores.daily)
-        high_scores.daily_id = save_or_update(Score.daily_collection, high_scores.daily_id, document.merge({:dt => leaderboard.daily_start}))
+        high_scores.daily_id = save_or_update(Score.daily_collection, high_scores.daily_id, document.merge({:ss => leaderboard.daily_stamp}))
       end
       if leaderboard.score_is_better?(points, high_scores.weekly)
-        high_scores.weekly_id = save_or_update(Score.weekly_collection, high_scores.weekly_id, document.merge({:dt => leaderboard.weekly_start}))
+        high_scores.weekly_id = save_or_update(Score.weekly_collection, high_scores.weekly_id, document.merge({:ss => leaderboard.weekly_stamp}))
       end
       if leaderboard.score_is_better?(points, high_scores.overall)
         high_scores.overall_id = save_or_update(Score.overall_collection, high_scores.overall_id, document)
@@ -43,11 +43,11 @@ class Score
       when LeaderboardScope::Overall
         return {}
       when LeaderboardScope::Weekly
-        return {:dated => leaderboard.weekly_start}
+        return {:scope_stamp => leaderboard.weekly_stamp}
       when LeaderboardScope::Yesterday
-        return {:dated => leaderboard.yesterday_start}
+        return {:scope_stamp => leaderboard.yesterday_stamp}
       else
-        return {:dated => leaderboard.daily_start}
+        return {:scope_stamp => leaderboard.daily_stamp}
       end
     end
     

@@ -58,7 +58,7 @@ describe Score, :get_by_page do
   it "should limit the daily scores to today" do
     @leaderboard = Factory.create(:leaderboard)
     create_daily_scores(2)
-    create_daily_scores(2, @leaderboard.daily_start - 86400)
+    create_daily_scores(2, @leaderboard.daily_stamp - 86400)
     scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Daily)[:scores].to_a
     scores.length.should == 2
     scores[0][:points].should == 1
@@ -68,7 +68,7 @@ describe Score, :get_by_page do
   it "should limit yesterday's scores to yesterday" do
     @leaderboard = Factory.create(:leaderboard)
     create_daily_scores(2)
-    create_daily_scores(2, @leaderboard.daily_start - 86400)
+    create_daily_scores(2, @leaderboard.daily_stamp - 86400)
     scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Yesterday)[:scores].to_a
     scores.length.should == 2
     scores[0][:points].should == 3
@@ -77,7 +77,7 @@ describe Score, :get_by_page do
   
   it "should limit the weekly scores to this week" do
     @leaderboard = Factory.create(:leaderboard)
-    create_weekly_scores(4, @leaderboard.weekly_start - 2)
+    create_weekly_scores(4, @leaderboard.weekly_stamp - 2)
     create_weekly_scores(2)
     scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Weekly)[:scores].to_a
     scores.length.should == 2
@@ -94,13 +94,13 @@ describe Score, :get_by_page do
   
   private
   def create_yesterday_scores(count, dated = nil)
-    create_scores(count, Score.daily_collection, dated || @leaderboard.yesterday_start)
+    create_scores(count, Score.daily_collection, dated || @leaderboard.yesterday_stamp)
   end
   def create_daily_scores(count, dated = nil)
-    create_scores(count, Score.daily_collection, dated || @leaderboard.daily_start)
+    create_scores(count, Score.daily_collection, dated || @leaderboard.daily_stamp)
   end
   def create_weekly_scores(count, dated = nil)
-    create_scores(count, Score.weekly_collection, dated || @leaderboard.weekly_start)
+    create_scores(count, Score.weekly_collection, dated || @leaderboard.weekly_stamp)
   end
   def create_overall_scores(count)
     create_scores(count, Score.overall_collection)
@@ -108,7 +108,7 @@ describe Score, :get_by_page do
   def create_scores(count, collection, dated = nil)
     count.times do |i|
       params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :points => @created, :data => "data#{@created}"}
-      params[:dated] = dated unless dated.nil?
+      params[:scope_stamp] = dated unless dated.nil?
       score = Score.new(params)
       collection.save(Score.map(score.attributes)) #fugly
       @created += 1

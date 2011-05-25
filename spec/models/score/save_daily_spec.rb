@@ -42,15 +42,15 @@ describe Score, 'save daily' do
   
   
   def score_should_exist(points)
-    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :dt => @leaderboard.daily_start}
+    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :ss => @leaderboard.daily_stamp}
     Score.daily_collection.find(selector).count.should == 1
   end
   def create_high_score(points)
     score_id = Score.daily_collection.insert({:lid => @leaderboard.id,
-      :dt => @leaderboard.daily_start, :p => points, :un => @player.username})
+      :ss => @leaderboard.daily_stamp, :p => points, :un => @player.username})
 
     Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
                 :userkey => @player.unique, :daily_points => points, 
-                :daily_dated => @leaderboard.daily_start, :daily_id => score_id})
+                :daily_stamp => @leaderboard.daily_stamp, :daily_id => score_id})
   end
 end

@@ -17,10 +17,10 @@ class Cleaner
   
   #this doesn't use indexes, so it's best to do it during non-busy times
   def clean_scores
-    Store['high_scores'].update({:dd => {'$lte' => Time.now.utc - 3 * 86400}}, {'$set' => {:dd => nil, :di => nil}}, {:multi => true})
-    Store['high_scores'].update({:wd => {'$lte' => Time.now.utc - 10 * 86400}}, {'$set' => {:wd => nil, :wi => nil}}, {:multi => true})
-    Store['scores_daily'].remove({:dt => {'$lte' => Time.now.utc - 3 * 86400}}, {:multi => true})
-    Store['scores_weekly'].remove({:dt => {'$lte' => Time.now.utc - 10 * 86400}}, {:multi => true})
+    Store['high_scores'].update({:ds => {'$lte' => Time.now.utc - 3 * 86400}}, {'$set' => {:ds => nil, :di => nil}}, {:multi => true})
+    Store['high_scores'].update({:ws => {'$lte' => Time.now.utc - 10 * 86400}}, {'$set' => {:ws => nil, :wi => nil}}, {:multi => true})
+    Store['scores_daily'].remove({:ss => {'$lte' => Time.now.utc - 3 * 86400}}, {:multi => true})
+    Store['scores_weekly'].remove({:ss => {'$lte' => Time.now.utc - 10 * 86400}}, {:multi => true})
   end  
     
   private 

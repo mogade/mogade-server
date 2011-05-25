@@ -22,17 +22,17 @@ class Leaderboard
     type == LeaderboardType::LowToHigh ? :asc : :desc
   end
   
-  def daily_start
+  def daily_stamp
     now = Time.now.utc
     time = now.midnight + -3600 * offset
     return time > now ? time - 86400 : time
   end
   
-  def yesterday_start
-    daily_start - 86400
+  def yesterday_stamp
+    daily_stamp - 86400
   end
   
-  def weekly_start
+  def weekly_stamp
     now = Time.now.utc
     time = now.at_beginning_of_week + -3600 * offset
     return time > now ? time - 604800 : time

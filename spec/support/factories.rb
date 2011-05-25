@@ -27,9 +27,9 @@ Factory.define :high_scores do |h|
   h.unique {Factory.next(:unique)}
   #h.unique Factory.build(:player).unique
   h.daily_points 0
-  h.daily_dated nil
+  h.daily_stamp nil
   h.weekly_points 0
-  h.weekly_dated nil
+  h.weekly_stamp nil
   h.overall_points 0
 end
 

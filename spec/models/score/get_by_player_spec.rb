@@ -64,13 +64,13 @@ describe Score, :get_by_player do
     
   end
   def create_yesterday_scores(count)
-    create_scores(count, Score.daily_collection, LeaderboardScope::Daily, @leaderboard.yesterday_start)
+    create_scores(count, Score.daily_collection, LeaderboardScope::Daily, @leaderboard.yesterday_stamp)
   end
   def create_daily_scores(count)
-    create_scores(count, Score.daily_collection, LeaderboardScope::Daily, @leaderboard.daily_start)
+    create_scores(count, Score.daily_collection, LeaderboardScope::Daily, @leaderboard.daily_stamp)
   end
   def create_weekly_scores(count)
-    create_scores(count, Score.weekly_collection, LeaderboardScope::Weekly,  @leaderboard.weekly_start)
+    create_scores(count, Score.weekly_collection, LeaderboardScope::Weekly,  @leaderboard.weekly_stamp)
   end
   def create_overall_scores(count)
     create_scores(count, Score.overall_collection, LeaderboardScope::Overall)
@@ -78,7 +78,7 @@ describe Score, :get_by_player do
   def create_scores(count, collection, scope, dated = nil)
     count.times do |i|
       params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :points => @created, :data => "data#{@created}"}
-      params[:dated] = dated unless dated.nil?
+      params[:scope_stamp] = dated unless dated.nil?
       score = Score.new(params)
       collection.save(Score.map(score.attributes)) #fugly
       Rank.save(@leaderboard, scope, "punique#{@created}", @created)
