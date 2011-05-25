@@ -12,9 +12,17 @@ class Api::Legacy::ApiController < ActionController::Base
   
   def ensure_leaderboard(name, sub = nil)
     value = sub.nil?? params[name] : params[name][sub]
-    return error('missing leaderboard id')  if value.blank?
+    return error('missing leaderboard id') if value.blank?
     @leaderboard = Leaderboard.find_by_id(Id.from_string(value))
     return error('invalid leaderboard') if @leaderboard.nil? || @leaderboard.game_id != @game.id
+    true
+  end
+  
+  def ensure_achievement()
+    value = params[:achievement_id]
+    return error('missing achievement id') if value.blank?
+    @achievement = Achievement.find_by_id(Id.from_string(value))
+    return error('invalid achievement') if @achievement.nil? || @achievement.game_id != @game.id
     true
   end
   

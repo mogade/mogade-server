@@ -12,12 +12,13 @@ Mogade::Application.routes.draw do
     match '/scores' => 'legacy::Scores#save_score', :via => :put
     match '/scores/yesterdays_rank' => 'legacy::Scores#yesterdays_rank', :via => :post
     match '/scores/yesterdays_leaders' => 'legacy::Scores#yesterdays_leaders', :via => :post
-    match '/logging/error' => 'legacy::Logs#log_error', :via => :put
     match '/analytics/start' => 'legacy::Logs#log_start', :via => :put
-    
-    match '/conf/version' => 'legacy#version', :via => :post
-    match '/conf/my' => 'legacy#player_configuration', :via => :post
-    match '/conf' => 'legacy#game_configuration', :via => :post
+    match '/achievements' => 'legacy::Achievements#create', :via => :put
+    #todo
+    # match '/logging/error' => 'legacy::Logs#log_error', :via => :put
+    # match '/conf/version' => 'legacy#version', :via => :post
+    # match '/conf/my' => 'legacy#player_configuration', :via => :post
+    # match '/conf' => 'legacy#game_configuration', :via => :post
   end
   
   namespace 'manage' do
