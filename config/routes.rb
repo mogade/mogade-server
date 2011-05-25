@@ -8,14 +8,16 @@ Mogade::Application.routes.draw do
     end
   
     #v1 crap
-    match '/scores' => 'legacy#save_score', :via => :put
-    match '/scores/yesterdays_rank' => 'legacy#yesterdays_rank', :via => :post
-    match '/scores/yesterdays_leaders' => 'legacy#yesterdays_leaders', :via => :post
+    match '/scores' => 'legacy::Scores#get_scores', :via => :post
+    match '/scores' => 'legacy::Scores#save_score', :via => :put
+    match '/scores/yesterdays_rank' => 'legacy::Scores#yesterdays_rank', :via => :post
+    match '/scores/yesterdays_leaders' => 'legacy::Scores#yesterdays_leaders', :via => :post
+    match '/logging/error' => 'legacy::Logs#log_error', :via => :put
+    match '/analytics/start' => 'legacy::Logs#log_start', :via => :put
+    
     match '/conf/version' => 'legacy#version', :via => :post
     match '/conf/my' => 'legacy#player_configuration', :via => :post
     match '/conf' => 'legacy#game_configuration', :via => :post
-    match '/logging/error' => 'legacy#log_error', :via => :put
-    match '/analytics/start' => 'legacy#log_start', :via => :put
   end
   
   namespace 'manage' do

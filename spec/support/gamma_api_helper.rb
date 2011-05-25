@@ -26,21 +26,6 @@ module GammaApiHelper
     response.status.should == 400
     JSON.parse(response.body)['error'].should == message
   end
-  
-  def it_ensures_a_valid_version(verb, action)
-    it "renders an error if the version is missing" do
-      self.send verb, action
-      response.status.should == 400
-      json = ActiveSupport::JSON.decode(response.body)
-      json['error'].should == 'unknown version'
-    end
-    it "renders an error if the version is invalid" do
-      self.send verb, action, {'v' => 1}
-      response.status.should == 400
-      json = ActiveSupport::JSON.decode(response.body)
-      json['error'].should == 'unknown version'
-    end
-  end
    
   def it_ensures_a_valid_context(verb, action)
     it "renders an error if the key is missing" do

@@ -10,9 +10,10 @@ class Api::Legacy::ApiController < ActionController::Base
     return error('invalid signature') unless valid_signature?(params, @game.secret)
   end
   
-  def ensure_leaderboard
-    return error('missing leaderboard id')  if params[:leaderboard_id].blank?
-    @leaderboard = Leaderboard.find_by_id(Id.from_string(params[:leaderboard_id]))
+  def ensure_leaderboard(name, sub = nil)
+    value = sub.nil?? params[name] : params[name][sub]
+    return error('missing leaderboard id')  if value.blank?
+    @leaderboard = Leaderboard.find_by_id(Id.from_string(value))
     return error('invalid leaderboard') if @leaderboard.nil? || @leaderboard.game_id != @game.id
     true
   end
