@@ -14,11 +14,14 @@ Mogade::Application.routes.draw do
     match '/scores/yesterdays_leaders' => 'legacy::Scores#yesterdays_leaders', :via => :post
     match '/analytics/start' => 'legacy::Logs#log_start', :via => :put
     match '/achievements' => 'legacy::Achievements#create', :via => :put
+    match '/conf/version' => 'legacy::Configurations#version', :via => :post
+    match '/conf' => 'legacy::Configurations#get_game_configuration', :via => :post
+    match '/conf/my' => 'legacy::Configurations#get_player_configuration', :via => :post
+    
     #todo
     # match '/logging/error' => 'legacy::Logs#log_error', :via => :put
-    # match '/conf/version' => 'legacy#version', :via => :post
-    # match '/conf/my' => 'legacy#player_configuration', :via => :post
-    # match '/conf' => 'legacy#game_configuration', :via => :post
+    # get leaderboard with player!!!!
+
   end
   
   namespace 'manage' do

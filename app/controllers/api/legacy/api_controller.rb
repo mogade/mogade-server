@@ -18,7 +18,7 @@ class Api::Legacy::ApiController < ActionController::Base
     true
   end
   
-  def ensure_achievement()
+  def ensure_achievement
     value = params[:achievement_id]
     return error('missing achievement id') if value.blank?
     @achievement = Achievement.find_by_id(Id.from_string(value))

@@ -24,6 +24,11 @@ class HighScores
       scores.leaderboard = leaderboard
       scores
     end
+    
+    def find_for_player(game, player)
+      leaderboards = Leaderboard.find({:game_id => game.id})
+      leaderboards.map{|leaderboard| HighScores.load(leaderboard, player)}
+    end
   end
   
   def daily

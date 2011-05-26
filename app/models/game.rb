@@ -1,7 +1,7 @@
 class Game
   include Document
   include ActiveModel::Validations
-  mongo_accessor({:name => :name, :secret => :secret})
+  mongo_accessor({:name => :name, :secret => :secret, :version => :v})
   
   validates_length_of :name, :minimum => 1, :maximum => 50, :allow_blank => false, :message => 'please enter a name'
   
