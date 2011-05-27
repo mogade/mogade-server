@@ -54,8 +54,8 @@ describe Destroyer, 'destroy leaderboards' do
     Store.redis.sadd('cleanup:leaderboards', leaderboard1.id)
     Destroyer.new.destroy_leaderboards
     
-    HighScores.find({:lid => leaderboard1.id}).count.should == 0
-    HighScores.find({:lid => leaderboard2.id}).count.should == 1
+    HighScores.find({:leaderboard_id => leaderboard1.id}).count.should == 0
+    HighScores.find({:leaderboard_id => leaderboard2.id}).count.should == 1
   end
   
   it "removes the leaderboard id from the destruction queue" do

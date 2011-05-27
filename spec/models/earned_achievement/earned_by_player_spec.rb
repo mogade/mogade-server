@@ -19,12 +19,12 @@ describe EarnedAchievement, :earned_by_player do
     earned[1].should == achievement2.id
   end
   
-  it "returns an empty array if the player is a loser" do
-    game = Factory.build(:game)
-    achievement1 = Factory.create(:achievement, {:game_id => game.id})
-    player1 = Factory.build(:player, {:username => 'leto'})
-        
-    earned = EarnedAchievement.earned_by_player(game, player1)
-    earned.length.should == 0
-  end
+  # it "returns an empty array if the player is a loser" do
+  #   game = Factory.build(:game)
+  #   achievement1 = Factory.create(:achievement, {:game_id => game.id})
+  #   player1 = Factory.build(:player, {:username => 'leto'})
+  #       
+  #   earned = EarnedAchievement.earned_by_player(game, player1)
+  #   earned.length.should == 0
+  # end
 end

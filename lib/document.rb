@@ -1,5 +1,7 @@
 module Document
   extend ActiveSupport::Concern
+  include EmbeddedDocument
+  
   module ClassMethods
     def collection
       Store[self.to_s.tableize]
@@ -29,42 +31,6 @@ module Document
       c = collection || self.collection
       c.find(map(selector)).count
     end
-    def mongo_accessor(map)
-      @map = map
-      @unmap = {}
-      map.each do |k,v|
-        define_method(k) { @attributes[k] }
-        define_method("#{k}=") {|value| @attributes[k] = value }
-        @unmap[v.to_s] = k
-      end
-    end
-    def map(raw)
-      return {} if raw.blank? || !raw.is_a?(Hash)
-      hash = {}
-      raw.each do |key, value|
-        real_key = map_key(key.to_sym)
-        hash[real_key] = value.is_a?(Hash) ? map(value) : value
-      end
-      return hash
-    end
-    def map_options(options)
-      options[:fields] = map(options[:fields]) if options.include?(:fields)
-      options[:sort][0] = map_key(options[:sort][0]) if options.include?(:sort)
-      options
-    end
-    def unmap(raw)
-      return {} if raw.blank? || !raw.is_a?(Hash)
-      hash = {}
-      raw.each do |key, value|
-        real_key = @unmap.include?(key) ? @unmap[key] : key
-        hash[real_key] = value
-        hash.merge!(unmap(value)) if value.is_a?(Hash)
-      end
-      hash
-    end
-    def map_key(key)
-      @map.include?(key) ? @map[key] : key
-    end
   end
   module InstanceMethods
     def initialize(attributes = {})
@@ -87,14 +53,8 @@ module Document
     def id=(value)
       @attributes[:_id] = value
     end
-    def [](name)
-      @attributes[name]
-    end
     def ==(other)
       other.class == self.class && id == other.id
-    end
-    def attributes
-      @attributes
     end
     def collection
       self.class.collection
