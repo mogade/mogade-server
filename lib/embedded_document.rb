@@ -33,13 +33,14 @@ module EmbeddedDocument
       options[:sort][0] = map_key(options[:sort][0]) if options.include?(:sort)
       options
     end
-    def unmap(raw)
-      return {} if raw.blank? || !raw.is_a?(Hash)
+    def unmap(data, raw = false)
+      return {} if data.blank? || !data.is_a?(Hash)
       hash = {}
-      raw.each do |key, value|
+      data.each do |key, value|
         if @unmap[key].is_a?(Hash)
           real_key = @unmap[key][:prop]
-          v = @unmap[key][:class].unmap(value)
+          c = @unmap[key][:class]
+          v = raw ? c.unmap(value) : c.new(c.unmap(value))
         else
           real_key = key == '_id' ? :_id : @unmap[key]
           v = value
@@ -49,7 +50,7 @@ module EmbeddedDocument
       hash
     end
     def map_key(key)
-      return key if key == :_id
+      return key unless @map.include?(key)
       @map[key].is_a?(Hash) ? @map[key][:field] : @map[key]
     end
   end

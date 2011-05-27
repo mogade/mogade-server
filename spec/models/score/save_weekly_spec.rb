@@ -24,7 +24,7 @@ describe Score, 'save weekly' do
     @player.stub!(:high_scores).and_return(scores)
     Score.save(@leaderboard, @player, 100)
       
-    Score.weekly_collection.find({:_id => scores.weekly_id}).count.should == 1
+    Score.weekly_collection.find({:_id => scores.weekly.id}).count.should == 1
   end
   it "saves a new weekly score if the player's current weekly is lower than the new one" do
     @player = Factory.build(:player)
@@ -54,8 +54,7 @@ describe Score, 'save weekly' do
     score_id = Score.weekly_collection.insert({:lid => @leaderboard.id,
       :ss => @leaderboard.weekly_stamp, :p => points, :un => @player.username, :dt => @now})
 
-    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
-                :userkey => @player.unique, :weekly_points => points, 
-                :weekly_stamp => @leaderboard.weekly_stamp, :weekly_id => score_id})
+    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique, :userkey => @player.unique, 
+      :weekly => Factory.build(:high_score, {:points => points, :stamp => @leaderboard.daily_stamp, :id => score_id})})
   end
 end

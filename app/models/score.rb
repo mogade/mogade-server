@@ -8,14 +8,14 @@ class Score
       document = {:lid => leaderboard.id, :un => player.username[0..19], :p => points, :dt => Time.now.utc}
       document[:d] = data[0..49] unless data.nil?
       
-      if leaderboard.score_is_better?(points, high_scores.daily)
-        high_scores.daily_id = save_or_update(Score.daily_collection, high_scores.daily_id, document.merge({:ss => leaderboard.daily_stamp}))
+      if leaderboard.score_is_better?(points, high_scores.daily.points)
+        high_scores.daily.id = save_or_update(Score.daily_collection, high_scores.daily.id, document.merge({:ss => leaderboard.daily_stamp}))
       end
-      if leaderboard.score_is_better?(points, high_scores.weekly)
-        high_scores.weekly_id = save_or_update(Score.weekly_collection, high_scores.weekly_id, document.merge({:ss => leaderboard.weekly_stamp}))
+      if leaderboard.score_is_better?(points, high_scores.weekly.points)
+        high_scores.weekly.id = save_or_update(Score.weekly_collection, high_scores.weekly.id, document.merge({:ss => leaderboard.weekly_stamp}))
       end
-      if leaderboard.score_is_better?(points, high_scores.overall)
-        high_scores.overall_id = save_or_update(Score.overall_collection, high_scores.overall_id, document)
+      if leaderboard.score_is_better?(points, high_scores.overall.points)
+        high_scores.overall.id = save_or_update(Score.overall_collection, high_scores.overall.id, document)
       end
       high_scores.has_new_score(points)
     end

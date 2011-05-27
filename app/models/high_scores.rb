@@ -3,21 +3,19 @@
 
 # These are merely POTENTIAL high scores...the daily and weekly could be stale
 # Hence the class scrubs the scores for any stale data before returning it 
-
-# document.rb doesn't support embedded documents, need to fix that to clean this shit up
 class HighScores
   include Document
   attr_accessor :leaderboard
   mongo_accessor({:leaderboard_id => :lid, :unique => :u, :userkey => :uk, 
-    :daily_points => :dp, :daily_stamp => :ds, :daily_id => :di,
-    :weekly_points => :wp, :weekly_stamp => :ws, :weekly_id => :wi, 
-    :overall_points => :op, :overall_id => :oi})
+    :daily => {:field => :d, :class => HighScore},
+    :weekly => {:field => :w, :class => HighScore},
+    :overall => {:field => :o, :class => HighScore}})
   
   class << self
     def load(leaderboard, player)
       scores = find_one({:leaderboard_id => leaderboard.id, :unique => player.unique}) 
       if scores.nil?
-        scores = HighScores.new({:leaderboard_id => leaderboard.id, :unique => player.unique, :userkey => player.userkey, :daily_points => 0, :weekly_points => 0, :overall_points => 0})
+        scores = HighScores.new({:leaderboard_id => leaderboard.id, :unique => player.unique, :userkey => player.userkey, :daily => HighScore.blank, :weekly => HighScore.blank, :overall => HighScore.blank})
       else
         scores.scrub!(leaderboard)
       end
@@ -31,18 +29,6 @@ class HighScores
     end
   end
   
-  def daily
-    daily_points
-  end
-  
-  def weekly
-    weekly_points
-  end
-  
-  def overall
-    overall_points
-  end
-  
   def has_new_score(points)
     changed = {}    
     changed[LeaderboardScope::Daily] = update_if_better(LeaderboardScope::Daily, points)
@@ -54,19 +40,20 @@ class HighScores
   
   
   def scrub!(leaderboard)
-    self.daily_points = 0 if daily_stamp.nil? || daily_stamp < leaderboard.daily_stamp
-    self.weekly_points = 0 if weekly_stamp.nil? || weekly_stamp < leaderboard.weekly_stamp
-    self.overall_points = 0 if overall_points.nil?
+    self.daily.points = 0 if daily.stamp.nil? || daily.stamp < leaderboard.daily_stamp
+    self.weekly.points = 0 if weekly.stamp.nil? || weekly.stamp < leaderboard.weekly_stamp
+    self.overall.points = 0 if overall.points.nil?
     self
   end
   
   def update_if_better(scope, points)
     name = HighScores.scope_to_name(scope)
-    return false unless @leaderboard.score_is_better?(points, send(name))
+    return false unless @leaderboard.score_is_better?(points, send(name).points)
 
     Rank.save(@leaderboard, scope, unique, points)
-    send("#{name}_points=", points)
-    send("#{name}_stamp=", @leaderboard.send("#{name}_stamp")) if @leaderboard.respond_to?("#{name}_stamp")
+    score = send("#{name}")
+    score.points = points
+    score.stamp = @leaderboard.send("#{name}_stamp") if @leaderboard.respond_to?("#{name}_stamp")
     return true
   end
   

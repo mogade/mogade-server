@@ -24,7 +24,7 @@ describe Score, 'save overall' do
     @player.stub!(:high_scores).and_return(scores)
     Score.save(@leaderboard, @player, 100)
       
-    Score.overall_collection.find({:_id => scores.overall_id}).count.should == 1
+    Score.overall_collection.find({:_id => scores.overall.id}).count.should == 1
   end
   it "saves a new overall score if the player's current overall is lower than the new one" do
     @player = Factory.build(:player)
@@ -53,7 +53,7 @@ describe Score, 'save overall' do
   def create_high_score(points)
     score_id = Score.overall_collection.insert({:lid => @leaderboard.id, :p => points, :un => @player.username, :dt => @now})
 
-    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
-                :userkey => @player.unique, :overall_points => points, :overall_id => score_id})
+    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique, :userkey => @player.unique, 
+      :overall => Factory.build(:high_score, {:points => points, :id => score_id})})
   end
 end

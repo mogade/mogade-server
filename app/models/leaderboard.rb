@@ -15,6 +15,7 @@ class Leaderboard
   end
   
   def score_is_better?(new_score, old_score)
+    return true if old_score.nil?
     type == LeaderboardType::LowToHigh ? new_score < old_score : new_score > old_score
   end
   

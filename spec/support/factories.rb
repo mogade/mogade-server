@@ -26,11 +26,15 @@ Factory.define :high_scores do |h|
   h.leaderboard_id Id.from_string('222222222222222222222222')
   h.unique {Factory.next(:unique)}
   #h.unique Factory.build(:player).unique
-  h.daily_points 0
-  h.daily_stamp nil
-  h.weekly_points 0
-  h.weekly_stamp nil
-  h.overall_points 0
+  h.daily {HighScore.new}
+  h.weekly {HighScore.new}
+  h.overall {HighScore.new}
+end
+
+Factory.define :high_score do |h|
+  h.points 0
+  h.stamp nil
+  h.id {Id.new}
 end
 
 Factory.sequence :name do |n|

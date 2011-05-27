@@ -19,7 +19,7 @@ module Document
     end
     def find(selector={}, opts={}, collection = nil)
       raw = opts.delete(:raw) || false
-      opts[:transformer] = Proc.new{|data| raw ? unmap(data) : self.new(unmap(data)) }
+      opts[:transformer] = Proc.new{|data| raw ? unmap(data, raw) : self.new(unmap(data)) }
       c = collection || self.collection
       c.find(map(selector), map_options(opts))
     end

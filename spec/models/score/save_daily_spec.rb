@@ -24,7 +24,7 @@ describe Score, 'save daily' do
     @player.stub!(:high_scores).and_return(scores)
     Score.save(@leaderboard, @player, 100)
       
-    Score.daily_collection.find({:_id => scores.daily_id}).count.should == 1
+    Score.daily_collection.find({:_id => scores.daily.id}).count.should == 1
   end
   it "saves a new daily score if the player's current daily is lower than the new one" do
     @player = Factory.build(:player)
@@ -54,8 +54,7 @@ describe Score, 'save daily' do
     score_id = Score.daily_collection.insert({:lid => @leaderboard.id,
       :ss => @leaderboard.daily_stamp, :p => points, :un => @player.username, :dt => @now})
 
-    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique,
-                :userkey => @player.unique, :daily_points => points, 
-                :daily_stamp => @leaderboard.daily_stamp, :daily_id => score_id})
+    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique, :userkey => @player.unique, 
+      :daily => Factory.build(:high_score, {:points => points, :stamp => @leaderboard.daily_stamp, :id => score_id})})
   end
 end
