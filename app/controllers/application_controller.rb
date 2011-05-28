@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     redirect_to :protocol => 'http://' if request.ssl? && Rails.env == 'production'
   end
   def ensure_https
-    redirect_to :protocol => 'https://' unless request.ssl? || request.local? || Rails.env != 'production'
+    redirect_to :protocol => 'https://' unless request.ssl? || Rails.env != 'production'
   end
 
   def load_developer
