@@ -9,4 +9,5 @@
   </li>
   <li><a href="<%= url_for(:controller => 'achievements', :action => 'index', :id => @game.id)%>">achievements</a>
   <li><a href="<%= url_for(:controller => 'stats', :action => 'index', :id => @game.id)%>">usage statistics</a></li>
+  <li><a href="<%= url_for(:controller => 'errors', :action => 'index', :id => @game.id)%>">logged errors</a></li>
 </ul>

@@ -1,0 +1,48 @@
+<% content_for :title, @game.name + ' errors' -%>
+<% content_for :section_title,  @game.name + ' .. errors' -%>
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu'%>
+  <h3>Help</h3>
+  <p><strong>Unique users</strong> are the number of unique users for that day, whereas <strong>new users</strong> are users which are totally new to your game.</p>
+  <p>Note that some platforms keep a &quot;closed&quot; process running in the background. Depending on when you call the log method, this could have an impact on the <strong>game load<strong> statistic.</p>
+<% end -%>
+
+<% content_for :title, @game.name + ' error logs' -%>
+<% content_for :special,  @game.name + ' .. error logs' -%>
+
+<% if @count == 0%>
+<h3>No errors have been logged</h3>
+<% else %>
+<table id="error_list" class="list">
+  <thead>
+    <th>subject</th>
+    <th>first</th>
+    <th>last</th>
+    <th>#</th>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<div class="pager" id="error_list_pager"></div>
+
+<script type="text/javascript">
+$('#error_list').pagedList
+({
+  total: <%= @count %>,
+  dataUrl: '<%= url_for :action => 'list', :id => @game.id %>',
+  loaded: function($tbody)
+  {
+    $tbody.children(':odd').hide();
+    $tbody.children(':even').click(function()
+    {
+      $(this).toggleClass('active').next().toggle();
+    });
+  }
+});
+</script>
+<% end %>
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu' %>
+<% end -%>

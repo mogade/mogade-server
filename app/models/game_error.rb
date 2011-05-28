@@ -19,18 +19,11 @@ class GameError
     def get_hash(game_id, subject, details)
       return Digest::SHA1.hexdigest(game_id.to_s + subject + details)
     end
-    
-    def count_for_game(game)
-      return 0 if game.blank?
-      return count(:conditions => {:gid => game.id})
-    end
-    
-    def paged_for_game(game, params)
-      return [] if game.blank?
-      page = params[:page].to_i || 1
-      offset = ((page-1) * 10).floor
-      offset = 0 if offset < 0      
-      all(:conditions => {:gid => game.id}, :sort => 'uat desc', :limit => 10, :offset => offset, :fields => [:subject, :details, :count, :uat, :cat])
+  
+    def paged(game, page)
+      page = 1 if page < 1 
+      offset = ((page-1) * 20).floor
+      find({:game_id => game.id}, {:sort => [:uat, :descending], :limit => 20, :skip => offset})
     end
   end
 end

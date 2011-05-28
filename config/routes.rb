@@ -25,6 +25,7 @@ Mogade::Application.routes.draw do
     match '/accounts/:action/(:key)', :controller => 'accounts'
     match '/sessions/logout' => 'sessions#logout'
     match '/stats/data' => 'stats#data'
+    match '/errors/list' => 'errors#list'
     match '/scores/count' => 'scores#count'
 
     resources :accounts, :only => [:new, :create]
@@ -33,6 +34,7 @@ Mogade::Application.routes.draw do
     resources :leaderboards, :only => [:index, :create, :destroy, :update]
     resources :achievements, :only => [:index, :create, :destroy, :update]
     resources :stats, :only => [:index]
+    resources :errors, :only => [:index]
     resources :scores, :only => [:index, :destroy]
       
     match '/:action', :controller => 'manage'

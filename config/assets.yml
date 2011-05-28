@@ -12,6 +12,7 @@ js:
     - jquery.numeric
     - jquery.editTo
     - jquery.resetForm
+    - jquery.pagedList
     - mogade
   stats:
     - excanvas
