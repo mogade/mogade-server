@@ -33,14 +33,23 @@ describe Score, :save do
     all_scores_have_data(nil)
   end
   
-  it "informs the high score about the new score" do
+  it "informs the high scores about the new score" do
     player = Factory.build(:player)
     leaderboard = Factory.build(:leaderboard)
     scores = Factory.build(:high_scores, {:leaderboard => @leaderboard})
     player.stub!(:high_scores).and_return(scores)
     changed = {:daily => true}
-    scores.should_receive(:has_new_score).with(100).and_return(changed)
+    scores.should_receive(:has_new_score).with(100, nil).and_return(changed)
     Score.save(leaderboard, player, 100).should == changed
+  end
+  
+  it "limits the data size passed to the high scores" do
+    player = Factory.build(:player)
+    leaderboard = Factory.build(:leaderboard)
+    scores = Factory.build(:high_scores, {:leaderboard => @leaderboard})
+    player.stub!(:high_scores).and_return(scores)
+    scores.should_receive(:has_new_score).with(100, 'b'* 50)
+    Score.save(leaderboard, player, 100, 'b'* 55)
   end
   
   def all_scores_have_data(data)

@@ -29,11 +29,11 @@ class HighScores
     end
   end
   
-  def has_new_score(points)
+  def has_new_score(points, data)
     changed = {}    
-    changed[LeaderboardScope::Daily] = update_if_better(LeaderboardScope::Daily, points)
-    changed[LeaderboardScope::Weekly] = update_if_better(LeaderboardScope::Weekly, points)
-    changed[LeaderboardScope::Overall] = update_if_better(LeaderboardScope::Overall, points)
+    changed[LeaderboardScope::Daily] = update_if_better(LeaderboardScope::Daily, points, data)
+    changed[LeaderboardScope::Weekly] = update_if_better(LeaderboardScope::Weekly, points, data)
+    changed[LeaderboardScope::Overall] = update_if_better(LeaderboardScope::Overall, points, data)
     save unless changed.blank?
     changed
   end
@@ -46,7 +46,7 @@ class HighScores
     self
   end
   
-  def update_if_better(scope, points)
+  def update_if_better(scope, points, data)
     name = HighScores.scope_to_name(scope)
     return false unless @leaderboard.score_is_better?(points, send(name).points)
 
@@ -54,6 +54,7 @@ class HighScores
     score = send("#{name}")
     score.points = points
     score.stamp = @leaderboard.send("#{name}_stamp") if @leaderboard.respond_to?("#{name}_stamp")
+    score.data = data
     return true
   end
   

@@ -17,7 +17,7 @@ class Score
       if leaderboard.score_is_better?(points, high_scores.overall.points)
         high_scores.overall.id = save_or_update(Score.overall_collection, high_scores.overall.id, document)
       end
-      high_scores.has_new_score(points)
+      high_scores.has_new_score(points, document[:d])
     end
     
     def get_by_page(leaderboard, page, records, scope)
