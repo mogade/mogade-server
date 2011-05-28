@@ -22,7 +22,7 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     return unless ensure_params(:points)
     high_scores = Score.save(@leaderboard, @player, params[:points].to_i, params[:data])
     ranks = {}
-    high_scores.each{|key, value| ranks.merge!(value ? Rank.get(@leaderboard, @player, [key]) : {key => 0})}
+    high_scores.each{|key, value| ranks.merge!(value ? Rank.get(@leaderboard, @player.unique, [key]) : {key => 0})}
     render :json => ranks
   end
 end

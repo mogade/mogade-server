@@ -7,14 +7,13 @@ class Rank
     def get(leaderboard, unique, scopes = nil)
       ranks = {}
       (scopes || [LeaderboardScope::Yesterday, LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall]).each do |scope|
-        #todo fix
         if leaderboard.type == LeaderboardType::LowToHigh 
-          ranks[scope] = Store.redis.zrank(Rank.get_key(leaderboard, scope), unique) || -1
+          ranks[scope] = Store.redis.zrank(Rank.get_key(leaderboard, scope), unique)
         else
-          ranks[scope] = Store.redis.zrevrank(Rank.get_key(leaderboard, scope), unique) || -1
+          ranks[scope] = Store.redis.zrevrank(Rank.get_key(leaderboard, scope), unique)
         end
       end
-      ranks.each{|k, v| ranks[k] = v + 1 }
+      ranks.each{|k, v| ranks[k] = v.nil? ? 0 : v + 1 }
     end
     
     def get_key(leaderboard, scope)
