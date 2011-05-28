@@ -1,6 +1,6 @@
 (function($) 
 {
-  var defaults = {data: {}, total: 0, perPage: 20, dataUrl: null, loaded: null};
+  var defaults = {data: {}, total: 0, perPage: 10, dataUrl: null, loaded: null};
   $.fn.pagedList = function(opts) 
   {        
     var options = $.extend({}, defaults, opts);

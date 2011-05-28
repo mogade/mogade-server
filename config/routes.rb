@@ -34,7 +34,7 @@ Mogade::Application.routes.draw do
     resources :leaderboards, :only => [:index, :create, :destroy, :update]
     resources :achievements, :only => [:index, :create, :destroy, :update]
     resources :stats, :only => [:index]
-    resources :errors, :only => [:index]
+    resources :errors, :only => [:index, :destroy]
     resources :scores, :only => [:index, :destroy]
       
     match '/:action', :controller => 'manage'

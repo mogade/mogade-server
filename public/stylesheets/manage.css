@@ -56,3 +56,12 @@ ul.menu ul a{margin-left:10px;border-bottom:none;}
 .info{margin-bottom:20px;}
 .info h4{margin:0;color:#666;}
 .info > div{color:#444;}
+
+#error_list{width:100%;}
+#error_list tr.nodesc td{cursor:pointer;}
+#error_list tr.desc{border-bottom:1px solid #e6e6e6;}
+.pager {margin-top:20px;overflow:auto;position:relative;}
+.pager a {float:left;display:block;margin-right:10px;border:1px solid #eee;padding:10px;}
+.pager a:hover{background:#cff;}
+.pager a.active{border-color:transparent;font-weight:bold;}
+.pager .total{position:absolute;right:5px;top:6px;font-weight:bold;}

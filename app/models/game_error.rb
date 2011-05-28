@@ -22,8 +22,8 @@ class GameError
   
     def paged(game, page)
       page = 1 if page < 1 
-      offset = ((page-1) * 20).floor
-      find({:game_id => game.id}, {:sort => [:uat, :descending], :limit => 20, :skip => offset})
+      offset = ((page-1) * 10).floor
+      find({:game_id => game.id}, {:sort => [:uat, :descending], :limit => 10, :skip => offset})
     end
   end
 end

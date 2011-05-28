@@ -10,7 +10,7 @@ describe GameError, :paged do
     25.times do |i|
       Factory.create(:game_error, {:game_id => game.id, :hash => "hash-#{i}", :subject => "s-#{i}", :updated => Time.now - i})
     end
-    errors = GameError.paged(game, 2).to_a
+    errors = GameError.paged(game, 3).to_a
     errors.length.should == 5
     errors[0].subject = 's-20'
     errors[4].subject = 's-24'

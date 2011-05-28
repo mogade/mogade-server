@@ -17,9 +17,10 @@
 <table id="error_list" class="list">
   <thead>
     <th>subject</th>
-    <th>first</th>
-    <th>last</th>
-    <th>#</th>
+    <th>first seen</th>
+    <th>last seen</th>
+    <th>times</th>
+    <th></th>
   </thead>
   <tbody>
   </tbody>
@@ -27,19 +28,21 @@
 <div class="pager" id="error_list_pager"></div>
 
 <script type="text/javascript">
-$('#error_list').pagedList
+var $tbody = $('#error_list').pagedList
 ({
   total: <%= @count %>,
   dataUrl: '<%= url_for :action => 'list', :id => @game.id %>',
   loaded: function($tbody)
   {
-    $tbody.children(':odd').hide();
-    $tbody.children(':even').click(function()
-    {
-      $(this).toggleClass('active').next().toggle();
-    });
+    $tbody.children(':odd').hide().addClass('desc');
+    $tbody.children(':even').addClass('nodesc');
   }
-});
+}).find('tbody');
+
+$tbody.delegate('tr:even td:not(.delete)', 'click', function()
+{
+  $(this).parent().toggleClass('active').next().toggle();
+}).confirm('td.delete', 'Delete this error?', 'This error will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/errors/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
 </script>
 <% end %>
 

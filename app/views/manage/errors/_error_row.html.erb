@@ -1,9 +1,10 @@
-<tr>
-	<td><%= error.subject %></td>
-	<td><%= error.dated.strftime("%h %d %H:%M") %></td>
-	<td><%= error.dated.strftime("%h %d %H:%M") %></td>
-	<td><%= error.count %></td>
+<tr data-id="<%=error.id%>">
+  <td><%= error.subject %></td>
+  <td><%= error.dated.strftime("%h %d %H:%M") %></td>
+  <td><%= error.dated.strftime("%h %d %H:%M") %></td>
+  <td><%= error.count %></td>
+  <td class="delete"></td>
 </tr>
 <tr>
-	<td colspan="4"><%= error.details %></td>
+  <td colspan="5"><%= simple_format(error.details) %></td>
 </tr>

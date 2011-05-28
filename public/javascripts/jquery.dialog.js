@@ -100,19 +100,21 @@ jQuery.fn.center = function()
 
 (function($)
 {
-  $.fn.confirm = function(title, message, onYes)
+  $.fn.confirm = function(target, title, message, onYes)
   {
     return this.each(function()
     {
-      var $element = $(this);
-      $element.click(function()
-      {                
+      var callback = function()
+      {
         $.showConfirm(title, message, onYes, $(this));
         return false;
-      });
+      };
+      if (target == null) { $(this).click(callback); }
+      else { $(this).delegate(target, 'click', callback); }
     });
   };
 })(jQuery);
+
 
 jQuery.showConfirm = function(title, message, onYes, $element)
 {
