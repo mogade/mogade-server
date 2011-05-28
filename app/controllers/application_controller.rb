@@ -4,10 +4,10 @@ class ApplicationController < ActionController::Base
   
   private
   def ensure_not_https
-    redirect_to :protocol => 'http://' if request.ssl? && Rails.env == 'production'
+    redirect_to "http://#{request.env['HTTP_HOST']}#{request.fullpath}" if request.ssl? && Rails.env == 'production'
   end
   def ensure_https
-    redirect_to :protocol => 'https://' unless request.ssl? || Rails.env != 'production'
+    redirect_to "https://#{request.env['HTTP_HOST']}#{request.fullpath}" unless request.ssl? || Rails.env != 'production'
   end
 
   def load_developer

@@ -1,5 +1,7 @@
 class Manage::AccountsController < Manage::ManageController
-  
+  skip_before_filter :ensure_not_https
+  before_filter :ensure_https
+    
   def new
     @signup = Signup.new
   end
