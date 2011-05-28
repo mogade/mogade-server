@@ -4,4 +4,8 @@ class Api::Legacy::LogsController < Api::Legacy::ApiController
     Stat.hit(@game, params[:unique])
     render :nothing => true    
   end
+  def log_error
+    GameError.create(@game, params[:subject], params[:details])
+    render :nothing => true
+  end
 end

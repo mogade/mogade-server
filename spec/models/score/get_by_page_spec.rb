@@ -85,12 +85,10 @@ describe Score, :get_by_page do
     scores[1][:points].should == 4
   end
   
-  
   it "should set the page" do
     @leaderboard = Factory.create(:leaderboard)
     Score.get_by_page(@leaderboard, 32, 10, LeaderboardScope::Weekly)[:page].should == 32
   end
-  
   
   private
   def create_yesterday_scores(count, dated = nil)

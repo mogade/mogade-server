@@ -5,6 +5,7 @@ Mogade::Application.routes.draw do
       resources :achievements, :only => [:index, :create]
       resources :ranks, :only => [:index]
       resources :stats, :only => [:create]
+      resources :errors, :only => [:create]
     end
   
     #v1 crap
@@ -17,11 +18,7 @@ Mogade::Application.routes.draw do
     match '/conf/version' => 'legacy::Configurations#version', :via => :post
     match '/conf' => 'legacy::Configurations#get_game_configuration', :via => :post
     match '/conf/my' => 'legacy::Configurations#get_player_configuration', :via => :post
-    
-    #todo
-    # match '/logging/error' => 'legacy::Logs#log_error', :via => :put
-    # get leaderboard with player!!!!
-
+    match '/logging/error' => 'legacy::Logs#log_error', :via => :put    
   end
   
   namespace 'manage' do

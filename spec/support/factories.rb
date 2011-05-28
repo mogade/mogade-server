@@ -60,3 +60,10 @@ Factory.define :achievement do |a|
   a.points 200
   a.game_id Id.from_string('111111111111111111111111')
 end
+
+Factory.define :game_error do |e|
+  e.count 1
+  e.subject 'the subject'
+  e.details 'the details'
+  e.game_id Id.from_string('111111111111111111111111')
+end

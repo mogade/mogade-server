@@ -27,6 +27,10 @@ module Document
       c = collection || self.collection
       c.remove(map(selector))
     end
+    def update(selector, document, options = {}, collection = nil)
+      c = collection || self.collection
+      c.update(map(selector), map(document), options)
+    end
     def count(selector={}, collection = nil)
       c = collection || self.collection
       c.find(map(selector)).count

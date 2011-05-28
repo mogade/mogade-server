@@ -21,6 +21,8 @@ module EmbeddedDocument
       raw.each do |key, value|
         if value.is_a?(EmbeddedDocument)
           v = value.class.map(value.attributes)
+        elsif value.is_a?(Hash)
+          v = map(value)
         else
           v = value
         end
