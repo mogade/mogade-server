@@ -26,14 +26,16 @@ class Api::Legacy::ApiController < ActionController::Base
     true
   end
   
-  def ensure_player(within = nil)
+  def load_player(within = nil)
     username = within.nil? ? params[:username] : params[within][:username]
     unique = within.nil? ? params[:unique] : params[within][:unique]
-    return error('missing username') if username.blank?
-    return error('missing unique') if unique.blank?
+    return nil if username.blank? || unique.blank?
     @player = Player.new(username, unique)
-    return error('username and unique are both required, and username must be 30 or less characters')  unless @player.valid?
-    true
+    @player.valid?
+  end
+  
+  def ensure_player(within = nil)
+    return load_player(within) ? true : error('username and unique are both required, and username must be 30 or less characters')
   end
   
   def error(message, data = nil)

@@ -58,6 +58,17 @@ class HighScores
     return true
   end
   
+  def for_scope(scope)
+    case scope
+    when LeaderboardScope::Weekly
+      return weekly
+    when LeaderboardScope::Overall
+      return overall
+    else
+      return daily
+    end
+  end
+  
   private
   def self.scope_to_name(scope)
     case scope
