@@ -18,7 +18,7 @@ class Api::Legacy::ConfigurationsController < Api::Legacy::ApiController
     render :json => 
     {
       :achievements => EarnedAchievement.earned_by_player(@game, @player).map{|a| a.to_s},
-      :leaderboards => HighScores.find_for_player(@game, @player).map{|h| {:id => h.leaderboard_id.to_s, :points => h.overall_points}}
+      :leaderboards => Score.find_for_player(@game, @player).map{|h| {:id => h.leaderboard_id.to_s, :points => h.overall.points}}
     }
   end
 end

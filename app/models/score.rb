@@ -96,6 +96,18 @@ class Score
     end
   end
   
+
+  def for_scope(scope)
+    case scope
+    when LeaderboardScope::Overall
+      return overall
+    when LeaderboardScope::Weekly
+      return weekly
+    else
+      return daily
+    end
+  end
+  
   def scrub!(leaderboard)
     self.daily = ScoreData.blank if daily.nil?
     self.daily.points = 0 if daily.stamp.nil? || daily.stamp < leaderboard.daily_stamp

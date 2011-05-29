@@ -11,7 +11,7 @@ class Api::Legacy::ScoresController < Api::Legacy::ApiController
     payload = {:page => page, :scores => scores[:scores].map{|s| s.merge({:cat => s.delete(:dated)})}}
     
     if page == 1 && load_player
-      high = HighScores.load(@leaderboard, @player).for_scope(scope)
+      high = Score.load(@leaderboard, @player).for_scope(scope)
       payload[:user] = high.points == 0 ? nil : {:username => @player.username, :points => high.points, :data => high.data, :rank => Rank.get(@leaderboard, @player.unique, [scope])[scope]}
     end
     
