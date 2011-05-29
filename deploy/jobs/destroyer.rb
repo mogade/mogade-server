@@ -27,11 +27,8 @@ class Destroyer
       return if leaderboard_id.nil?
       
       destroy_ranks(leaderboard_id)
-      Score.daily_collection.remove({:lid => leaderboard_id})
-      Score.weekly_collection.remove({:lid => leaderboard_id})
-      Score.overall_collection.remove({:lid => leaderboard_id})
-      HighScores.collection.remove({:lid => leaderboard_id})
-      
+      Score.remove({:lid => leaderboard_id})
+            
       @redis.srem('cleanup:leaderboards', leaderboard_id)
       count += 50
     end

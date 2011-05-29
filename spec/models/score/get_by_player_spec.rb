@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Score, :get_by_player do
   before :each do
     @created = 0
+    @now = Time.now.utc
+    Time.stub!(:now).and_return(@now)
   end
   
   it "should get the start of the leaderboard if the player doesn't have a score" do
@@ -10,7 +12,7 @@ describe Score, :get_by_player do
     create_daily_scores(20)
     data = Score.get_by_player(@leaderboard, Player.new('x', 'y'), 5, LeaderboardScope::Daily)
     data[:page].should == 1
-    data[:scores].count(true).should == 5
+    data[:scores].length.should == 5
   end
  
   it "should return yesterdays's leaderboard from the player's position" do
@@ -43,7 +45,7 @@ describe Score, :get_by_player do
     
     assert_data(data, 3, 9, 5)
   end
-
+  
   it "should return the overall leaderboard from the player's position" do
     @leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
@@ -58,29 +60,29 @@ describe Score, :get_by_player do
   private
   def assert_data(data, page, highest_score, lowest_score)
     data[:page].should == page
-    scores = data[:scores].to_a
+    scores = data[:scores]
     scores[0][:points].should == highest_score
     scores[-1][:points].should == lowest_score
     
   end
-  def create_yesterday_scores(count)
-    create_scores(count, Score.daily_collection, LeaderboardScope::Daily, @leaderboard.yesterday_stamp)
+  def create_yesterday_scores(count, stamp = nil)
+    create_scores(count, :daily, LeaderboardScope::Daily, stamp || @leaderboard.yesterday_stamp)
   end
-  def create_daily_scores(count)
-    create_scores(count, Score.daily_collection, LeaderboardScope::Daily, @leaderboard.daily_stamp)
+  def create_daily_scores(count, stamp = nil)
+    create_scores(count, :daily, LeaderboardScope::Daily, stamp || @leaderboard.daily_stamp)
   end
-  def create_weekly_scores(count)
-    create_scores(count, Score.weekly_collection, LeaderboardScope::Weekly,  @leaderboard.weekly_stamp)
+  def create_weekly_scores(count, stamp = nil)
+    create_scores(count, :weekly, LeaderboardScope::Weekly, stamp || @leaderboard.weekly_stamp)
   end
   def create_overall_scores(count)
-    create_scores(count, Score.overall_collection, LeaderboardScope::Overall)
+    create_scores(count, :overall, LeaderboardScope::Overall)
   end
-  def create_scores(count, collection, scope, dated = nil)
+  def create_scores(count, scope_name, scope, stamp = nil)
     count.times do |i|
-      params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :points => @created, :data => "data#{@created}"}
-      params[:scope_stamp] = dated unless dated.nil?
-      score = Score.new(params)
-      collection.save(Score.map(score.attributes)) #fugly
+      score_data = Factory.build(:score_data, {:points => @created, :data => "data#{@created}", :dated => @now - 100 * @created})
+      score_data.stamp = stamp  unless stamp.nil?
+      params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :unique => "unique_#{@created}", scope_name => score_data}
+      Score.new(params).save      
       Rank.save(@leaderboard, scope, "punique#{@created}", @created)
       @created += 1
     end

@@ -8,7 +8,7 @@ describe Manage::ScoresController, :count do
   it_ensures_developer_owns_the_game :get, :count, Proc.new { 
     leaderboard = Factory.build(:leaderboard, {:game_id => ManageHelper.game_id})
     Leaderboard.stub!(:find_by_id).and_return(leaderboard)
-    {:id => leaderboard.id} 
+    {:id => leaderboard.id, :scope => 1, :field => 1} 
   }
 
   it "verifies that the leaderboard belongs to the game" do

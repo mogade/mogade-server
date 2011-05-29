@@ -9,52 +9,52 @@ describe Score, 'save daily' do
   it "saves a new daily score if the player doesn't have a score for today" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
-    
-    @player.stub!(:high_scores).and_return(Factory.build(:high_scores, {:leaderboard => @leaderboard}))
     Score.save(@leaderboard, @player, 100)
-    
-    Score.daily_collection.count.should == 1
     score_should_exist(100)
   end
-  it "saves the new daily score id to the high scores" do
-    @player = Factory.build(:player)
-    @leaderboard = Factory.build(:leaderboard)
-    scores = Factory.build(:high_scores, {:leaderboard => @leaderboard})
-    
-    @player.stub!(:high_scores).and_return(scores)
-    Score.save(@leaderboard, @player, 100)
-      
-    Score.daily_collection.find({:_id => scores.daily.id}).count.should == 1
-  end
+
   it "saves a new daily score if the player's current daily is lower than the new one" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
     create_high_score(99)
-    
+
     Score.save(@leaderboard, @player, 100)
-    Score.daily_collection.count.should == 1
     score_should_exist(100)
   end
+  
   it "does not save the score if the user's current daily is higher than the new one" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
     create_high_score(150)
     
     Score.save(@leaderboard, @player, 149)
-    Score.daily_collection.count.should == 1
     score_should_exist(150)
   end
   
+  it "saves the rank if the player's new score is better" do
+    @player = Factory.build(:player)
+    @leaderboard = Factory.build(:leaderboard)
+    create_high_score(99)
+    #either I, or rspec, suck..go ahead, try to do this without the next stupid line
+    Rank.should_receive(:save).with(@leaderboard, LeaderboardScope::Daily, @player.unique, 100)
+    Rank.should_receive(:save).with(@leaderboard, LeaderboardScope::Weekly, @player.unique, 100)
+    Rank.should_receive(:save).with(@leaderboard, LeaderboardScope::Overall, @player.unique, 100)
+    Score.save(@leaderboard, @player, 100)
+  end
+
+  it "does not save the rank if the player's current score is better" do
+    @player = Factory.build(:player)
+    @leaderboard = Factory.build(:leaderboard)
+    create_high_score(150)
+    Rank.should_not_receive(:save).with(anything(), LeaderboardScope::Daily, anything(), anything())
+    Score.save(@leaderboard, @player, 149)
+  end
   
   def score_should_exist(points)
-    selector = {:lid => @leaderboard.id, :un => @player.username, :p => points, :ss => @leaderboard.daily_stamp, :dt => @now}
-    Score.daily_collection.find(selector).count.should == 1
+    selector = {:lid => @leaderboard.id, :un => @player.username, :u => @player.unique, :uk => @player.userkey, 'd.p' => points, 'd.s' => @leaderboard.daily_stamp, 'd.dt' => @now}
+    Score.count(selector).should == 1
   end
   def create_high_score(points)
-    score_id = Score.daily_collection.insert({:lid => @leaderboard.id,
-      :ss => @leaderboard.daily_stamp, :p => points, :un => @player.username, :dt => @now})
-
-    Factory.create(:high_scores, {:leaderboard_id => @leaderboard.id, :unique => @player.unique, :userkey => @player.unique, 
-      :daily => Factory.build(:high_score, {:points => points, :stamp => @leaderboard.daily_stamp, :id => score_id})})
+    Factory.create(:score, {:leaderboard_id => @leaderboard.id, :username => @player.username, :userkey => @player.userkey, :unique => @player.unique, :daily => Factory.build(:score_data, {:points => points, :stamp => @leaderboard.daily_stamp, :dated => @now})})
   end
 end
