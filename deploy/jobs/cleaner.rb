@@ -15,6 +15,21 @@ class Cleaner
     delete_stale_keys(@redis.keys('lb:w:*'), 10 * 86400, '%y%m%d%H')
   end
   
+  def shrink_rank_lookup(max)
+    @redis.keys('lb:*').each do |key|
+      lid = key.split(':')[2]
+      count = @redis.zcard(key)
+      if count > max
+        type = Store['leaderboards'].find_one({:_id => BSON::ObjectId.from_string(lid)})['t']
+        if type == 1
+          @redis.zremrangebyrank(key, 0, count - max - 1)
+        else
+          @redis.zremrangebyrank(key, max, count)
+        end
+      end
+    end
+  end
+  
   #this doesn't use indexes, so it's best to do it during non-busy times
   def clean_scores
     Store['scores'].update({'d.s' => {'$lte' => Time.now.utc - 3 * 86400}}, {'$set' => {:d => nil}}, {:multi => true})
