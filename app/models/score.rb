@@ -46,16 +46,18 @@ class Score
       records = 50 if records > 50
       offset = ((page-1) * records).floor
       offset = 0 if offset < 0
-
+      
+      if scope == LeaderboardScope::Yesterday
+        return { :page => page, :scores => ScoreDaily.get_by_stamp_and_page(leaderboard, leaderboard.yesterday_stamp, records, offset)}
+      end
+      
       prefix = @@prefixes[scope]
       name = Score.scope_to_name(scope)
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
       options = {:fields => {prefix + '.p' => 1, :username => 1, prefix + '.d' => 1, prefix + '.dt' => 1, :_id => 0}, :sort => [prefix + '.p', leaderboard.sort], :skip => offset, :limit => records, :raw => true}
-      {
-        :scores => find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}, 
-        :page => page
-      }
+      
+      {:page => page,  :scores => find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}}
     end
 
     def get_by_player(leaderboard, player, records, scope)

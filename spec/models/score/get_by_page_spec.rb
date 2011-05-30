@@ -68,14 +68,12 @@ describe Score, :get_by_page do
     scores[1][:points].should == 0
   end
   
-  it "should limit yesterday's scores to yesterday" do
+  it "relies on the ScoreDaily for yesterday's scope" do
     @leaderboard = Factory.create(:leaderboard)
-    create_daily_scores(2)
-    create_daily_scores(2, @leaderboard.daily_stamp - 86400)
-    scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Yesterday)[:scores].to_a
-    scores.length.should == 2
-    scores[0][:points].should == 3
-    scores[1][:points].should == 2
+    ScoreDaily.should_receive(:get_by_stamp_and_page).with(@leaderboard, @leaderboard.yesterday_stamp, 10, 0).and_return([1, 2, 3])
+    r = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Yesterday)
+    r[:scores].should == [1,2,3]
+    r[:page].should == 1
   end
   
   it "should limit the weekly scores to this week" do

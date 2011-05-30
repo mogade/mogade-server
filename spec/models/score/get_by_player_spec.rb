@@ -18,11 +18,11 @@ describe Score, :get_by_player do
   it "should return yesterdays's leaderboard from the player's position" do
     @leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
+    player.stub!(:unique).and_return('punique2')
     create_yesterday_scores(20)
     
-    player.stub!(:unique).and_return('punique19')
-    data = Score.get_by_player(@leaderboard, player, 4, LeaderboardScope::Yesterday)    
-    assert_data(data, 1, 19, 16)
+    ScoreDaily.should_receive(:get_by_stamp_and_page).with(@leaderboard, @leaderboard.yesterday_stamp, 4, 16)
+    Score.get_by_player(@leaderboard, player, 4, LeaderboardScope::Yesterday)
   end
    
   it "should return the daily leaderboard from the player's position" do
@@ -66,7 +66,7 @@ describe Score, :get_by_player do
     
   end
   def create_yesterday_scores(count, stamp = nil)
-    create_scores(count, :daily, LeaderboardScope::Daily, stamp || @leaderboard.yesterday_stamp)
+    create_scores(count, :daily, LeaderboardScope::Yesterday, stamp || @leaderboard.yesterday_stamp)
   end
   def create_daily_scores(count, stamp = nil)
     create_scores(count, :daily, LeaderboardScope::Daily, stamp || @leaderboard.daily_stamp)
