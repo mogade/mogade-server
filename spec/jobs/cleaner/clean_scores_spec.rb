@@ -16,6 +16,18 @@ describe Cleaner, 'clean scores' do
     assert_scrubbed(:daily, [4, 5, 6])
   end
   
+  it "clears out daily scores older than 3 days" do
+    Factory.create(:score_daily, {:stamp => Time.now.utc - 43400})
+    Factory.create(:score_daily, {:stamp => Time.now.utc - 1 * 86400})
+    Factory.create(:score_daily, {:stamp => Time.now.utc - 2 * 86400})
+    Factory.create(:score_daily, {:stamp => Time.now.utc - 3 * 86400})
+    Factory.create(:score_daily, {:stamp => Time.now.utc - 4 * 86400})
+
+    Cleaner.new.clean_scores
+    ScoreDaily.count.should == 3
+    ScoreDaily.count({:stamp => {'$gt' => Time.now.utc - 3 * 86400}}).should == 3
+  end
+  
   it "clears our weekly scores older than 10 days" do
     Factory.create(:score, {:weekly => Factory.build(:score_data, {:data => 1, :stamp => Time.now.utc - 43400})})
     Factory.create(:score, {:weekly => Factory.build(:score_data, {:data => 2, :stamp => Time.now.utc - 4 * 86400})})

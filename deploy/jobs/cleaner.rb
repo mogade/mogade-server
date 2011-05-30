@@ -34,6 +34,7 @@ class Cleaner
   def clean_scores
     Store['scores'].update({'d.s' => {'$lte' => Time.now.utc - 3 * 86400}}, {'$set' => {:d => nil}}, {:multi => true})
     Store['scores'].update({'w.s' => {'$lte' => Time.now.utc - 10 * 86400}}, {'$set' => {:w => nil}}, {:multi => true})
+    Store['score_dailies'].remove({:s => {'$lte' => Time.now.utc - 3 * 86400}})
   end  
     
   private 
