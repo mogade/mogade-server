@@ -21,7 +21,7 @@ class Score
     end
     
     def save(leaderboard, player, points, data = nil)
-      data = data[0..49] unless data.nil?
+      data = data[0..49] unless data.nil? || data.length < 50
 
       score = Score.load(leaderboard, player)
       now = Time.now.utc
@@ -38,6 +38,7 @@ class Score
         score.overall = nil if score.overall.points == 0
         score.save!
       end
+      ScoreDaily.save(leaderboard, player, points, data) if changed[LeaderboardScope::Daily]
       changed
     end
 
@@ -94,8 +95,11 @@ class Score
         return {'d.s' => leaderboard.daily_stamp}
       end
     end
+    
+    def daily_collection
+      Store['scores_daily']
+    end
   end
-  
 
   def for_scope(scope)
     case scope

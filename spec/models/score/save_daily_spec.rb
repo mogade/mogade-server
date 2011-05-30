@@ -31,6 +31,14 @@ describe Score, 'save daily' do
     score_should_exist(150)
   end
   
+  it "saves a daily score if the player's new score is better" do
+    @player = Factory.build(:player)
+    @leaderboard = Factory.build(:leaderboard)
+    create_high_score(99)
+    ScoreDaily.should_receive(:save).with(@leaderboard, @player, 1000, 'd3')
+    Score.save(@leaderboard, @player, 1000, 'd3')
+  end
+  
   it "saves the rank if the player's new score is better" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
@@ -42,7 +50,15 @@ describe Score, 'save daily' do
     Score.save(@leaderboard, @player, 100)
   end
 
-  it "does not save the rank if the player's current score is better" do
+  it "does not saves a daily score if the player's new score is worse" do
+    @player = Factory.build(:player)
+    @leaderboard = Factory.build(:leaderboard)
+    create_high_score(200)
+    ScoreDaily.should_not_receive(:save).with(@leaderboard, @player, 4, 'd3')
+    Score.save(@leaderboard, @player, 4, 'd3')
+  end
+  
+  it "does not save the rank if the player's current score is worse" do
     @player = Factory.build(:player)
     @leaderboard = Factory.build(:leaderboard)
     create_high_score(150)

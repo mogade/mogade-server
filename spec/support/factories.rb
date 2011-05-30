@@ -22,15 +22,23 @@ Factory.sequence :unique do |n|
   "unique-#{n}"
 end
 
-Factory.define :score do |h|
-  h.leaderboard_id Id.from_string('222222222222222222222222')
-  h.unique {Factory.next(:unique)}
-  h.username {Factory.next(:unique)}
+Factory.define :score do |s|
+  s.leaderboard_id Id.from_string('222222222222222222222222')
+  s.unique {Factory.next(:unique)}
+  s.username {Factory.next(:unique)}
 end
 
-Factory.define :score_data do |h|
-  h.points 0
-  h.stamp nil
+Factory.define :score_data do |s|
+  s.points 0
+  s.stamp nil
+end
+
+Factory.define :score_daily do |s|
+  s.leaderboard_id Id.from_string('222222222222222222222222')
+  s.unique {Factory.next(:unique)}
+  s.username {Factory.next(:unique)}
+  s.points 0
+  s.stamp nil
 end
 
 Factory.sequence :name do |n|
