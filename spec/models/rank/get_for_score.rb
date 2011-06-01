@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Rank, :get_for_score do
-  before :each do
-    @created = 0
-  end
-
   it "gets a rank from yesterday for high to low" do
     @leaderboard = Factory.build(:leaderboard, {:type => LeaderboardType::HighToLow})
     add_yesterday_ranks(10)
@@ -99,8 +95,7 @@ describe Rank, :get_for_score do
   end
   def add_ranks(count, key)
     count.times do |i|
-      Store.redis.zadd key, i, "member#{@created}"
-      @created += 1
+      Store.redis.zadd key, i, "member#{i}"
     end
   end
 end

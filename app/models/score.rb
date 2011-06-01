@@ -62,7 +62,7 @@ class Score
 
     def get_by_player(leaderboard, player, records, scope)
       records = 50 if records > 50
-      rank = Rank.get_for_player(leaderboard, player.unique, [scope])[scope]
+      rank = Rank.get_for_player(leaderboard, player.unique, scope)
       page = rank == 0 ? 1 : (rank / records.to_f).ceil
       get_by_page(leaderboard, page, records, scope)
     end
