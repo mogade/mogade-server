@@ -16,6 +16,17 @@ class Rank
       ranks.each{|k, v| ranks[k] = v.nil? ? 0 : v + 1 }
     end
     
+    def get_for_score(leaderboard, score, scopes = nil)
+      score = "(#{score}" #exclusive
+      if scopes.nil?
+        scopes = [LeaderboardScope::Yesterday, LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall]
+      end
+      unless scopes.is_a?(Array)
+        return get_for_score_and_scope(leaderboard, score, scopes) + 1
+      end
+      Hash[scopes.map{|scope| [scope, get_for_score_and_scope(leaderboard, score, scope) + 1]}]
+    end
+    
     def get_key(leaderboard, scope)
       case scope
       when LeaderboardScope::Yesterday
@@ -27,6 +38,14 @@ class Rank
       else
         return "lb:d:#{leaderboard.id}:#{leaderboard.daily_stamp.strftime("%y%m%d%H")}"
       end
+    end
+    
+    private
+    def get_for_score_and_scope(leaderboard, score, scope)
+      if leaderboard.type == LeaderboardType::LowToHigh 
+        return Store.redis.zcount(Rank.get_key(leaderboard, scope), 0, score)
+      end
+      return Store.redis.zcount(Rank.get_key(leaderboard, scope), score, 'inf')
     end
   end
 end
