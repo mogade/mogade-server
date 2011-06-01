@@ -4,7 +4,7 @@ class Rank
       Store.redis.zadd(Rank.get_key(leaderboard, scope), points, unique)
     end
     
-    def get(leaderboard, unique, scopes = nil)
+    def get_for_player(leaderboard, unique, scopes = nil)
       ranks = {}
       (scopes || [LeaderboardScope::Yesterday, LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall]).each do |scope|
         if leaderboard.type == LeaderboardType::LowToHigh 

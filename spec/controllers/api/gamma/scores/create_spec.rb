@@ -31,8 +31,8 @@ describe Api::Gamma::ScoresController, :create do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
     Score.stub!(:save).and_return({LeaderboardScope::Daily => true, LeaderboardScope::Weekly => true, LeaderboardScope::Overall => false})
-    Rank.should_receive(:get).with(leaderboard, player.unique, [LeaderboardScope::Daily]).and_return({LeaderboardScope::Daily => 985})
-    Rank.should_receive(:get).with(leaderboard, player.unique, [LeaderboardScope::Weekly]).and_return({LeaderboardScope::Weekly => 455})
+    Rank.should_receive(:get_for_player).with(leaderboard, player.unique, [LeaderboardScope::Daily]).and_return({LeaderboardScope::Daily => 985})
+    Rank.should_receive(:get_for_player).with(leaderboard, player.unique, [LeaderboardScope::Weekly]).and_return({LeaderboardScope::Weekly => 455})
     
     post :create, GammaApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
     response.status.should == 200

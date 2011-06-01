@@ -12,7 +12,7 @@ class Api::Legacy::ScoresController < Api::Legacy::ApiController
     
     if page == 1 && load_player
       high = Score.load(@leaderboard, @player).for_scope(scope)
-      payload[:user] = high.points == 0 ? nil : {:username => @player.username, :points => high.points, :data => high.data, :rank => Rank.get(@leaderboard, @player.unique, [scope])[scope]}
+      payload[:user] = high.points == 0 ? nil : {:username => @player.username, :points => high.points, :data => high.data, :rank => Rank.get_for_player(@leaderboard, @player.unique, [scope])[scope]}
     end
     
     render :json => payload.merge({:page => page.to_i})
@@ -20,7 +20,7 @@ class Api::Legacy::ScoresController < Api::Legacy::ApiController
   
   def yesterdays_rank
     return unless ensure_player
-    render :json => {:rank => Rank.get(@leaderboard, @player.unique, [LeaderboardScope::Yesterday])[LeaderboardScope::Yesterday]}
+    render :json => {:rank => Rank.get_for_player(@leaderboard, @player.unique, [LeaderboardScope::Yesterday])[LeaderboardScope::Yesterday]}
   end
   
   def yesterdays_leaders
@@ -34,7 +34,7 @@ class Api::Legacy::ScoresController < Api::Legacy::ApiController
     return error('missing points') if params[:score][:points].blank?
 
     high_scores = Score.save(@leaderboard, @player, params[:score][:points].to_i, params[:score][:data])
-    ranks = Rank.get(@leaderboard, @player.unique)
+    ranks = Rank.get_for_player(@leaderboard, @player.unique)
     render :json => {:daily => ranks[LeaderboardScope::Daily], :weekly => ranks[LeaderboardScope::Weekly], :overall => ranks[LeaderboardScope::Overall], :top_score => high_scores[LeaderboardScope::Overall]}
   end
 end

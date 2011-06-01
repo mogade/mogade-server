@@ -10,14 +10,14 @@ describe Api::Gamma::RanksController, :index do
   it "gets the ranks with no specified scope" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    Rank.should_receive(:get).with(leaderboard, player.unique, nil)
+    Rank.should_receive(:get_for_player).with(leaderboard, player.unique, nil)
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey}
   end
   
   it "gets the ranks for the specified scope" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    Rank.should_receive(:get).with(leaderboard, player.unique, [LeaderboardScope::Daily, LeaderboardScope::Overall])
+    Rank.should_receive(:get_for_player).with(leaderboard, player.unique, [LeaderboardScope::Daily, LeaderboardScope::Overall])
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey, :scopes => [LeaderboardScope::Daily, LeaderboardScope::Overall]}
   end
   
@@ -26,7 +26,7 @@ describe Api::Gamma::RanksController, :index do
     player = Factory.build(:player)
     ranks = {:daily => 44, :weekly => 3}
     
-    Rank.stub!(:get).and_return(ranks)
+    Rank.stub!(:get_for_player).and_return(ranks)
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey}
     
     response.status.should == 200
@@ -40,7 +40,7 @@ describe Api::Gamma::RanksController, :index do
     player = Factory.build(:player)
     ranks = {:daily => 44, :weekly => 3}
     
-    Rank.stub!(:get).and_return(ranks)
+    Rank.stub!(:get_for_player).and_return(ranks)
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey, :callback => 'gotRanks'}
     
     response.status.should == 200
@@ -51,7 +51,7 @@ describe Api::Gamma::RanksController, :index do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
     
-    Rank.stub!(:get).and_return({})
+    Rank.stub!(:get_for_player).and_return({})
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey, :callback => 'gotScores'}
     
     response.headers['Cache-Control'].should == 'public, max-age=300'
@@ -61,7 +61,7 @@ describe Api::Gamma::RanksController, :index do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
     
-    Rank.stub!(:get).and_return({})
+    Rank.stub!(:get_for_player).and_return({})
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey}
     
     response.headers['Cache-Control'].should == 'max-age=0, private, must-revalidate'
