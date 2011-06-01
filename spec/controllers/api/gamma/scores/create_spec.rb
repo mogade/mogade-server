@@ -26,19 +26,27 @@ describe Api::Gamma::ScoresController, :create do
     post :create, GammaApiHelper.signed_params(@game, {:points => '323', :data => 'dta', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
   end
   
-  
-  it "renders the new rank for better scores" do
+  it "renders rank for the score" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    Score.stub!(:save).and_return({LeaderboardScope::Daily => true, LeaderboardScope::Weekly => true, LeaderboardScope::Overall => false})
-    Rank.should_receive(:get_for_player).with(leaderboard, player.unique, [LeaderboardScope::Daily]).and_return({LeaderboardScope::Daily => 985})
-    Rank.should_receive(:get_for_player).with(leaderboard, player.unique, [LeaderboardScope::Weekly]).and_return({LeaderboardScope::Weekly => 455})
+    
+    Score.stub!(:save)
+    Rank.should_receive(:get_for_score).with(leaderboard, 323).and_return('hahahah')
     
     post :create, GammaApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
-    json[LeaderboardScope::Daily.to_s].should == 985
-    json[LeaderboardScope::Weekly.to_s].should == 455
-    json[LeaderboardScope::Overall.to_s].should == 0
+    json['ranks'].should == 'hahahah'
+  end
+  
+  it "renders the high score data" do
+    leaderboard = Factory.create(:leaderboard)
+    player = Factory.build(:player)
+    Score.stub!(:save).and_return('blah')
+    
+    post :create, GammaApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
+    response.status.should == 200
+    json = ActiveSupport::JSON.decode(response.body)
+    json['high'].should == 'blah'
   end
 end

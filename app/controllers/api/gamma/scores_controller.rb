@@ -20,9 +20,10 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
 
   def create
     return unless ensure_params(:points)
-    high_scores = Score.save(@leaderboard, @player, params[:points].to_i, params[:data])
-    ranks = {}
-    high_scores.each{|key, value| ranks.merge!(value ? Rank.get_for_player(@leaderboard, @player.unique, [key]) : {key => 0})}
-    render :json => ranks
+    points = params[:points].to_i
+    
+    high_scores = Score.save(@leaderboard, @player, points, params[:data])
+    ranks =  Rank.get_for_score(@leaderboard, points)
+    render :json => {:ranks => ranks, :high => high_scores}
   end
 end

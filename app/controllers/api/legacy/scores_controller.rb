@@ -32,9 +32,10 @@ class Api::Legacy::ScoresController < Api::Legacy::ApiController
     return unless ensure_leaderboard(:leaderboard_id)
     return unless ensure_player(:score)
     return error('missing points') if params[:score][:points].blank?
-
-    high_scores = Score.save(@leaderboard, @player, params[:score][:points].to_i, params[:score][:data])
-    ranks = Rank.get_for_player(@leaderboard, @player.unique)
+    
+    score = params[:score][:points].to_i
+    high_scores = Score.save(@leaderboard, @player, score, params[:score][:data])
+    ranks = Rank.get_for_score(@leaderboard, score)
     render :json => {:daily => ranks[LeaderboardScope::Daily], :weekly => ranks[LeaderboardScope::Weekly], :overall => ranks[LeaderboardScope::Overall], :top_score => high_scores[LeaderboardScope::Overall]}
   end
 end
