@@ -31,6 +31,7 @@ end
 Factory.define :score_data do |s|
   s.points 0
   s.stamp nil
+  s.data nil
 end
 
 Factory.define :score_daily do |s|

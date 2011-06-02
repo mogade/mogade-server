@@ -39,6 +39,19 @@ describe Api::Gamma::ScoresController, :index do
     json['scores'].should == scores[:scores]
   end
   
+  it "returns only the player's score" do
+    leaderboard = Factory.create(:leaderboard)
+    score = Factory.build(:score, {:daily => Factory.build(:score_data, {:points => 9000, :data => "it's over"})})
+    player = Player.new('leto2', 'ghanima')
+    Player.should_receive(:new).with('leto2', 'ghanima').and_return(player)
+    Score.should_receive(:load).with(leaderboard, player).and_return(score)
+    get :index, {:lid => leaderboard.id, :username => 'leto2', :userkey => 'ghanima', :page => '2', :records => '1', :scope => LeaderboardScope::Daily}
+    
+    json = ActiveSupport::JSON.decode(response.body)
+    json['points'].should == 9000
+    json['data'].should == "it's over"
+  end
+  
   it "returns the scores within the specific callback" do
     leaderboard = Factory.create(:leaderboard)
     scores = {:page => 4, :scores =>[{'blah' => 1}]}

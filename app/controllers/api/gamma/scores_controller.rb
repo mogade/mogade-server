@@ -12,6 +12,8 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     player = load_player
     if player.nil?
       payload = Score.get_by_page(@leaderboard, params_to_i(:page, 1), records, scope)
+    elsif records == 1
+      payload = Score.load(@leaderboard, player).for_scope(scope).attributes
     else
       payload = Score.get_by_player(@leaderboard, player, records, scope)
     end
