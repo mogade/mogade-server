@@ -1,9 +1,21 @@
-#homeWrap{background:#222 url('../images/home_back.gif') repeat-x;font-size:1.3em;line-height:140%;}
-#home{color:#fff;width:750px;padding:10px 0 30px 0;margin:0 auto;overflow:auto;}
-#home a {color:#bbb;}
+#homeWrap{background:#222 url('../images/home_back.gif') repeat-x;font-size:1.3em;line-height:140%;position:relative;}
+#home{color:#fff;width:750px;padding:30px 0 10px 0;margin:0 auto}
+#home a {color:#fff;text-decoration:underline;}
 #home a:hover{color:#eee;}
-#home .steps{border-top:1px solid #333;padding-top:10px;}
-#home .steps > div {float:left;width:185px;display:block;height:120px;border-left:1px solid #222;border-right:1px solid #333;text-align:center;}
-#home .steps img{display:block;margin:10px auto;}
-#home .steps a{color:#fff;text-decoration:none;}
-#home .steps a:hover{color:#999;}
+
+
+#steps{background:#f3f3f3;color:#222;padding:20px;border:1px solid #ddd;overflow:auto;
+  background: #fff;
+   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f0f0f0));
+   background: -moz-linear-gradient(-90deg, #fff, #f0f0f0f);
+   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#f0f0f0);}
+#steps h2{margin:0 0 10px 28px;padding-bottom:10px;border-bottom:1px solid #ddd;}
+#steps h3{font-weight:bold;margin-bottom:3px;}
+#steps > div {float:left;width:410px;display:block;height:120px;margin:0 0 0 30px}
+#steps p{font-size:1.1em;line-height:1.6em;}
+
+.buttons {position:absolute;right:3px;bottom:10px;}
+.buttons a{font-weight:bold;color:#8ff;padding:10px 40px;font-size:0.8em;margin-left:20px;background:#1e1e1e;
+  -moz-border-radius: 4px;-webkit-border-radius: 4px;border-radius:4px;border:1px solid transparent;}
+.buttons a:hover{border:1px solid #8ff;}
+
