@@ -69,8 +69,25 @@
 <h3>Get Achievements</h3>
 <p>To get all of the achievements a player has earned in your game, you can <code>GET</code> the <code>achievements</code> endpoint. This command takes the <code>key</code>, <code>username</code> and <code>userkey</code>. Also, as this command is read-only, an optional <code>callback</code> parameter can be supplied (for use with JSONP).</p>
 
-<p>As a response, you'll get an array of achievement ids which the player has earned</p>.
+<p>As a response, you'll get an array of achievement ids which the player has earned.</p>
 
+<a name="logerror"></a>
+<h2>Log Error</h2>
+<p>You can <code>POST</code> to the <code>errors</code> endpoint to log any error and have access to the details through mogade.com. This command requires a <code>key</code> and <code>sig</code>. It also requires a <code>subject</code> which is a short (up to 150 character) description of the error. You can optionally supply a <code>details</code> parameter which can be up to 2000 characters.</p>
+
+<p>This command does not return a value.</p>
+
+<a name="logstart"></a>
+<h2>Log Start</h2>
+<p>You should <code>POST</code> to the <code>stats</code> endpoint whenever your game starts up. This allows for the collection of basic usage statistics. This command requires a <code>key</code>, <code>sig</code> and <code>userkey</code>.
+
+<p>This command does not return a value.</p>
+
+<a name="ranks"></a>
+<h2>Ranks</h2>
+<p>You can get a player's current rank by <code>GET</code>ting the <code>ranks</code> endpoint. This takes the leaderboard id as <code>lid</code>, the <code>username</code> and <code>userkey</code>. You can optionally specify one or more <code>scopes</code> (daily (1), weekly (2), overall (3) and yesterday (4)). By default, all scopes are returned.</p>
+
+<p>The response is the  rank of the player score for that leaderboard across the specified (or all) scopes.</p>
 
 </div>
 <% content_for :right do -%>
@@ -95,5 +112,8 @@
       <li><a href="#achievements_get">get</a></li>
     </ul>
   </li>
+  <li><a href="#logerror">log error</a></li>
+  <li><a href="#logstart">log start</a></li>
+  <li><a href="#ranks">ranks</a></li>
 </ul>
 <% end -%>
