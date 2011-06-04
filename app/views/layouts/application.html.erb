@@ -8,6 +8,7 @@
   <%= yield :head -%>
 </head>
 <body>
+  <div id="notice">testing.mogade.com is currently being used to test v2. <a href="https://groups.google.com/d/msg/mogadedev/lK3jS9IHwAQ/q2hrnyjWXocJ">read more</a></div>
 <% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
 <div id="site">
   <div id="header">
