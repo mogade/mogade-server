@@ -1,0 +1,99 @@
+<% content_for :title, 'Mogade API' -%>
+<% content_for :section_title, "Do you Speak Mogade?" -%>
+<div id="api">
+<a name="overview"></a>
+<h2>Overview</h2>
+<p>Communication between a client and the mogade server happens via a REST interface over HTTP. Although the mogade libraries abstract the API away and provide a familiar interface, developers may still find the details useful. The information listed here is more of a high level overview of the mogade protocol. <strong>You really don't have to understand any of this to use mogade!</strong></p>
+
+<a name="basics"></a>
+<h2>Basics</h2>
+<p>When learning the mogade API, it's safe to think of everything in terms of two categories: commands which are read-only and commands which aren't. A non read-only command always requires a <code>key</code> and a <code>sig</code> (more on these shortly); whereas a read-only command never requires a <code>sig</code>, might require a <code>key</code>, and always accepts an optional <code>callback</code> parameter (for use with JSONP).</p>
+
+<p>The root of the API is <code>http://api2.mogade.com/api/gamma/</code>.</p>
+
+<p>All responses are in JSON.</p>
+
+<a name="key"></a>
+<h3>The Key</h3>
+<p>When you create a game in the mogade.com website, you'll get a game key. Drivers will typically ask for the game key as part of your configuration (perhaps when constructing a mogade object) and handle it internally from there on.</p>
+
+<a name="sig"></a>
+<h3>The Sig</h3>
+<p>The other parameter you get when creating your game is a <code>secret</code>. <strong>It is very important that you keep your secret..well..secret.</strong> The secret is used by drivers to generate a <code>sig</code> parameter. The <code>sig</code> parameter is a SHA1 hex-representation of all the other parameters, sorted by key, joined by a pipe | with the secret appended at the end.</p>
+
+<p>What? Let's look at an example. Given a secret of <code>shhhh</code> and the following parameters <code>q=power%20level&amp;a=9001</code>, we would sort and join the key values by pipe: <code>a|9001|q|power%20level|</code> and append the secret: <code>a|9001|q|power%20level|shhhh</code>. We could then SHA1 hash it and get the final value for the <code>sig</code> parameter: <code>a02365b9a7e21c163d50a36e16b4d776f206adcc</code>. Depending on your language, the SHA1 implementation might return a byte-array (or something similar), you'll need to convert this to a hexadecimal representaiton.</p>
+
+<p>This approach has a couple nice benefits. First, only someone that knows your secret can submit requests. Also, even if a request is intercepted, all they can do is issue the exact same request - because any change to a parameter would require a new signature. Finally, the secret is never sent over the wire. This is why any request that has a <code>sig</code>, also requires a <code>key</code> - so that we can look up the <code>secret</code> on our side and make sure the signature is valid (by regenerating it from all the parameters and comparing is to the supplied one).</p>
+
+<a name="player"></a>
+<h3>Player</h3>
+<p>Mogade works without requiring players to register or even be aware of mogade.com. This is achieved by internally identifying them using two key pieces of information: a <code>username</code> and a <code>userkey</code>. The <code>username</code> is provided by a user. The <code>userkey</code> is some type of unique identifier - say a device id - which most drivers handle internally. Combined, these two parameters uniquely identify a player yet allow for multiple players to use the same device.</p>
+
+<p>Usernames are limited to 30 characters</p>
+
+<a name="scores"></a>
+<h2>Scores</h2>
+<p>The score endpoint is used to either get scores or save a score.</p>
+
+<a name="scores_save"></a>
+<h3>Save Score</h3>
+<p>You can save a score by <code>POST</code>ing to the <code>scores</code> endpoint. This command requires many of the basic parameters: <code>key</code>, <code>sig</code>, <code>userkey</code> and <code>username</code>. It also takes a <code>lid</code> which is the id of the leaderboard to save the score to and a <code>points</code> which is how many points the player got.</p>
+
+<p>The command also accepts a special optional parameter called <code>data</code>. This is an arbitrary string you can store along with a score which'll be retrieved whenever you get scores out. This can include additional information, such as a level reached or time taken. We don't do any processing on this value, it's up to developers to encode and decode whatever is held in data. The field is limited to 50 characters.</p>
+
+<p>The response is made up of two parts. The first is the rank of that score for that leaderboard across all supported scopes (daily (1), weekly (2) and overall (3)). The second part is whether or not this is a new high score for the player across the same scopes.</p>
+
+<a name="scores_get"></a>
+<h3>Get Scores</h3>
+<p>There are three different ways to get a score. They all involve <code>GET</code>int to the <code>scores</code> endpoint.  In each case, you'll have to supply the leaderboard id as <code>lid</code> and a <code>scope</code> (daily (1), weekly (2), overall (3) or yesterday (4)). Also, as this command is read-only, an optional <code>callback</code> parameter can be supplied (for use with JSONP).</p>
+  
+<p>To get a page of score results, simply supply two additional parameters, the <code>page</code> and number of <code>records</code>. The first parameter is the 1-based index of where to start. The second is how many total records to retrieve - with an upper limit of 50.</p>
+
+<p>Instead of supplying a <code>page</code> parameter, you can opt to supply a <code>username</code> and <code>userkey</code> parameter. This will return a leaderboard located around the specified user. Please note that this is a best-guess effort and may return the wrong page should the player be tied with a high number of other players. This method also accept a <code>record</code> parameter</p>
+
+<p>Finally, if you take the above parameters but supply a <code>record</code> of 1, then you'll only get that player's score for the specified scope. This will always work regardless of ties.</p>
+
+<p>However you call it, get scores returns 0 or more scores. This includes the username, points, date and date of the score. Additionally, in the first two cases, the page is returned.</p>
+
+<a name="achievements"></a>
+<h2>Achievements</h2>
+<p>The achievement endpoint is used to either get achievements or grant achievements.</p>
+
+<a name="achievements_grant"></a>
+<h3>Grant Achievement</h3>
+<p>You can grant an achievement by <code>POST</code>ing to the <code>achievements</code> endpoint. This command requires many of the basic parameters: <code>key</code>, <code>sig</code>, <code>userkey</code> and <code>username</code>. It also takes a <code>aid</code> which is the id of the achievement to grant.</p>
+
+<p>If this is the first time the player has earned the achievement, the achievement id and how many points it is worth will be returned. Otherwise, an empty response is returned.</p>
+
+<a name="achievements_get"></a>
+<h3>Get Achievements</h3>
+<p>To get all of the achievements a player has earned in your game, you can <code>GET</code> the <code>achievements</code> endpoint. This command takes the <code>key</code>, <code>username</code> and <code>userkey</code>. Also, as this command is read-only, an optional <code>callback</code> parameter can be supplied (for use with JSONP).</p>
+
+<p>As a response, you'll get an array of achievement ids which the player has earned</p>.
+
+
+</div>
+<% content_for :right do -%>
+<ul class="menu" id="apimenu">
+  <li><a href="#overview">overview</a></li>
+  <li><a href="#basics">basics</a>
+    <ul>
+      <li><a href="#key">key</a></li>
+      <li><a href="#sig">sig</a></li>
+      <li><a href="#player">player</a></li>
+    </ul>
+  </li>
+  <li><a href="#scores">scores</a>
+    <ul>
+      <li><a href="#scores_save">save</a></li>
+      <li><a href="#scores_get">get</a></li>
+    </ul>
+  </li>
+  <li><a href="#achievements">achievements</a>
+    <ul>
+      <li><a href="#achievements_grant">grant</a></li>
+      <li><a href="#achievements_get">get</a></li>
+    </ul>
+  </li>
+</ul>
+<% end -%>

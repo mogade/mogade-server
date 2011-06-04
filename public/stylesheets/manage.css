@@ -1,6 +1,7 @@
 h3{font-size:1.2em;font-weight:bold;margin:5px 0 5px 0}
 ol{margin-bottom:20px;}
 li{line-height:1.3em;margin-bottom:5px;padding:5px;}
+code{border: 1px solid #E6E6E6; background: #F0F0F0; padding: 1px 4px;}
 #content{overflow:auto;}
 #content_dual{overflow:auto;background:url('../images/manage_back.png') repeat-y;}
 #left{float:left;width:680px;}
@@ -13,7 +14,10 @@ li{line-height:1.3em;margin-bottom:5px;padding:5px;}
 #confirm, #confirmNone{margin-top:30px;}
 #confirmNone{border:solid #faa;border-width:1px 0;padding:10px;}
 #confirm > .buttons{margin-top:20px;}
-
+#api h2{margin-bottom:3px;font-size:1.4em}
+#api h3{margin-bottom:3px;font-size:1.1em;}
+#api p{line-height:1.7em;}
+#apimenu{position:fixed;width:220px;}
 /* form stuff */
 .field{margin-bottom:25px;position:relative;}
 .field label{display:block;float:left;width:100px;margin-top:10px;padding-left:10px;}

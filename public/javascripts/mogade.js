@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-  $('input, .button').addClass('r');
+  $('input, .button, code').addClass('r');
   $('label.tip').tip();
   $('input.numeric').numeric();
   $('.menu a[href^="' + top.location.pathname + '"]').addClass('active').prepend(':');

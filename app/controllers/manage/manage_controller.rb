@@ -8,6 +8,9 @@ class Manage::ManageController < ApplicationController
   def tos
   end
   
+  def api
+  end
+  
   private 
   def signin(developer)
     session[:dev_id] = developer.id.to_s
