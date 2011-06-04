@@ -3,4 +3,5 @@ log/*.log
 config/settings.yml
 Capfile
 deploy/deploy.rb
+deploy/jobs/runner.rb
 tmp/
