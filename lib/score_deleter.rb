@@ -10,8 +10,12 @@ class ScoreDeleter
     
     def delete(leaderboard, scope, field, operator, value)
       conditions = {:leaderboard_id => leaderboard.id}.merge(conditions(field, operator, value, scope))
-      name = Score.scope_to_name(scope)
-      Score.update(conditions, {'$set' => {name => nil}}, {:multi => true})
+      redis = Store.redis
+      key = Rank.get_key(leaderboard, scope)
+      Score.find(conditions, {:fields => {:userkey => 1, :_id => -1}, :raw => true}).each do |score|
+        redis.zrem(key, score[:userkey])
+      end
+      Score.update(conditions, {'$set' => { Score.scope_to_name(scope) => nil}}, {:multi => true})
     end
     
     def conditions(field, operator, value, scope)

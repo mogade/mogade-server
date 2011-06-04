@@ -106,4 +106,30 @@ describe ScoreDeleter, :delete do
       Score.remove
     end
   end
+  
+  it "removes the ranks for the deleted scores" do
+    leaderboard = Factory.build(:leaderboard)
+    [LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall].each do |scope|
+      name = Score.scope_to_name(scope)
+      Factory.create(:score, {:leaderboard_id => leaderboard.id, :userkey => 'u1', name => Factory.build(:score_data, {:points => 4})})
+      Factory.create(:score, {:leaderboard_id => leaderboard.id, :userkey => 'u2', name => Factory.build(:score_data, {:points => 2})})
+      Factory.create(:score, {:leaderboard_id => leaderboard.id, :userkey => 'u3', name => Factory.build(:score_data, {:points => 23})})
+      Factory.create(:score, {:leaderboard_id => leaderboard.id, :userkey => 'u4', name => Factory.build(:score_data, {:points => 4})})
+      Rank.save(leaderboard, scope, 'u1', 4)
+      Rank.save(leaderboard, scope, 'u2', 2)
+      Rank.save(leaderboard, scope, 'u3', 23)
+      Rank.save(leaderboard, scope, 'u4', 4)
+      
+      key = Rank.get_key(leaderboard, scope)
+      
+      ScoreDeleter.delete(leaderboard, scope, ScoreDeleterField::Points, 3, 6)
+      Store.redis.zcard(key).should == 4
+      
+      ScoreDeleter.delete(leaderboard, scope, ScoreDeleterField::Points, 3, 4)
+      Store.redis.zcard(key).should == 2
+      Store.redis.zrevrank(key, 'u3').should == 0
+      Store.redis.zrevrank(key, 'u2').should == 1
+      Score.remove
+    end
+  end
 end

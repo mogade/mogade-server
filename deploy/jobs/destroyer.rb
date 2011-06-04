@@ -16,7 +16,7 @@ class Destroyer
       Leaderboard.find({:game_id => game_id}).each{|l| l.destroy }
       
       @redis.srem('cleanup:games', game_id)
-      count += 50
+      count += 1
     end
   end
   
@@ -30,10 +30,9 @@ class Destroyer
       Score.remove({:lid => leaderboard_id})
             
       @redis.srem('cleanup:leaderboards', leaderboard_id)
-      count += 50
+      count += 1
     end
   end
-  
   
   private
   def destroy_ranks(leaderboard_id)
