@@ -12,7 +12,7 @@ ScoreDaily.collection.ensure_index([['lid', Mongo::ASCENDING], ['u', Mongo::ASCE
 ScoreDaily.collection.ensure_index([['lid', Mongo::ASCENDING], ['dt', Mongo::ASCENDING], ['p', Mongo::DESCENDING]])
 
 Developer.collection.ensure_index([['e', Mongo::ASCENDING]], {:unique => true})
-Developer.collection.ensure_index([['a', Mongo::ASCENDING]], {:unique => true})
+Developer.collection.ensure_index([['a', Mongo::ASCENDING]])
 EarnedAchievement.collection.ensure_index([['aid', Mongo::ASCENDING], ['u', Mongo::ASCENDING]], {:unique => true})
 GameError.collection.ensure_index([['gid', Mongo::ASCENDING], ['uat', Mongo::DESCENDING]])
 GameError.collection.ensure_index([['h', Mongo::ASCENDING]], {:unique => true})
