@@ -12,7 +12,15 @@
         initialize: function()
         {
           $label.hide();
-          $input.focus(self.hasFocus).blur(self.lostFocus);
+          if ($input.is(':checkbox'))
+          {
+            $input.filter(':checkbox').mouseover(self.hasFocus).mouseout(self.lostFocus);
+            $label.css('left', '150px');
+          }
+          else
+          {
+            $input.focus(self.hasFocus).blur(self.lostFocus);
+          }
         },
         hasFocus: function()
         {

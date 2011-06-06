@@ -13,7 +13,15 @@ module ApplicationHelper
     values = enum.lookup.reject{|pair| ignore.include?(pair[1])}
     ("<select name=\"#{name}\" id=\"#{name}\">" + options_for_select(values, selected) + "</select>").html_safe
   end
+  
+  def profile_image_root
+    (request.ssl? ? 'https://' : 'http://') + Settings.aws_root_path
+  end
 
+  def profile_image(profile, index)
+    return ' /images/trans.gif' if profile.images.nil? || profile.images[index].nil?
+    profile_image_root + profile.images[index]
+  end
   def ssl_url(path)
     return path if request.ssl? || request.local?
     'https://' + request.host_with_port + path

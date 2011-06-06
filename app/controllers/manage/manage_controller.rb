@@ -8,6 +8,10 @@ class Manage::ManageController < ApplicationController
   def tos
   end
   
+  def drivers
+    render :layout => 'manage_single'
+  end
+  
   def api
   end
   

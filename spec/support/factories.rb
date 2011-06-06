@@ -72,3 +72,13 @@ Factory.define :game_error do |e|
   e.details 'the details'
   e.game_id Id.from_string('111111111111111111111111')
 end
+
+Factory.define :profile do |p|
+  p.name 'the profile'
+  p.game_url 'http://the.url.com/hah?over=9000'
+  p.developer 'the developer'
+  p.developer_url 'http://the.developer.com'
+  p.enabled true
+  p.description 'mind blowing'
+  
+end

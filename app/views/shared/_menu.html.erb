@@ -1,4 +1,3 @@
-<h3>general settings</h3>
 <ul class="menu">
   <li><a href="<%= url_for(:controller => 'games', :action => 'index') %>">game list</a></li>
   <li><a href="<%= ssl_url(url_for(:controller => 'games', :action => 'show', :id => @game.id))%>">overview</a></li>
@@ -8,6 +7,11 @@
     <% end -%>
   </li>
   <li><a href="<%= url_for(:controller => 'achievements', :action => 'index', :id => @game.id)%>">achievements</a>
+  <li><a href="<%= url_for(:controller => 'profiles', :action => 'index', :id => @game.id)%>">web profile</a>
+    <% if defined? show_profile -%>
+    <ul><li><a href="<%= url_for :controller => 'profiles', :action => 'images', :id => @game.id %>">images</a></li></ul>		
+    <% end -%>
+  </li>
   <li><a href="<%= url_for(:controller => 'stats', :action => 'index', :id => @game.id)%>">usage statistics</a></li>
   <li><a href="<%= url_for(:controller => 'errors', :action => 'index', :id => @game.id)%>">logged errors</a></li>
 </ul>

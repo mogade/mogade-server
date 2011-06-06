@@ -15,12 +15,14 @@ js:
     - jquery.pagedList
     - mogade
   stats:
-    - excanvas
-    - jquery.dateRange
-    - jquery.flot
-    - statistics
+    - stats/excanvas
+    - stats/jquery.dateRange
+    - stats/jquery.flot
+    - stats/statistics
   s:
     - scores
+  u:
+    - fileuploader
 
 css:
   main:

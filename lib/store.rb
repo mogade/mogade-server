@@ -18,6 +18,7 @@ module Store
     
     @@redis = Redis.new(:host => Settings.redis['host'], :port => Settings.redis['port'])
     @@redis.select(Settings.redis['database'])
+    @@aws_bucket = Settings.aws['bucket']
   end
   
   def self.mongo_collections
@@ -27,8 +28,14 @@ module Store
   def self.redis
     @@redis
   end
+
   def self.[](collection_name)
     @@mongo_database.collection(collection_name)
+  end
+
+  def self.save_image(name, stream, previous = nil)
+    AWS::S3::S3Object.delete(previous, @@aws_bucket) unless previous.nil?
+    AWS::S3::S3Object.store(name, stream, @@aws_bucket, {'Cache-Control' => 'public,max-age=31536000'})
   end
   
   def self.handle_passenger_forking

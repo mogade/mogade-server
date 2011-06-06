@@ -47,7 +47,6 @@ $(document).ready(function()
     .find('td.delete').confirm('Delete this leaderboard?', 'This leaderboard will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/leaderboards/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
   var rules = <%= validation_of(Leaderboard).html_safe%>;	
   $('#add').validator({rules: rules});
-
 });
 </script>
 

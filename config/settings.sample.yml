@@ -1,11 +1,15 @@
 defaults: &defaults
   admin_email: mogade@mogade.com
+  max_image_length: 25600
   
 development:
   <<: *defaults
   cdn_url: http://0.0.0.0:3000
   ssl_cdn_url: http://0.0.0.0:3000
   postmark_key: postmark_api_key
+  aws:
+    key: aws_key
+    secret: aws_secret
   mongo:
     host: localhost
     port: 27017
@@ -32,6 +36,10 @@ production:
   ssl_cdn_url: http://0.0.0.0:3000
   #hoptoad_key: optional_hoptoad_key
   postmark_key: postmark_api_key
+  aws:
+    key: aws_key
+    secret: aws_secret
+    bucket: name_of_bucket_name
   mongo:
     host: localhost
     port: 27017

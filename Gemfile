@@ -11,6 +11,7 @@ gem 'redis', '~> 2.2.0', :require => ['redis/connection/hiredis', 'redis']
 gem 'hoptoad_notifier'
 gem 'postmark'
 gem 'mail'
+gem 'aws-s3'
 
 group :development do  
 	gem 'spork'

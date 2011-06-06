@@ -115,3 +115,31 @@
     });
   };
 })(jQuery);
+
+(function($)
+{
+  $.fn.textAreaLength = function(maxlength)
+  {
+    return this.each(function()
+    {
+      if (this.textAreaLength) { return false; }
+      var $this = $(this);
+      var $container = $this.siblings('.charCounter');
+      var self =
+      {
+        initialize: function()
+        {
+          $this.attr('maxlength', maxlength)
+          $this.keyup(self.updateCount);
+          self.updateCount();
+        },
+        updateCount: function()
+        {
+          $container.html($this.val().length + " / " + maxlength);
+        }
+      }
+      this.textAreaLength = self;
+      self.initialize();
+    });
+  };
+})(jQuery);
