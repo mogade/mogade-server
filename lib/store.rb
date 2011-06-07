@@ -32,11 +32,6 @@ module Store
   def self.[](collection_name)
     @@mongo_database.collection(collection_name)
   end
-
-  def self.save_image(name, stream, previous = nil)
-    AWS::S3::S3Object.delete(previous, @@aws_bucket) unless previous.nil?
-    AWS::S3::S3Object.store(name, stream, @@aws_bucket, {'Cache-Control' => 'public,max-age=31536000'})
-  end
   
   def self.handle_passenger_forking
     if defined?(PhusionPassenger)

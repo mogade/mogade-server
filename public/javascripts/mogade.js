@@ -3,7 +3,7 @@ $(document).ready(function()
   $('input, .button, code').addClass('r');
   $('label.tip').tip();
   $('input.numeric').numeric();
-  $('.menu a[href^="' + top.location.pathname + '"]').addClass('active').prepend(':');
+  $('.menu a[href="' + top.location.pathname + top.location.search + '"]').addClass('active').prepend(':');
 });
 
 function do_delete(url, data)

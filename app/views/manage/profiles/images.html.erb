@@ -1,38 +1,26 @@
 <% content_for :title, @game.name + ' profile images' -%>
 <% content_for :section_title,  @game.name + ' .. profile images' -%>
-<% content_for :head do -%><%= include_js_bundle 'u' %><% end -%>
+<% content_for :head do -%><%= include_js_bundle 'pi' %><% end -%>
 
+<h2>Banner Image</h2>
+<div id="bannerImage">
+  <img src="<%= profile_image(@profile, 0)%>" class="uploadedImage"/>
+  <div class="button uploadButton">upload</div>
+</div>
+<h2>Image Gallery</h2>
 <div id="imageList">
 <% 6.times do |i| -%>
   <div>
-    <img src="<%= profile_image(@profile, i)%>"/>
-    <div class="button">upload</div>
+    <img src="<%= profile_image(@profile, i+1)%>" class="uploadedImage"/>
+    <div class="button uploadButton">upload</div><div data-i="<%=i+1%>" class="button deleteButton"<% unless profile_has_image(@profile, i+1)%> style="display:none"<% end %>>X</div>
   </div>
 <% end -%>
 </div>
 
-
 <script type="text/javascript">
-$(document).ready(function()
-{
-  var $containers = $('#imageList > div');
-  var options = 
-  {
-    action: '/manage/profiles/upload',
-    params: {authenticity_token: AUTH_TOKEN, game_id: '<%=@game.id%>'},
-    multiple: false,
-    sizeLimit: <%=Settings.max_image_length%>,
-    allowedExtensions: ['gif', 'png', 'jpeg', 'jpg'],
-    onComplete: function(id, name, r) { $containers.eq(r.index).find('img')[0].src = '<%= profile_image_root%>' + r.name; }
-  }
-  for(var i = 0; i < 6; ++i)
-  {
-    var o = jQuery.extend(true, {}, options);
-    o['button'] = $containers.eq(i).find('.button')[0];
-    o['params']['index'] = i;
-    new qq.FileUploaderBasic(o);
-  }
-});
+var game_id = '<%=@game.id%>';
+var profile_image_root = '<%= profile_image_root%>';
+var max_image_length = <%=Settings.max_image_length%>;
 </script>
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu', :locals => {:show_profile => true} %>

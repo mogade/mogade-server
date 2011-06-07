@@ -77,7 +77,13 @@ h4{font-weight:bold;}
 .pager a.active{border-color:transparent;font-weight:bold;}
 .pager .total{position:absolute;right:5px;top:6px;font-weight:bold;}
 
+#bannerImage{margin-bottom:20px;}
+
 #imageList{overflow: auto;}
-#imageList img {width:150px; height:200px;}
-#imageList > div{float:left;width:200px;margin:0 20px 20px 0;}
-#imageList .button{width:55px;margin:5px 0 0 30px;}
+#imageList > div{float:left;width:156px;margin:0 20px 20px 40px;height:250px;}
+#imageList img {width:156px; height:200px;border:1px solid #eee;}
+#imageList .button{display:inline;position:relative;top:8px;}
+#imageList .uploading{background-image:url('../images/loading.gif');background-repeat:no-repeat;}
+#imageList .deleteButton{color:#933;border:1px solid #caa;}
+
+

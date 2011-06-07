@@ -616,6 +616,8 @@ qq.UploadButton.prototype = {
             // the right side of the input
             right: 0,
             top: 0,
+            width: '100%',
+            height: '100%',
             fontFamily: 'Arial',
             // 4 persons reported this, the max values that worked for them were 243, 236, 236, 118
             fontSize: '118px',
@@ -629,6 +631,7 @@ qq.UploadButton.prototype = {
 
         var self = this;
         qq.attach(input, 'change', function(){
+            self._element.className += ' uploading';
             self._options.onChange(input);
         });
                 

@@ -21,8 +21,10 @@ js:
     - stats/statistics
   s:
     - scores
-  u:
-    - fileuploader
+  pi:
+    - profile_images/fileuploader
+    - profile_images/images.js
+    
 
 css:
   main:

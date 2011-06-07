@@ -34,6 +34,17 @@ class Destroyer
     end
   end
   
+  def destroy_profile_images(bucket)
+    @redis.keys('cleanup:images:*').each do |key|
+      timestamp = Time.strptime(key.split(':')[2], '%y%m%d')
+      next unless Time.now.utc - timestamp > 86400
+      @redis.smembers(key).each do |member|
+        AWS::S3::S3Object.delete(member, bucket)
+      end
+      @redis.del(key)
+    end
+  end
+  
   private
   def destroy_ranks(leaderboard_id)
     delete_keys(@redis.keys("lb:?:#{leaderboard_id}:*"))

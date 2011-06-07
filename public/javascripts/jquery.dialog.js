@@ -92,10 +92,11 @@
   
 jQuery.fn.center = function() 
 {
-    this.css("position", "absolute");
-    this.css("top", '200px');
-    this.css("left", ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + "px");
-    return this;
+  var $window = $(window);
+  this.css("position", "absolute");
+  this.css("top", $window.scrollTop() + 200);
+  this.css("left", ($window.width() - this.width()) / 2 + $window.scrollLeft() + "px");
+  return this;
 };
 
 (function($)

@@ -24,17 +24,32 @@ class Profile
       profile.enabled = enabled == 1
       profile
     end
+    def save_image(name, stream, previous = nil)
+      Profile.delete_image(previous)
+      AWS::S3::S3Object.store(name, stream, Settings.aws['bucket'], {'Cache-Control' => 'public,max-age=31536000'})
+    end
+
+    #can't delete images right away because the profile page is cached
+    def delete_image(name)
+      Store.redis.sadd("cleanup:images:#{Time.now.strftime("%y%m%d")}", name) unless name.nil?
+    end
   end
   
   def save_image(filename, data, index)
-    return nil if filename.nil? || data.length > Settings.max_image_length
+    return nil if filename.blank? || index > 6 || data.length > Settings.max_image_length
     return nil unless ['.jpg', '.jpeg', '.png', '.gif'].include?(File.extname(filename).downcase)
     
     name = Id.new.to_s + '_' + filename
     self.images = [] if self.images.nil?
-    Store.save_image(name, data, images[index])
+    Profile.save_image(name, data, images[index])
     self.images[index] = name
     save!
     name
+  end
+  
+  def remove_image(index)
+    return if self.images.nil?
+    self.images[index] = nil
+    save!
   end
 end

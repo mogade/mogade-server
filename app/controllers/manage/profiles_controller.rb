@@ -28,4 +28,12 @@ class Manage::ProfilesController < Manage::ManageController
     name = profile.save_image(params[:qqfile], request.body, index)
     render :json => {:name => name, :index => index}
   end
+  
+  def destroy
+    return unless load_game_as_owner
+    profile = Profile.load_for_game(@game)
+    index = params[:id].to_i
+    profile.remove_image(index)
+    render :json => {:index => index}
+  end
 end
