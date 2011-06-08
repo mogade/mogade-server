@@ -5,7 +5,7 @@
 <h2>Banner Image</h2>
 <div id="bannerImage">
   <img src="<%= profile_image(@profile, 0)%>" class="uploadedImage"/>
-  <div class="button uploadButton">upload</div>
+  <div class="button uploadButton">upload</div><div data-i="0" class="button deleteButton"<% unless profile_has_image(@profile, 0)%> style="display:none"<% end %>>X</div>
 </div>
 <h2>Image Gallery</h2>
 <div id="imageList">

@@ -32,7 +32,7 @@ class Manage::ProfilesController < Manage::ManageController
   def destroy
     return unless load_game_as_owner
     profile = Profile.load_for_game(@game)
-    index = params[:id].to_i
+    index = params[:index].to_i
     profile.remove_image(index)
     render :json => {:index => index}
   end

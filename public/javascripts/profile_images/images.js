@@ -26,6 +26,10 @@ var $document = $(document).ready(function()
   }
   $document.confirm('div.deleteButton', 'Delete this image?', 'This will remove the image from your profile, are you sure?', function($div)
   { 
-    return do_delete('/manage/profiles/' + $div.data('i') + '?game_id=' + game_id); 
+    return do_delete('/manage/profiles/' + game_id + '?index=' + $div.data('i'), null, function(r)
+    {
+      $images[r.index].src = '/images/trans.gif';
+      $deleteButtons.eq(r.index).hide();
+    }); 
   });
 });

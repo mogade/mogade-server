@@ -1,19 +1,19 @@
 ---
 js:
   m:
-    - jquery.tip
-    - jquery.validator
-    - jquery.simpleList
-    - jquery.dialog
-    - jquery.inlineEdit
-    - jquery.message
-    - genericResponseHandler
-    - jquery.caret
-    - jquery.numeric
-    - jquery.editTo
-    - jquery.resetForm
-    - jquery.pagedList
-    - mogade
+    - manage/jquery.tip
+    - manage/jquery.validator
+    - manage/jquery.simpleList
+    - manage/jquery.dialog
+    - manage/jquery.inlineEdit
+    - manage/jquery.message
+    - manage/genericResponseHandler
+    - manage/jquery.caret
+    - manage/jquery.numeric
+    - manage/jquery.editTo
+    - manage/jquery.resetForm
+    - manage/jquery.pagedList
+    - manage/manage
   stats:
     - stats/excanvas
     - stats/jquery.dateRange

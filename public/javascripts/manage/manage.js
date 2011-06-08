@@ -6,7 +6,7 @@ $(document).ready(function()
   $('.menu a[href="' + top.location.pathname + top.location.search + '"]').addClass('active').prepend(':');
 });
 
-function do_delete(url, data)
+function do_delete(url, data, callback)
 {
   var $form = $('<form>', {method: 'POST', action: url}).hide().appendTo($('body'));
   $form.append($('<input>', {type: 'hidden', name: '_method', value: 'delete'}));
@@ -22,7 +22,14 @@ function do_delete(url, data)
       $form.append($('<input>', {type: 'hidden', name: d.name, value: d.value})); 
     }
   }
-  $form.submit();
+  if (callback)
+  {
+    $.post($form.attr('action'), $form.serialize(), callback, 'json');
+  }
+  else
+  {
+    $form.submit();
+  }
   $form.remove();
   return false;
 }
