@@ -82,8 +82,8 @@ h4{font-weight:bold;}
 #imageList{overflow: auto;}
 #imageList > div{float:left;width:156px;margin:0 20px 20px 40px;height:250px;}
 #imageList img {width:156px; height:200px;border:1px solid #eee;}
-#imageList .button{display:inline;position:relative;top:8px;}
-#imageList .uploading{background-image:url('../images/loading.gif');background-repeat:no-repeat;}
-#imageList .deleteButton{color:#933;border:1px solid #caa;}
+#bannerImage .button, #imageList .button{display:inline;position:relative;top:8px;}
+#bannerImage .uploading, #imageList .uploading{background-image:url('../images/loading.gif');background-repeat:no-repeat;}
+#bannerImage .deleteButton, #imageList .deleteButton{color:#933;border:1px solid #caa;}
 
 
