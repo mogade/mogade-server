@@ -25,40 +25,21 @@ describe Profile, :save_image do
   end
   
   it "saves the image to the store" do
-    id = Id.new
-    index = 0
-    Id.stub!(:new).and_return(id)
     profile = Factory.build(:profile)
-    ['first.png', 'second.jpg', 'third.jpeg', 'forth.gif'].each do |file|
-      Profile.should_receive(:save_image).with(id.to_s + '_' +  file, 'data', nil)
-      profile.save_image(file, 'data', index)
-      index += 1
-    end
+    FileStorage.should_receive(:save_image).with('image.png', 'data', nil)
+    profile.save_image('image.png', 'data', 0)  
   end
   
   it "passes the previous image to the store" do
-    id = Id.new
-    index = 0
-    Id.stub!(:new).and_return(id)
-    profile = Factory.build(:profile, {:images => ['old_first.png', 'old_second.jpg', 'old_third.jpeg', 'old_forth.gif']})
-    ['first.png', 'second.jpg', 'third.jpeg', 'forth.gif'].each do |file|
-      Profile.should_receive(:save_image).with(id.to_s + '_' +  file, 'data', 'old_' + file)
-      profile.save_image(file, 'data', index)
-      index += 1
-    end
+    profile = Factory.build(:profile, {:images => ['old_image0', 'old_image1', 'old_image2']})
+    FileStorage.should_receive(:save_image).with('another.gif', 'data2', 'old_image1')
+    profile.save_image('another.gif', 'data2', 1)
   end
   
   it "saves the image info" do
-    id = Id.new
-    index = 0
-    Id.stub!(:new).and_return(id)
     profile = Factory.build(:profile)
-    filenames = ['first.png', 'second.jpg', 'third.jpeg', 'forth.gif']
-    filenames.each do |file|
-      Profile.stub!(:save_image)
-      profile.save_image(file, 'data', index)
-      Profile.find_by_id(profile.id).images.should == filenames[0..index].map{|name| id.to_s + '_' + name}
-      index += 1
-    end
+    FileStorage.stub(:save_image).and_return('the_new_name')
+    profile.save_image('another.jpg', 'data2', 0)
+    Profile.find_by_id(profile.id).images.should == ['the_new_name']
   end
 end
