@@ -40,6 +40,7 @@ class Destroyer
       next unless Time.now.utc - timestamp > 86400
       @redis.smembers(key).each do |member|
         AWS::S3::S3Object.delete(member, bucket)
+        AWS::S3::S3Object.delete('thumb' + member, bucket)
       end
       @redis.del(key)
     end

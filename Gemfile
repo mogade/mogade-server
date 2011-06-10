@@ -12,6 +12,8 @@ gem 'hoptoad_notifier'
 gem 'postmark'
 gem 'mail'
 gem 'aws-s3'
+gem 'RubyInline'
+gem 'g1nn13-image_science'
 
 group :development do  
 	gem 'spork'

@@ -11,7 +11,7 @@
 <div id="imageList">
 <% 6.times do |i| -%>
   <div>
-    <img src="<%= profile_image(@profile, i+1)%>" class="uploadedImage"/>
+    <img src="<%= profile_thumb(@profile, i+1)%>" class="uploadedImage"/>
     <div class="button uploadButton">upload</div><div data-i="<%=i+1%>" class="button deleteButton"<% unless profile_has_image(@profile, i+1)%> style="display:none"<% end %>>X</div>
   </div>
 <% end -%>

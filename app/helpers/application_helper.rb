@@ -23,6 +23,11 @@ module ApplicationHelper
     profile_image_root + profile.images[index]
   end
   
+  def profile_thumb(profile, index)
+    return '/images/trans.gif' unless profile_has_image(profile, index)
+    profile_image_root + 'thumb' + profile.images[index]
+  end
+  
   def profile_has_image(profile, index)
     !profile.images.nil? && !profile.images[index].nil?
   end

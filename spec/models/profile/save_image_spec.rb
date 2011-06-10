@@ -26,14 +26,28 @@ describe Profile, :save_image do
   
   it "saves the image to the store" do
     profile = Factory.build(:profile)
-    FileStorage.should_receive(:save_image).with('image.png', 'data', nil)
+    FileStorage.should_receive(:save_image).with('image.png', 'data', nil, anything())
     profile.save_image('image.png', 'data', 0)  
   end
   
   it "passes the previous image to the store" do
     profile = Factory.build(:profile, {:images => ['old_image0', 'old_image1', 'old_image2']})
-    FileStorage.should_receive(:save_image).with('another.gif', 'data2', 'old_image1')
+    FileStorage.should_receive(:save_image).with('another.gif', 'data2', 'old_image1', anything())
     profile.save_image('another.gif', 'data2', 1)
+  end
+  
+  it "does not request thumbnail for banner image" do
+    profile = Factory.build(:profile, {:images => ['old_image0', 'old_image1', 'old_image2']})
+    FileStorage.should_receive(:save_image).with(anything(), anything(), anything(), false)
+    profile.save_image('another.gif', 'data2', 0)
+  end
+  
+  it "request thumbnail for other images" do
+    profile = Factory.build(:profile, {:images => ['old_image0', 'old_image1', 'old_image2']})
+    FileStorage.should_receive(:save_image).with(anything(), anything(), anything(), true).exactly(6).times
+    6.times do |i|
+      profile.save_image('another.gif', 'data2', i+1)
+    end
   end
   
   it "saves the image info" do

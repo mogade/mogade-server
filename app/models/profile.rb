@@ -31,7 +31,7 @@ class Profile
     return nil unless ['.jpg', '.jpeg', '.png', '.gif'].include?(File.extname(filename).downcase)
     self.images = [] if self.images.nil?
     
-    self.images[index] = FileStorage.save_image(filename, data, images[index])
+    self.images[index] = FileStorage.save_image(filename, data, images[index], index > 0)
     save!
     self.images[index]
   end

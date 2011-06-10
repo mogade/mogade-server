@@ -10,7 +10,7 @@ describe Manage::ProfilesController, :destroy do
   it "removes the profile image" do
     profile = Profile.new
     Profile.should_receive(:load_for_game).with(@game).and_return(profile)
-    profile.should_receive(:remove_image).with(5)
+    profile.should_receive(:delete_image).with(5)
     delete :destroy, {:id => @game.id, :index => '5'}
   end
   
