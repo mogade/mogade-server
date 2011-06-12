@@ -16,4 +16,13 @@ describe Manage::ProfilesController, :index do
     assigns[:profile].should == profile
   end
   
+  it "loads the leaderboards " do
+    leaderboards = [Factory.build(:leaderboard)]
+    
+    Leaderboard.should_receive(:find_for_game).with(@game).and_return(leaderboards)
+    get :index, {:id => @game.id}
+    
+    assigns[:leaderboards].to_a.should == leaderboards
+  end
+  
 end

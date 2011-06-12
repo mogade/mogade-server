@@ -23,13 +23,20 @@ js:
     - scores
   pi:
     - profile_images/fileuploader
-    - profile_images/images.js
+    - profile_images/images
+  public:
+    - public/jquery.colorbox
+    - public/public
     
 
 css:
   main:
     - reset
     - mogade
+  public:
+    - reset
+    - public
+    - colorbox
   m:
     - manage
     - dialog

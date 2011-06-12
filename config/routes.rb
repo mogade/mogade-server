@@ -43,5 +43,6 @@ Mogade::Application.routes.draw do
     match '/:action', :controller => 'manage'
   end
   match '/manage/:controller(/:action(/:id))', :controller => /manage\/[^\/]+/
+  match '/game/(:id)/(:soe)' => 'home#profile'
   root :to => 'home#index'
 end

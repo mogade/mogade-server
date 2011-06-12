@@ -14,6 +14,10 @@ module ApplicationHelper
     ("<select name=\"#{name}\" id=\"#{name}\">" + options_for_select(values, selected) + "</select>").html_safe
   end
   
+  def nl2br(string)
+    h(string).gsub(/\n/, '<br />').html_safe
+  end
+  
   def profile_image_root
     (request.ssl? ? 'https://' : 'http://') + Settings.aws_root_path
   end

@@ -78,10 +78,10 @@ h4{font-weight:bold;}
 .pager .total{position:absolute;right:5px;top:6px;font-weight:bold;}
 
 #imageList{overflow: auto;}
-#imageList > div{float:left;width:156px;margin:0 20px 20px 40px;height:250px;}
+#imageList > div{float:left;width:156px;margin-right:10px;height:250px;}
 #imageList img {width:100px; height:150px;border:1px solid #eee;}
 #bannerImage{margin-bottom:40px;}
 #bannerImage img {width:300px;height:146px;display:block;margin-bottom:2px;}
 #bannerImage .button, #imageList .button{display:inline;position:relative;top:8px;}
 #bannerImage .uploading, #imageList .uploading{background-image:url('../images/loading.gif');background-repeat:no-repeat;}
-#bannerImage .deleteButton, #imageList .deleteButton{color:#933;border:1px solid #caa;}
+#bannerImage .deleteButton, #imageList .deleteButton{color:#933;border:1px solid #caa;left:-25px;padding:6px 5px;}

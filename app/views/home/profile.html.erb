@@ -1,0 +1,32 @@
+<% content_for :head do -%><%= include_js_bundle 'public' %><% end -%>
+<% content_for :title, @profile.name -%>
+<img id="banner" src="<%= profile_image(@profile, 0)%>" />
+
+<h1><%= @profile.name %></h1>
+<p><a href="<%= @profile.developer_url%>"><%= @profile.developer%></a></p>
+<div id="info">
+  <div id="desc">
+    <p><%= nl2br(@profile.description)%></p>
+    <% unless @profile.game_url.blank? %><p id="more"><a href="<%= @profile.game_url%>">more info</a></p><% end %>
+  </div>
+
+  <div id="facts">
+    <h2>high scores</h2>
+    <div>
+      <label>all time</label>
+      <span></span>
+    </div>
+    <div>
+      <label>this week</label>
+      <span></span>
+    </div>
+    <div>
+      <label>today</label>
+      <span></span>
+    </div>
+  </div>
+</div>
+<div id="thumbs"><% 4.times do |index| -%>
+  <% unless @profile.images[index+1].nil? %><a href="<%= profile_image(@profile, index+1 )%>" rel="thumbs"><img src="<%= profile_thumb(@profile, index+1 )%>"></a><% end %>
+  <% end -%>
+</div>

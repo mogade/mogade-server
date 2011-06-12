@@ -40,7 +40,7 @@ class Cleaner
   private 
   def delete_stale_keys(keys, ttl, pattern)
     keys.each do |key|
-      @redis.del(key) if Time.now.utc - Time.strptime(key.split(':')[3], pattern) > ttl
+      @redis.del(key) if Time.now.utc - Date.strptime(key.split(':')[3], pattern).to_time > ttl
     end
   end
 end

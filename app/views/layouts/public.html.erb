@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en-US" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title><%= yield :title %></title>
+  <%= include_css_bundle 'public' %>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+  <%= yield :head -%>
+</head>
+<body>
+<% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
+<div id="site">
+  <div id="header">
+  
+  </div>
+  <%= yield  %>
+  <div id="footer" class="r">
+
+  </div>
+</div>
+</body>
+</html>

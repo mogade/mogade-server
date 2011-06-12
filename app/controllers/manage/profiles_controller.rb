@@ -4,11 +4,12 @@ class Manage::ProfilesController < Manage::ManageController
   def index
     return unless load_game_as_owner
     @profile = Profile.load_for_game(@game)
+    @leaderboards = Leaderboard.find_for_game(@game)
   end
   
   def create
     return unless load_game_as_owner
-    profile = Profile.create_or_update(params[:name], params[:game_url], params[:developer], params[:developer_url], params[:description], params[:enabled].to_i, @game)
+    profile = Profile.create_or_update(params[:name], params[:game_url], params[:developer], params[:developer_url], params[:description], params[:enabled].to_i, params[:leaderboard_id], @game)
     if profile.valid?
       profile.save!
       set_info('the profile was successfully saved', false)
