@@ -1,5 +1,6 @@
 .bundle
 log/*.log
+.DS_Store
 config/settings.yml
 Capfile
 deploy/deploy.rb
