@@ -1,0 +1,8 @@
+<% content_for :title, @profile.name + ' leaderboards' -%>
+<img id="banner" src="<%= profile_image(@profile, 0)%>" />
+<div id="leaderboard"></div>
+
+<% content_for :js do -%>
+var baseUrl = '<%= request.local? ? 'http://' + request.host_with_port : 'http://mogade.com'%>';
+$('#leaderboard').mogade({lid: '<%=@profile.leaderboard_id%>', scope: 0, baseUrl: baseUrl + '/api/gamma/scores'});
+<% end -%>

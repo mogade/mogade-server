@@ -28,7 +28,7 @@ js:
     - profile_images/images
   facebook:
     - facebook/jquery.colorbox
-    
+    - facebook/jquery.leaderboard
 
 css:
   main:
