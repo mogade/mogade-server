@@ -33,13 +33,10 @@
   </div>
 <% end -%>
 
-<script type="text/javascript">
-$(document).ready(function()
-{
-  $('#description').textAreaLength(500);
-  $('#information').validator({rules: <%= validation_of(Profile).html_safe%>})
-});
-</script>
+<% content_for :js do -%>
+$('#description').textAreaLength(500);
+$('#information').validator({rules: <%= validation_of(Profile).html_safe%>})
+<% end -%>
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu', :locals => {:show_profile => true} %>
 <% end -%>

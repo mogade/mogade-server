@@ -18,10 +18,8 @@
   </div>
 <% end -%>
 
-<script type="text/javascript">
-$(document).ready(function()
-{
-	var rules = <%= validation_of(Signup).html_safe%>;
-	$('#reset').validator({rules: rules});
-});
-</script>
+
+<% content_for :js do -%>
+var rules = <%= validation_of(Signup).html_safe%>;
+$('#reset').validator({rules: rules});
+<% end -%>

@@ -1,14 +1,8 @@
-<% content_for :head do -%>
-  <%= include_css_bundle 'm' %>
-  <%= include_js_bundle 'm' %>
-<% end -%>
+<% content_for :head do %><%= include_css_bundle 'm' %><% end -%>
+<% content_for :js_include do%> <%= include_js_files 'm' %><% end -%>
 <% content_for :content do -%>
 <h1><%= yield :section_title %></h1>
-<div id="messages">
-  <% unless flash[:error].nil? %><div id="error"><%=flash[:error]%></div><% end %>
-  <% unless flash[:info].nil? %><div id="info"><%=flash[:info]%></div><% end %>
-</div>
-
+<div id="messages"><% unless flash[:error].nil? %><div id="error"><%=flash[:error]%></div><% end -%><% unless flash[:info].nil? %><div id="info"><%=flash[:info]%></div><% end -%></div>
 <%= yield :inner %>
 
 <% end -%>

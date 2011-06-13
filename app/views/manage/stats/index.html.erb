@@ -1,7 +1,5 @@
-<% content_for :head do -%>
-<%= include_css_bundle 'stats' %>
-<%= include_js_bundle 'stats' %>
-<% end -%>
+<% content_for :head do %><%= include_css_bundle 'stats' %><% end -%>
+<% content_for :js_include do %><%= include_js_files 'stats' %>,<% end -%>
 <% content_for :title, @game.name + ' usage statistics' -%>
 <% content_for :section_title,  @game.name + ' .. usage statistics' -%>
 

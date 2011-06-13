@@ -35,11 +35,11 @@
   </div>
 <% end -%>
 
-<script type="text/javascript">
-	var rules = <%= validation_of(Signup).html_safe%>;	
-	var init = <%= validation_init(@signup).html_safe%>;
-	$('#signup').validator({rules: rules, init: init});
-</script>
+<% content_for :js do -%>
+var rules = <%= validation_of(Signup).html_safe%>;	
+var init = <%= validation_init(@signup).html_safe%>;
+$('#signup').validator({rules: rules, init: init});
+<% end -%>
 
 <% content_for :right do -%>
 <h2>Let's succeed together</h2>

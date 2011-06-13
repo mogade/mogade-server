@@ -1,7 +1,6 @@
 <% content_for :title, @game.name + ' achievements' -%>
 <% content_for :section_title,  @game.name + ' .. achievements' -%>
 
-
 <div class="list" id="achievement_list">
   <table>
     <thead>
@@ -17,7 +16,6 @@
   </table>
   <h3>Uhmm...are you an underachiever?</h3>
 </div>
-
 
 <%= form_for :achievement, :url => {:action => 'create' }, :html => {:id => 'add'} do |f| -%>
   <h3>Add Achievement</h3>
@@ -39,18 +37,13 @@
   </div>
 <% end -%>
 
-
-<script type="text/javascript">
-$(document).ready(function()
-{
-  $('#achievement_list').simpleList({})
-    .editTo({ to: '#add', map: {0: 'name', 1: 'points', 'data-desc': 'description'}, url: '<%= url_for :action => 'create' %>' })
-    .confirm('td.delete', 'Delete this achievement?', 'This achievement will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/achievements/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
-  var rules = <%= validation_of(Achievement).html_safe%>;	
-  $('#add').validator({rules: rules});
-
-});
-</script>
+<% content_for :js do -%>
+$('#achievement_list').simpleList({})
+  .editTo({ to: '#add', map: {0: 'name', 1: 'points', 'data-desc': 'description'}, url: '<%= url_for :action => 'create' %>' })
+  .confirm('td.delete', 'Delete this achievement?', 'This achievement will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/achievements/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
+var rules = <%= validation_of(Achievement).html_safe%>;	
+$('#add').validator({rules: rules});
+<% end -%>
 
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu' %>

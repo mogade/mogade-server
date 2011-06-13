@@ -6,7 +6,7 @@ module ApplicationHelper
 
   def include_js_files(name)
     files = Rails.env.development? ? Asset.js(name) : name
-    files.map{|file| javascript_path(file) }.join('""')
+    files.map{|file| "'#{javascript_path(file)}'" }.to_sentence({:last_word_connector => ',', :two_words_connector => ','}).html_safe
   end
     
   def include_css_bundle(name)

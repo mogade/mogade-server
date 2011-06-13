@@ -9,7 +9,7 @@
 <% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
 <div id="site"><%= yield  %></div>
 <script>
-head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", "<%= include_js_files 'facebook' %>", function(){<%= yield :js%>});
+head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", <%= include_js_files 'facebook' %>, function(){<%= yield :js%>});
 </script>
 </body>
 </html>

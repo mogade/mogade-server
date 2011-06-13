@@ -27,14 +27,11 @@
 <% end -%>
 
 
-<script type="text/javascript">
-$(document).ready(function()
-{
-  $('#game_list').simpleList({viewUrl: '<%= ssl_url('/manage/games') %>'});
-  var rules = <%= validation_of(Game).html_safe%>;	
-  $('#add').validator({rules: rules});
-});
-</script>
+<% content_for :js do -%>
+$('#game_list').simpleList({viewUrl: '<%= ssl_url('/manage/games') %>'});
+var rules = <%= validation_of(Game).html_safe%>;	
+$('#add').validator({rules: rules});
+<% end -%>
 
 <% content_for :right do -%>
   <h3>What's New</h3>

@@ -1,6 +1,6 @@
 <% content_for :title, @game.name + ' profile images' -%>
 <% content_for :section_title,  @game.name + ' .. profile images' -%>
-<% content_for :head do -%><%= include_js_bundle 'pi' %><% end -%>
+<% content_for :js_include do -%><%= include_js_files 'pi' %>,<% end -%>
 
 <h2>Banner Image</h2>
 <div id="bannerImage">

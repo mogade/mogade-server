@@ -20,21 +20,17 @@
   </div>
 </div>
 
-<script type="text/javascript">
-$(document).ready(function()
+<% content_for :js do -%>
+$('#delete').confirm(null, 'Delete this game?', 'This game will be permanently deleted and cannot be recovered. Are you sure?', function()
 {
-  $('#delete').confirm(null, 'Delete this game?', 'This game will be permanently deleted and cannot be recovered. Are you sure?', function()
-  {
-    return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
-  });
-  $('#edit').inlineEdit({ types: ['text'], names: ['name'], saveUrl: '<%= url_for :action => 'update' %>', saved: function()
-  {
-    $.message.info('you game\'s information has been updated');
-    $('h1').text($('div[data-edit-id=0]').text() + ' .. overview');
-  }});
-  
+  return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
 });
-</script>
+$('#edit').inlineEdit({ types: ['text'], names: ['name'], saveUrl: '<%= url_for :action => 'update' %>', saved: function()
+{
+  $.message.info('you game\'s information has been updated');
+  $('h1').text($('div[data-edit-id=0]').text() + ' .. overview');
+}});
+<% end -%>
 
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu' %>

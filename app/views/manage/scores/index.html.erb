@@ -1,10 +1,10 @@
-<% content_for :head do -%>
-<%= include_js_bundle 's' %>
-<% end -%>
 <% content_for :title, @game.name + ' score management' -%>
 <% content_for :section_title,  @game.name + ' .. score management' -%>
+<% content_for :js_include do%> <%= include_js_files 's' %>,<% end -%>
 
- <% if @leaderboards.blank?%><h3>You should probably add a leaderboard first<h3><% else -%>
+<% if @leaderboards.blank?%>
+  <h3>You should probably add a leaderboard first<h3>
+<% else -%>
   <h3>Find Scores to Delete</h3>
   <%= form_for :score, :url => {:action => 'count' }, :html => {:id => 'form'} do |f| -%>
     <input type="hidden" name="game_id" value="<%=@game.id%>" />
