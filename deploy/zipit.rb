@@ -28,7 +28,11 @@ class ZipIt
     Dir.foreach(folder) do |item|
       next if item == '.' or item == '..'
       path = folder + '/' + item
-      zip(path, "#{path}.gz")
+      if File.directory?(path)
+        zip_images(path)        
+      else
+        zip(path, "#{path}.gz")
+      end
     end
   end
 
