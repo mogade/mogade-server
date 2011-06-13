@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Manage::ProfilesController, :upload do
+describe Manage::FacebookController, :upload do
   extend ManageHelper
   
   setup

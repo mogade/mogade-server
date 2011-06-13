@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Manage::ProfilesController, :destroy do
+describe Manage::FacebookController, :destroy do
   extend ManageHelper
   
   setup

@@ -24,4 +24,8 @@ var max_image_length = <%=Settings.max_image_length%>;
 </script>
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu', :locals => {:show_profile => true} %>
+  <h3>Tips</h3>
+  <p>The banner image should be 520px wide, or less. ~150px high is also suggested.</p>
+  <p>Images in the gallery look nice at 480x320 - or some similar aspect ration</p>
+  <p>Images cannot exceed <%=Settings.max_image_length / 1024 %>KB</p>
 <% end -%>

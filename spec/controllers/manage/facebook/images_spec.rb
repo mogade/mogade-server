@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Manage::ProfilesController, :images do
+describe Manage::FacebookController, :images do
   extend ManageHelper
   
   setup
@@ -12,7 +12,7 @@ describe Manage::ProfilesController, :images do
     Profile.should_receive(:load_for_game).with(@game).and_return(profile)
     get :images, {:id => @game.id}
     
-    response.should render_template('manage/profiles/images')
+    response.should render_template('manage/facebook/images')
     assigns[:profile].should == profile
   end
   

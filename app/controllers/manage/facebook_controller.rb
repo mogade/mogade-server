@@ -1,4 +1,4 @@
-class Manage::ProfilesController < Manage::ManageController
+class Manage::FacebookController < Manage::ManageController
   before_filter :ensure_logged_in
   
   def index

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Manage::ProfilesController, :index do
+describe Manage::FacebookController, :index do
   extend ManageHelper
   
   setup
@@ -12,7 +12,7 @@ describe Manage::ProfilesController, :index do
     Profile.should_receive(:load_for_game).with(@game).and_return(profile)
     get :index, {:id => @game.id}
     
-    response.should render_template('manage/profiles/index')
+    response.should render_template('manage/facebook/index')
     assigns[:profile].should == profile
   end
   

@@ -79,7 +79,7 @@ h4{font-weight:bold;}
 
 #imageList{overflow: auto;}
 #imageList > div{float:left;width:156px;margin-right:10px;height:250px;}
-#imageList img {width:100px; height:150px;border:1px solid #eee;}
+#imageList img {border:1px solid #eee;}
 #bannerImage{margin-bottom:40px;}
 #bannerImage img {width:300px;height:146px;display:block;margin-bottom:2px;}
 #bannerImage .button, #imageList .button{display:inline;position:relative;top:8px;}
