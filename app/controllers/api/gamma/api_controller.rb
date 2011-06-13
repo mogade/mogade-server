@@ -68,7 +68,7 @@ class Api::Gamma::ApiController < ActionController::Base
   def render_payload(payload, params, cache_duration = 0)
     payload = ActiveSupport::JSON.encode(payload)
     if params.include?(:callback)
-      response.headers['Cache-Control'] = 'public, max-age=' + cache_duration.to_s unless cache_duration == 0
+      expires_in 3.minutes, :public => true
       render :text => "#{params[:callback]}(#{payload});", :content_type => 'application/javascript'
     else
       render :json => payload

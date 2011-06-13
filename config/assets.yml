@@ -1,5 +1,7 @@
 ---
 js:
+  h:
+    - head
   m:
     - manage/jquery.tip
     - manage/jquery.validator
@@ -24,18 +26,17 @@ js:
   pi:
     - profile_images/fileuploader
     - profile_images/images
-  public:
-    - public/jquery.colorbox
-    - public/public
+  facebook:
+    - facebook/jquery.colorbox
     
 
 css:
   main:
     - reset
     - mogade
-  public:
+  facebook:
     - reset
-    - public
+    - facebook
     - colorbox
   m:
     - manage

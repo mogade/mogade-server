@@ -69,7 +69,7 @@ describe Api::Gamma::ScoresController, :index do
     Score.stub!(:get_by_page).and_return({})
     get :index, {:lid => leaderboard.id, :page => '4', :callback => 'gotScores'}
     
-    response.headers['Cache-Control'].should == 'public, max-age=300'
+    response.headers['Cache-Control'].should == 'max-age=180, public'
   end
   
   it "does not set output cache when callback is not used" do

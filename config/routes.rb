@@ -43,6 +43,6 @@ Mogade::Application.routes.draw do
     match '/:action', :controller => 'manage'
   end
   match '/manage/:controller(/:action(/:id))', :controller => /manage\/[^\/]+/
-  match '/game/(:id)/(:soe)' => 'home#profile'
+  match '/facebook/(:id)/(:soe)' => 'facebook#index'
   root :to => 'home#index'
 end

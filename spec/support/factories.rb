@@ -75,10 +75,6 @@ end
 
 Factory.define :profile do |p|
   p.name 'the profile'
-  p.game_url 'http://the.url.com/hah?over=9000'
-  p.developer 'the developer'
-  p.developer_url 'http://the.developer.com'
   p.enabled true
   p.description 'mind blowing'
-  
 end

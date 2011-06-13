@@ -1,0 +1,32 @@
+<% content_for :title, @profile.name -%>
+
+<img id="banner" src="<%= profile_image(@profile, 0)%>" />
+<div id="desc">
+  <p><%= nl2br(@profile.description)%></p>
+
+  <% unless @profile.images.nil? -%>
+  <div id="thumbs">
+  <% 4.times do |index| -%>
+    <% unless @profile.images[index+1].nil? %>
+      <a href="<%= profile_image(@profile, index+1 )%>" rel="thumbs"><img src="<%= profile_thumb(@profile, index+1 )%>"></a>
+    <% end %>
+  <% end -%>
+  </div>
+  <% end -%>
+</div>
+
+<div id="facts">
+  <% unless @scores.nil? %>
+    <%= render :partial => 'leaders', :locals => {:name => "today's leaders", :scores => @scores[LeaderboardScope::Daily]}  -%>
+    <%= render :partial => 'leaders', :locals => {:name => "yesterday's winners", :scores => @scores[LeaderboardScope::Yesterday]} -%>
+    <%= render :partial => 'leaders', :locals => {:name => "weekly leaders", :scores => @scores[LeaderboardScope::Weekly]} -%>
+    <%= render :partial => 'leaders', :locals => {:name => "all time leaders", :scores => @scores[LeaderboardScope::Overall]} -%>
+  <% end %>
+</div>
+
+<% content_for :js do -%>
+$('#thumbs a').colorbox({overlay:0.2});
+var $facts = $('#facts');
+$facts.find('ul').each(function(i, ul){ $(ul).children(':last').css('border-bottom', 'none');});
+$facts.children(':odd').css('margin-right', 0);
+<% end -%>

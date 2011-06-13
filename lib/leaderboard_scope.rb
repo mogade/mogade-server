@@ -4,6 +4,13 @@ module LeaderboardScope
   Overall = 3
   Yesterday = 4
   
+  def self.all_scopes
+    [LeaderboardScope::Yesterday, LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall]
+  end
+  def self.without_yesterday
+    [LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall]
+  end
+  
   def self.nice(value)
     v = value.is_a?(Integer) ? value : const_get(value)
     case v

@@ -3,7 +3,12 @@ module ApplicationHelper
     files = Rails.env.development? ? Asset.js(name) : name
     javascript_include_tag files
   end
-  
+
+  def include_js_files(name)
+    files = Rails.env.development? ? Asset.js(name) : name
+    files.map{|file| javascript_path(file) }.join('""')
+  end
+    
   def include_css_bundle(name)
     files = Rails.env.development? ? Asset.css(name) : name
     stylesheet_link_tag files

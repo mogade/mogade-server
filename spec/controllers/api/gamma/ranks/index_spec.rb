@@ -54,7 +54,7 @@ describe Api::Gamma::RanksController, :index do
     Rank.stub!(:get_for_player).and_return({})
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey, :callback => 'gotScores'}
     
-    response.headers['Cache-Control'].should == 'public, max-age=300'
+    response.headers['Cache-Control'].should == 'max-age=180, public'
   end
   
   it "does not set output cache when callback is not used" do

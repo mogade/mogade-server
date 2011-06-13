@@ -15,21 +15,6 @@
     <label for="name" class="tip">game's name</label>
   </div>
   <div class="field">
-    <label for="game_url">game url</label>
-    <input type="text" id="game_url" name="game_url" maxlength="125" value="<%=@profile.game_url%>" />
-    <label for="game_url" class="tip">more info/download url</label>
-  </div>
-  <div class="field">
-    <label for="developer">developer</label>
-    <input type="text" id="developer" name="developer" maxlength="25" value="<%=@profile.developer%>" />
-    <label for="developer" class="tip">creator/studio of the game</label>
-  </div>
-  <div class="field">
-    <label for="developer_url">developer url</label>
-    <input type="text" id="developer_url" name="developer_url" maxlength="125"  value="<%=@profile.developer_url%>"/>
-    <label for="developer_url" class="tip">url for the developer/studio</label>
-  </div>
-  <div class="field">
     <label for="leaderboard_id">leaderboard</label>
     <select name="leaderboard_id" id="leaderboard_id">
       <% @leaderboards.each do |leaderboard| -%>

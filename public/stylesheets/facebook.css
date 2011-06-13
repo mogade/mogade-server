@@ -1,0 +1,19 @@
+body{font-family:verdana,tahoma,arial;font-size:75%;background:#fff;}
+p{line-height:1.5em;}
+h1, h2, h3{font-weight:bold;}
+h1{font-size:1.3em;}
+h2{font-size:1.1em;}
+a{color:#3B5998;}
+#environment{position:absolute;width:200px;text-align:center;padding:10px 0;background:#822;color:#fff;}
+#site{width:520px;margin:0 auto;overflow:visible;}
+#banner{display:block;margin-bottom:10px;padding-bottom:10px;width:520px;}
+#desc{margin:5px 0;}
+#facts{overflow:auto;}
+#facts > div {float:left;margin-right:25px;width:240px;}
+#facts > div:nth-child(even) {margin-right:0;}
+#facts h3{margin-bottom:5px;}
+#facts ul{margin-bottom:10px;}
+#facts li{padding:5px;border-bottom:1px solid #e0e0e0;}
+#facts span{float:right;}
+#thumbs{margin-top:10px;}
+#thumbs img{padding:0 10px 10px 10px}
