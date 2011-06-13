@@ -22,7 +22,7 @@ class Profile
   end
   
   def save_image(filename, data, index)
-    return nil if filename.blank? || index > 6 || data.length > Settings.max_image_length
+    return nil if filename.blank? || index > 6 || data.size > Settings.max_image_length
     return nil unless ['.jpg', '.jpeg', '.png', '.gif'].include?(File.extname(filename).downcase)
     self.images = [] if self.images.nil?
     
