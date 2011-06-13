@@ -1,0 +1,1 @@
+ENV['INLINEDIR'] = Settings.ruby_inline_directory unless Settings.ruby_inline_directory.nil?

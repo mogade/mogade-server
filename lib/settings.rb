@@ -17,6 +17,10 @@ class Settings
   def self.aws_root_path
     @@aws_root_path
   end
+  
+  def self.ruby_inline_directory
+    @@settings['ruby_inline_directory']
+  end
 
   class MissingConfigOptionError < StandardError;
   end

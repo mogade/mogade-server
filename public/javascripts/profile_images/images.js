@@ -5,7 +5,7 @@ var $document = $(document).ready(function()
   var $deleteButtons = $('div.deleteButton');
   var options = 
   {
-    action: '/manage/profiles/upload',
+    action: '/manage/facebook/upload',
     params: {authenticity_token: AUTH_TOKEN, game_id: game_id},
     multiple: false,
     sizeLimit: max_image_length,
@@ -26,7 +26,7 @@ var $document = $(document).ready(function()
   }
   $document.confirm('div.deleteButton', 'Delete this image?', 'This will remove the image from your profile, are you sure?', function($div)
   { 
-    return do_delete('/manage/profiles/' + game_id + '?index=' + $div.data('i'), null, function(r)
+    return do_delete('/manage/facebook/' + game_id + '?index=' + $div.data('i'), null, function(r)
     {
       $images[r.index].src = '/images/trans.gif';
       $deleteButtons.eq(r.index).hide();
