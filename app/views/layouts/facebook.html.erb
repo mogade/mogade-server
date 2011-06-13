@@ -2,14 +2,14 @@
 <html lang="en-US" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title><%= yield :title %></title>
-  <%= include_css_bundle 'facebook' %>
+  <%= include_css_bundle 'fb' %>
   <%= include_js_bundle 'h' %>
 </head>
 <body>
 <% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
 <div id="site"><%= yield  %></div>
 <script>
-head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", <%= include_js_files 'facebook' %>, function(){<%= yield :js%>});
+head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", <%= include_js_files 'fb' %>, function(){<%= yield :js%>});
 </script>
 </body>
 </html>

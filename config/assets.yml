@@ -26,7 +26,7 @@ js:
   pi:
     - profile_images/fileuploader
     - profile_images/images
-  facebook:
+  fb:
     - facebook/jquery.colorbox
     - facebook/jquery.leaderboard
 
@@ -34,7 +34,7 @@ css:
   main:
     - reset
     - mogade
-  facebook:
+  fb:
     - reset
     - facebook
     - colorbox
