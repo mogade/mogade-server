@@ -47,6 +47,6 @@ describe Api::Gamma::ScoresController, :create do
     post :create, GammaApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
-    json['high'].should == 'blah'
+    json['highs'].should == 'blah'
   end
 end

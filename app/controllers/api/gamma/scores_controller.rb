@@ -26,6 +26,6 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     
     high_scores = Score.save(@leaderboard, @player, points, params[:data])
     ranks =  Rank.get_for_score(@leaderboard, points)
-    render :json => {:ranks => ranks, :high => high_scores}
+    render :json => {:ranks => ranks, :highs => high_scores}
   end
 end
