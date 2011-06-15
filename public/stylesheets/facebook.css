@@ -4,6 +4,7 @@ h1, h2, h3{font-weight:bold;}
 h1{font-size:1.3em;}
 h2{font-size:1.1em;}
 a{color:#3B5998;}
+.hide{display:none;}
 #environment{position:absolute;width:200px;text-align:center;padding:10px 0;background:#822;color:#fff;}
 #site{width:520px;margin:0 auto;overflow:visible;}
 #banner{display:block;margin-bottom:10px;padding-bottom:10px;width:520px;}

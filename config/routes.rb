@@ -27,7 +27,6 @@ Mogade::Application.routes.draw do
     match '/stats/data' => 'stats#data'
     match '/errors/list' => 'errors#list'
     match '/scores/count' => 'scores#count'
-    match '/facebook/images' => 'facebook#images'
     match '/facebook/upload' => 'facebook#upload'
 
     resources :accounts, :only => [:new, :create]

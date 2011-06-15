@@ -1,72 +1,49 @@
 (function($) 
 {
-   var defaults = {lid: null, scope: 3, records: 10, page: 1, baseUrl: 'http://mogade.com/api/gamma/scores/', headers: ['rank', 'name', 'score', 'date']}
+   var defaults = {lid: null, scope: 2, records: 10, page: 1, baseUrl: 'http://mogade.com/api/gamma/scores/'}
    var monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-   $.fn.mogade = function(opts) 
+   $.fn.leaderboard = function(opts) 
    {
       var options = $.extend({}, defaults, opts); 
       return this.each(function() 
       {
-         if (this.mogade) { return false; }
+         if (this.leaderboard) { return false; }
          var $container = $(this);
          var $table, $tbody, $error, $tabContainer, $pager = null;
          var data = {lid: options.lid, scope: options.scope, page: options.page}
-         var page = 1;
+         var previousPage = 0;
          var self =
          {
             initialize: function() 
             {
-               $tabContainer = self.buildTabs().appendTo($container).delegate('div', 'click', self.scopeChange);
-               $table = self.buildTable().appendTo($container).hide();
-               $pager = self.buildPage().appendTo($container).hide().delegate('div', 'click', self.pageChanged);
+               $tabContainer = $container.children('div.tabs').delegate('div', 'click', self.scopeChange);
+               $table = $container.children('table');
+               $pager = $container.children('div.pager').delegate('div', 'click', self.pageChanged);
                $error = $('<div>').appendTo($container);
                $tbody = $table.find('tbody');
                $tabContainer.children().eq(options.scope).click();
-            },
-            buildTabs: function()
-            {
-              var scopes = ['today', 'this week', 'overall', 'yesterday'];
-              var $container = $('<div>').addClass('tabs');
-              for(var i = 0; i < scopes.length; ++i)
-              {
-                var $tab = $('<div>').attr('scope', i).text(scopes[i]);
-                $container.append($tab)
-              }
-              return $container;
-            },
-            buildPage: function()
-            {
-              var $container = $('<div>').addClass('pager');
-              $container.append($('<div>').addClass('prev').text('prev'));
-              $container.append($('<div>').addClass('next').text('next'));
-              return $container;
-            },
-            buildTable: function()
-            {
-               var $head = $('<thead>');
-               for(var i = 0; i < options.headers.length; ++i)
-               {
-                  $head.append('<th class="' + options.headers[i] + '">' + options.headers[i] + '</th>');
-               }
-               return $('<table class="leaderboard">').append($head).append('<tbody>');
             },
             scopeChange: function()
             {
               var $tab = $(this);
               var $tabs = $tabContainer.children();
               var index = $tabs.index($tab);
+              previousPage = 0;
               data['scope'] = index + 1;
               data['page'] = 1;
               self.getLeaderboard();
+              return false;
             },
             pageChanged: function()
             {
               var page = data['page'];
+              var previousPage = page;
               if ($(this).is('.next')) { ++page; }
               else { --page; }
 
               data['page'] = page;
               self.getLeaderboard();
+              return false;
             },
             getLeaderboard: function()
             {
@@ -91,18 +68,44 @@
                $table.find('th:last').text(dateTimeName);
                $table.show();
                $error.hide();
-               $tbody.empty();
                var page = d.page;
+               var rows = [];
                for(var i = 0; i < d.scores.length; ++i)
                {
                   var score = d.scores[i];
-                  var $row = $('<tr>').appendTo($tbody);
+                  var $row = $('<tr>');
                   if (i % 2 == 1) { $row.addClass('odd'); }
                   $row.append(self.createCell((page - 1) * options.records + i + 1));
                   $row.append(self.createCell(score.username));
                   $row.append(self.createCell(score.points));
                   $row.append(self.createCell(self.formatDate(new Date(score.dated))));
+                  rows.push($row);
                }
+              
+               if (previousPage == 0) { for(var i = 0; i < rows.length; ++i) { $tbody.append(rows[i]);} }
+               else if (previousPage < page){ self.loadNextRows(rows, 0, $tbody.children().length); }
+               else{ self.loadPrevRows(rows, rows.length, $tbody.children().length); }
+               previousPage = page;
+            },
+            loadNextRows: function(rows, index, previous)
+            {
+              if (index == rows.length) { return; }
+              setTimeout(function()
+              {
+                if (index < previous) { $tbody.children().first().remove(); }
+                $tbody.append(rows[index]);
+                self.loadNextRows(rows, ++index, previous)
+              }, 10)
+            },
+            loadPrevRows: function(rows, index, previous)
+            {
+              if (index == -1) { return; }
+              setTimeout(function()
+              {
+                if (index < previous) { $tbody.children().last().remove(); }
+                $tbody.prepend(rows[index]);
+                self.loadPrevRows(rows, --index, previous)
+              }, 10)
             },
             formatDate: function(date)
             {
@@ -128,7 +131,8 @@
             noData: function()
             {
                $table.hide();
-               self.setPagerVisibility(true, false);
+               $tbody.empty();
+               self.setPagerVisibility(data['page'] > 1, false);
                $error.text('no scores are available right now').show();
             },
             setPagerVisibility: function(prev, next)
@@ -138,7 +142,7 @@
               $pager.show();
             }
          };
-         this.mogade = self;
+         this.leaderboard = self;
          self.initialize();
       });
    };

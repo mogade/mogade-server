@@ -17,11 +17,6 @@ class Manage::FacebookController < Manage::ManageController
     redirect_to :action => 'index', :id => @game.id
   end
   
-  def images
-    return unless load_game_as_owner
-    @profile = Profile.load_for_game(@game)
-  end
-  
   def upload
     return unless load_game_as_owner
     profile = Profile.load_for_game(@game)

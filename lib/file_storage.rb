@@ -10,7 +10,7 @@ class FileStorage
   end
   
   def self.save_thumbnail(name, stream)
-    ImageScience.with_image_from_memory(stream.string) do |image|
+    ImageScience.with_image_from_memory(stream.read) do |image|
       image.fit_within(100, 150) do |thumb|
         FileStorage.save_to_aws('thumb' + name, thumb.buffer(File.extname(name)), {'Cache-Control' => 'public,max-age=31536000'})
       end

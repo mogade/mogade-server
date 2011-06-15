@@ -1,5 +1,6 @@
 <% content_for :title, @game.name + ' profile' -%>
 <% content_for :section_title,  @game.name + ' .. profile' -%>
+<% content_for :js_include do -%><%= include_js_files 'pi' %>,<% end -%>
 
 <h2>General Information</h2>
 <%= form_for :profiles, :url => {:action => 'create', :id => @profile.id}, :html => {:id => 'information'} do |f| %>	
@@ -33,10 +34,34 @@
   </div>
 <% end -%>
 
+<div id="bannerImage">
+  <h2>Banner Image</h2>
+  <img src="<%= profile_image(@profile, 0)%>" class="uploadedImage"/>
+  <div class="button uploadButton">upload</div><div data-i="0" class="button deleteButton"<% unless profile_has_image(@profile, 0)%> style="display:none"<% end %>>X</div>
+</div>
+<h2>Image Gallery</h2>
+<div id="imageList">
+<% 4.times do |i| -%>
+  <div>
+    <img src="<%= profile_thumb(@profile, i+1)%>" class="uploadedImage"/>
+    <div class="button uploadButton">upload</div><div data-i="<%=i+1%>" class="button deleteButton"<% unless profile_has_image(@profile, i+1)%> style="display:none"<% end %>>X</div>
+  </div>
+<% end -%>
+</div>
+
+<script type="text/javascript">
+var game_id = '<%=@game.id%>';
+var profile_image_root = '<%= profile_image_root%>';
+var max_image_length = <%=Settings.max_image_length%>;
+</script>
 <% content_for :js do -%>
 $('#description').textAreaLength(500);
 $('#information').validator({rules: <%= validation_of(Profile).html_safe%>})
 <% end -%>
 <% content_for :right do -%>
-  <%= render :partial => 'shared/menu', :locals => {:show_profile => true} %>
+  <%= render :partial => 'shared/menu'%>
+  <h3>Tips</h3>
+  <p>The banner image should be 520px wide, or less. ~150px high is also suggested.</p>
+  <p>Images in the gallery look nice at 480x320 - or some similar aspect ration</p>
+  <p>Images cannot exceed <%=Settings.max_image_length / 1024 %>KB</p>
 <% end -%>

@@ -1,6 +1,6 @@
 <% content_for :title, @profile.name -%>
 
-<img id="banner" src="<%= profile_image(@profile, 0)%>" />
+<% unless @profile.images.nil? || @profile.images[0].nil?%><img id="banner" src="<%= profile_image(@profile, 0)%>" /><% end %>
 <div id="desc">
   <p><%= nl2br(@profile.description)%></p>
 
