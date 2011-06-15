@@ -1,6 +1,6 @@
 (function($) 
 {
-   var defaults = {lid: null, scope: 2, records: 10, page: 1, baseUrl: 'http://mogade.com/api/gamma/scores/'}
+   var defaults = {lid: null, scope: 0, records: 10, page: 1, baseUrl: 'http://mogade.com/api/gamma/scores/'}
    var monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
    $.fn.leaderboard = function(opts) 
    {
@@ -29,7 +29,6 @@
               var $tabs = $tabContainer.children();
               var index = $tabs.index($tab);
               previousPage = 0;
-              $tbody.empty();
               data['scope'] = index + 1;
               data['page'] = 1;
               self.getLeaderboard();
@@ -82,8 +81,7 @@
                   $row.append(self.createCell(self.formatDate(new Date(score.dated))));
                   rows.push($row);
                }
-              
-               if (previousPage == 0) { for(var i = 0; i < rows.length; ++i) { $tbody.append(rows[i]);} }
+               if (previousPage == 0) {$tbody.empty(); for(var i = 0; i < rows.length; ++i) { $tbody.append(rows[i]);} }
                else if (previousPage < page){ self.loadNextRows(rows, 0, $tbody.children().length); }
                else{ self.loadPrevRows(rows, rows.length, $tbody.children().length); }
                previousPage = page;
