@@ -29,6 +29,7 @@
               var $tabs = $tabContainer.children();
               var index = $tabs.index($tab);
               previousPage = 0;
+              $tbody.empty();
               data['scope'] = index + 1;
               data['page'] = 1;
               self.getLeaderboard();
