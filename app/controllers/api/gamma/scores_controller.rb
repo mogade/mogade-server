@@ -19,6 +19,14 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     end
     render_payload(payload, params, 300)
   end
+  
+  def overview
+    payload = {}
+    LeaderboardScope.all_scopes.each do |scope|
+      payload[scope] = Score.get_by_page(@leaderboard, 1, 3, scope)[:scores]
+    end
+    render_payload(payload, params, 300)
+  end
 
   def create
     return unless ensure_params(:points)
