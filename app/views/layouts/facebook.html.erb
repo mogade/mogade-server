@@ -3,13 +3,13 @@
 <head>
   <title><%= yield :title %></title>
   <%= include_css_bundle 'fb' %>
+  <div id="site"><%= yield  %></div>
   <%= include_js_bundle 'h' %>
+  <script>
+  head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", <%= include_js_files 'fb' %>, function(){<%= yield :js%>});
+  </script>
 </head>
 <body>
 <% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
-<div id="site"><%= yield  %></div>
-<script>
-head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", <%= include_js_files 'fb' %>, function(){<%= yield :js%>});
-</script>
 </body>
 </html>

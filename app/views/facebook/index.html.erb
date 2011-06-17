@@ -15,18 +15,17 @@
   <% end -%>
 </div>
 
-<div id="facts">
-  <% unless @scores.nil? %>
-    <%= render :partial => 'leaders', :locals => {:name => "today's leaders", :scores => @scores[LeaderboardScope::Daily]}  -%>
-    <%= render :partial => 'leaders', :locals => {:name => "yesterday's winners", :scores => @scores[LeaderboardScope::Yesterday]} -%>
-    <%= render :partial => 'leaders', :locals => {:name => "weekly leaders", :scores => @scores[LeaderboardScope::Weekly]} -%>
-    <%= render :partial => 'leaders', :locals => {:name => "all time leaders", :scores => @scores[LeaderboardScope::Overall]} -%>
-  <% end %>
+<div id="topscores">
+  <%= render :partial => 'leaderboard_choice' %>
 </div>
 
 <% content_for :js do -%>
-$('#thumbs a').colorbox({overlay:0.2});
-var $facts = $('#facts');
-$facts.find('ul').each(function(i, ul){ $(ul).children(':last').css('border-bottom', 'none');});
-$facts.children(':odd').css('margin-right', 0);
+var baseUrl = '<%= request.local? ? 'http://' + request.host_with_port : 'http://mogade.com'%>';
+$('#thumbs a').colorbox({overlay:0.2, initialWidth: 480, initialHeight:320});
+$('#topscores').topScores({lid: '<%=@profile.leaderboard_id%>', baseUrl: baseUrl + '/api/gamma/scores/overview/'});
+$('select').purdySelect();
+
+
+//$facts.find('ul').each(function(i, ul){ $(ul).children(':last').css('border-bottom', 'none');});
+//$facts.children(':odd').css('margin-right', 0);
 <% end -%>

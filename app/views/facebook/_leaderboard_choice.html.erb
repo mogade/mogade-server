@@ -1,0 +1,9 @@
+<% if @leaderboards.length > 1 %>
+<select name="lid" class="leaderboard_name">
+  <% @leaderboards.each do |leaderboard| -%>
+  <option value="<%=leaderboard.id%>"><%=leaderboard.name%></option>
+  <% end -%>
+</select>
+<% else -%>
+  <div class="leaderboard_name"><%= @leaderboards[0].name%></div>
+<% end -%>

@@ -29,6 +29,8 @@ js:
   fb:
     - facebook/jquery.colorbox
     - facebook/jquery.leaderboard
+    - facebook/jquery.topScores
+    - facebook/jquery.purdySelect
 
 css:
   main:
@@ -38,6 +40,7 @@ css:
     - reset
     - facebook
     - colorbox
+    - purdySelect
   m:
     - manage
     - dialog

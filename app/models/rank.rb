@@ -6,9 +6,7 @@ class Rank
     
     def get_for_player(leaderboard, unique, scopes = nil)
       score = "(#{score}" #exclusive
-      if scopes.nil?
-        scopes = [LeaderboardScope::Yesterday, LeaderboardScope::Daily, LeaderboardScope::Weekly, LeaderboardScope::Overall]
-      end
+      scopes = LeaderboardScope::all_scopes if scopes.nil?
       unless scopes.is_a?(Array)
         return get_for_player_and_scope(leaderboard, unique, scopes)
       end

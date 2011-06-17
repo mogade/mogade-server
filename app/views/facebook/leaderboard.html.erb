@@ -1,6 +1,8 @@
 <% content_for :title, @profile.name + ' leaderboards' -%>
 <% unless @profile.images.nil? || @profile.images[0].nil?%><img id="banner" src="<%= profile_image(@profile, 0)%>" /><% end %>
+
 <div id="leaderboard">
+  <%= render :partial => 'leaderboard_choice' %>
   <div class="tabs">
     <div data-scope="1">today</div>
     <div data-scope="2">this week</div>
@@ -22,5 +24,6 @@
 
 <% content_for :js do -%>
 var baseUrl = '<%= request.local? ? 'http://' + request.host_with_port : 'http://mogade.com'%>';
-$('#leaderboard').leaderboard({lid: '<%=@profile.leaderboard_id%>', baseUrl: baseUrl + '/api/gamma/scores'});
+$('#leaderboard').leaderboard({lid: '<%=@profile.leaderboard_id%>', baseUrl: baseUrl + '/api/gamma/scores/'});
+$('select').purdySelect();
 <% end -%>
