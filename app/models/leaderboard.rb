@@ -25,7 +25,7 @@ class Leaderboard
   
   def daily_stamp
     now = Time.now.utc
-    time = now.midnight + -3600 * offset
+    time = now.midnight + -3600 * (offset || 0)
     return time > now ? time - 86400 : time
   end
   
@@ -35,7 +35,7 @@ class Leaderboard
   
   def weekly_stamp
     now = Time.now.utc
-    time = now.at_beginning_of_week + -3600 * offset
+    time = now.at_beginning_of_week + -3600 * (offset || 0)
     return time > now ? time - 604800 : time
   end
   
