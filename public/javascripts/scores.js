@@ -39,7 +39,7 @@ $(document).ready(function()
     $('#score_submit').val('find');
     if (r.count > 0)
     {
-      $confirm.find('span').text(r.count);
+      $confirm.find('#del_count').text(r.count);
       $confirmNone.hide();
       $confirm.show();
     }

@@ -25,7 +25,7 @@ describe Manage::ScoresController, :count do
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
     
     ScoreDeleter.should_receive(:count).with(leaderboard, LeaderboardScope::Daily, ScoreDeleterField::UserName, 4, 'baron').and_return(454)
-    get :count, {:id => leaderboard.id, :game_id => @game.id, :scope => LeaderboardScope::Daily, :field => ScoreDeleterField::UserName, :operator => '4', :value => 'baron'}
+    get :count, {:id => leaderboard.id, :game_id => @game.id, :scope => LeaderboardScope::Daily, :field => '1', :operator => '4', :value => 'baron'}
     
     json = ActiveSupport::JSON.decode(response.body)
     json['count'].should == 454   
