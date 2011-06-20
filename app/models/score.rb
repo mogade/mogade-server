@@ -90,7 +90,7 @@ class Score
     def time_condition(leaderboard, scope)
       case scope
       when LeaderboardScope::Overall
-        return {}
+        return {'o' => {'$exists' => true}}
       when LeaderboardScope::Weekly
         return {'w.s' => leaderboard.weekly_stamp}
       else

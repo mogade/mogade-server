@@ -36,7 +36,10 @@ module Store
   def self.handle_passenger_forking
     if defined?(PhusionPassenger)
       PhusionPassenger.on_event(:starting_worker_process) do |forked|
-        @@mongo_connection.connect if forked
+        if forked
+          @@mongo_connection.connect
+          @@redis.client.reconnect
+        end
       end
     end
   end

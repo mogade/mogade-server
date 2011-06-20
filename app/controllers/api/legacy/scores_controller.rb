@@ -19,6 +19,7 @@ class Api::Legacy::ScoresController < Api::Legacy::ApiController
   end
   
   def yesterdays_rank
+    return unless ensure_leaderboard(:leaderboard_id)
     return unless ensure_player
     render :json => {:rank => Rank.get_for_player(@leaderboard, @player.unique, LeaderboardScope::Yesterday)}
   end
