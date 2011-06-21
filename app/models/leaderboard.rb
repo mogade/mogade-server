@@ -14,9 +14,9 @@ class Leaderboard
     end
   end
   
-  def score_is_better?(new_score, data)
-    return true if data.points.nil? || data.is_default
-    type == LeaderboardType::LowToHigh ? new_score < data.points : new_score > data.points
+  def score_is_better?(new_score, old_score)
+    return true if old_score.nil? || old_score == 0
+    type == LeaderboardType::LowToHigh ? new_score < old_score : new_score > old_score
   end
   
   def sort
