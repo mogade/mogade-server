@@ -5,7 +5,9 @@ class ScoreData
 
   class << self
     def blank
-      ScoreData.new({:points => 0, :is_default => true})
+      score = ScoreData.new({:points => 0})
+      score.is_default = true
+      score
     end
   end
 
