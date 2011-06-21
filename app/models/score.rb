@@ -127,7 +127,7 @@ class Score
   def update_if_better(scope, points, data, date)
     name = Score.scope_to_name(scope)
     score_data = send(name)
-    return false unless @leaderboard.score_is_better?(points, score_data.points)
+    return false unless @leaderboard.score_is_better?(points, score_data)
 
     Rank.save(@leaderboard, scope, unique, points)
     score_data.points = points
