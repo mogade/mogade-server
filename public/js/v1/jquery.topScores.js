@@ -15,6 +15,7 @@
         {
           $container.append(self.buildLeaderboardChoice());
           $container.show();
+          self.getTopScores();
         },
         buildLeaderboardChoice: function()
         {
@@ -28,7 +29,7 @@
             var lid = options.lids[i];
             $select.append($('<option>').text(lid[1]).val(lid[0]))
           }
-          if ($select.purdySelect) { $select.purdySelect();   }
+          if ($select.purdySelect) { $select.purdySelect(); }
           return $select.change(self.leaderboardChanged);
         },
         leaderboardChanged: function()
