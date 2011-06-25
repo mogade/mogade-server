@@ -2,28 +2,9 @@
 <% unless @profile.images.nil? || @profile.images[0].nil?%><img id="banner" src="<%= profile_image(@profile, 0)%>" /><% end %>
 
 <div id="leaderboard">
-  <%= render :partial => 'leaderboard_choice' %>
-  <div class="tabs">
-    <div data-scope="1">today</div>
-    <div data-scope="2">this week</div>
-    <div data-scope="3">overall</div>
-    <div data-scope="4">yesterday</div>
-  </div>
-  <table class="hide">
-    <thead>
-      <tr>
-        <th class="rank">rank</th><th class="name">name</th><th class="score">score</th><th class="date">date</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <div class="pager hide">
-    <div class="prev">prev</div><div class="next">next</div>
-  </div>
 </div>
 
 <% content_for :js do -%>
 var baseUrl = '<%= request.local? ? 'http://' + request.host_with_port : 'http://mogade.com'%>';
-$('#leaderboard').leaderboard({lid: '<%=@profile.leaderboard_id%>', baseUrl: baseUrl + '/api/gamma/scores/'});
-$('select').purdySelect();
+$('#leaderboard').leaderboard({lids: <%=leaderboard_selection_array(@leaderboards, @profile.leaderboard_id)%>, baseUrl: baseUrl + '/api/gamma/scores/'});
 <% end -%>

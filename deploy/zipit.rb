@@ -36,7 +36,6 @@ class ZipIt
     end
   end
 
-  private
   def yui(source, target)
    `java -jar #{@jar} -o #{target} #{source}`
   end
@@ -63,10 +62,14 @@ class ZipIt
 end
 
 root = ARGV[0]
-jar = ARGV[1]
-settings = YAML::load_file(ARGV[2])
-
-o = ZipIt.new(root, jar)
-o.bundle_type settings['js'], 'javascripts', 'js'
-o.bundle_type settings['css'], 'stylesheets', 'css'
-o.zip_images root + 'images'
+o = ZipIt.new(, ARGV[1])  
+extension = File.extname(ARGV[2])
+if extension == '.yaml'
+  settings = YAML::load_file(ARGV[2])
+  o.bundle_type settings['js'], 'javascripts', 'js'
+  o.bundle_type settings['css'], 'stylesheets', 'css'
+  o.zip_images root + 'images'
+else
+  o.yui(ARGV[2])
+  o.zip(ARGV[2], ARGV[2] + '.gz')
+end

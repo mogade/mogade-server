@@ -1,6 +1,6 @@
 (function($) 
 {
-  var defaults = {lid: null, scope: 0, records: 10, page: 1, baseUrl: 'http://mogade.com/api/gamma/scores/'}
+  var defaults = {lids: null, scope: 0, records: 10, page: 1, baseUrl: 'http://api.mogade.com/api/gamma/scores', nextText: 'next', previousText: 'prev', data: null}
   var monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   $.fn.leaderboard = function(opts) 
   {
@@ -9,29 +9,77 @@
     {
       if (this.leaderboard) { return false; }
       var $container = $(this);
-      var $table, $tbody, $error, $tabContainer, $pager = null;
-      var data = {lid: options.lid, scope: options.scope, page: options.page};
+      var $table, $tbody, $error, $tabContainer, $pager, $lid = null;
+      var data = {lid: options.lids[0][0], scope: options.scope, page: options.page};
       var previousPage = 0;
       var self =
       {
         initialize: function() 
         {
-          $tabContainer = $container.children('div.tabs').delegate('div', 'click', self.scopeChanged);
-          $container.find('select').change(self.leaderboardChanged);
+          self.buildLeaderboardChoice().appendTo($container);
+          $tabContainer = self.buildScopeTabs().appendTo($container);
+          $table = self.buildTable().appendTo($container);
+          $pager = self.buildPager().appendTo($container);
+          
           $table = $container.children('table');
-          $pager = $container.children('div.pager').delegate('div', 'click', self.pageChanged);
           $error = $('<div>').appendTo($container);
           $tbody = $table.find('tbody');
           $tabContainer.children().eq(options.scope).click();
           $container.show();
         },
+        buildLeaderboardChoice: function()
+        {
+          if (options.lids.length == 1)
+          {
+            return $('<div class="leaderboard_name">').text(options.lids[0][1]);
+          }     
+          var $select = $('<select class="leaderboard_name">');
+          for(var i = 0; i < options.lids.length; ++i)
+          {
+            var lid = options.lids[i];
+            $select.append($('<option>').text(lid[1]).val(lid[0]))
+          }
+          if ($select.purdySelect) { $select.purdySelect();   }
+          return $select.change(self.leaderboardChanged);
+        },
+        buildScopeTabs: function()
+        {
+          var $tabs = $('<div class="tabs">');
+          $tabs.append($('<div>').data('scope', 1).text('today'));
+          $tabs.append($('<div>').data('scope', 2).text('this week'));
+          $tabs.append($('<div>').data('scope', 3).text('overall'));
+          $tabs.append($('<div>').data('scope', 4).text('yesterday'));
+          $tabs.delegate('div', 'click', self.scopeChanged);
+          return $tabs;
+        },
+        buildTable: function()
+        {
+          var $table = $('<table>');
+          var $thead = $('<thead>').appendTo($table);
+          var $tr = $('<tr>').appendTo($thead)
+            .append($('<th class="rank">').text('rank'))
+            .append($('<th class="name">').text('name'))
+            .append($('<th class="score">').text('score'))
+            .append($('<th class="date">').text('date'));
+            
+          if (options.data)
+          {
+            $tr.append($('<th class="data">').text(options.data.name))
+          }
+          return $table.append($('<tbody>'));
+        },
+        buildPager: function()
+        {
+          var $pager = $('<div class="pager">').css('display', 'none');
+          $('<div class="prev">').text(options.previousText).appendTo($pager);
+          $('<div class="next">').text(options.nextText).appendTo($pager);
+          return $pager.delegate('div', 'click', self.pageChanged);
+        },
         scopeChanged: function()
         {
           var $tab = $(this);
-          var $tabs = $tabContainer.children();
-          var index = $tabs.index($tab);
           previousPage = 0;
-          data['scope'] = index + 1;
+          data['scope'] = $tab.data('scope');
           data['page'] = 1;
           self.getLeaderboard();
           return false;
@@ -74,7 +122,7 @@
           self.setPagerVisibility(d.page > 1, d.scores.length == options.records);
           
           var dateTimeName = self.isDailyScope() ? 'time' : 'date';
-          $table.find('th:last').text(dateTimeName);
+          $table.find('th.date').text(dateTimeName);
           $table.show();
           $error.hide();
           var page = d.page;
@@ -88,6 +136,10 @@
             $row.append(self.createCell(score.username));
             $row.append(self.createCell(score.points));
             $row.append(self.createCell(self.formatDate(new Date(score.dated))));
+            if (options.data)
+            {
+              $row.append(self.createCell(options.data.handler(score.data)));
+            }
             rows.push($row);
           }
           if (previousPage == 0) {$tbody.empty(); for(var i = 0; i < rows.length; ++i) { $tbody.append(rows[i]);} }
@@ -141,8 +193,8 @@
         },
         setPagerVisibility: function(prev, next)
         {
-          prev ? $pager.find('.prev').show() : $pager.find('.prev').hide();
-          next ? $pager.find('.next').show() : $pager.find('.next').hide();
+          prev ? $pager.children('div.prev').show() : $pager.children('div.prev').hide();
+          next ? $pager.children('div.next').show() : $pager.children('div.next').hide();
           $pager.show();
         }
       };

@@ -41,6 +41,12 @@ module ApplicationHelper
     !profile.images.nil? && !profile.images[index].nil?
   end
   
+  def leaderboard_selection_array(leaderboards, default)
+    index = leaderboards.find_index{|l| l.id == default}
+    leaderboard = leaderboards.delete_at(index)
+    leaderboards.unshift(leaderboard).map{|l| [l.id.to_s, l.name]}.to_json.html_safe
+  end
+  
   def ssl_url(path)
     return path if request.ssl? || request.local?
     'https://' + request.host_with_port + path
