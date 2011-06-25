@@ -16,10 +16,10 @@
       {
         initialize: function() 
         {
-          self.buildLeaderboardChoice().appendTo($container);
-          $tabContainer = self.buildScopeTabs().appendTo($container);
-          $table = self.buildTable().appendTo($container);
-          $pager = self.buildPager().appendTo($container);
+          self.buildLeaderboardChoice($container);
+          $tabContainer = self.buildScopeTabs($container);
+          $table = self.buildTable($container);
+          $pager = self.buildPager($container);
           
           $table = $container.children('table');
           $error = $('<div>').appendTo($container);
@@ -27,22 +27,22 @@
           $tabContainer.children().eq(options.scope).click();
           $container.show();
         },
-        buildLeaderboardChoice: function()
+        buildLeaderboardChoice: function($container)
         {
           if (options.lids.length == 1)
           {
-            return $('<div class="leaderboard_name">').text(options.lids[0][1]);
+            return $('<div class="leaderboard_name">').text(options.lids[0][1]).appendTo($container);
           }     
-          var $select = $('<select class="leaderboard_name">');
+          var $select = $('<select class="leaderboard_name">').appendTo($container)
           for(var i = 0; i < options.lids.length; ++i)
           {
             var lid = options.lids[i];
             $select.append($('<option>').text(lid[1]).val(lid[0]))
           }
-          if ($select.purdySelect) { $select.purdySelect();   }
+          if ($select.purdySelect) { $select.purdySelect(); }
           return $select.change(self.leaderboardChanged);
         },
-        buildScopeTabs: function()
+        buildScopeTabs: function($container)
         {
           var $tabs = $('<div class="tabs">');
           $tabs.append($('<div>').data('scope', 1).text('today'));
@@ -50,9 +50,9 @@
           $tabs.append($('<div>').data('scope', 3).text('overall'));
           $tabs.append($('<div>').data('scope', 4).text('yesterday'));
           $tabs.delegate('div', 'click', self.scopeChanged);
-          return $tabs;
+          return $tabs.appendTo($container);
         },
-        buildTable: function()
+        buildTable: function($container)
         {
           var $table = $('<table>');
           var $thead = $('<thead>').appendTo($table);
@@ -66,14 +66,14 @@
           {
             $tr.append($('<th class="data">').text(options.data.name))
           }
-          return $table.append($('<tbody>'));
+          return $table.append($('<tbody>')).appendTo($container);
         },
-        buildPager: function()
+        buildPager: function($container)
         {
           var $pager = $('<div class="pager">').css('display', 'none');
           $('<div class="prev">').text(options.previousText).appendTo($pager);
           $('<div class="next">').text(options.nextText).appendTo($pager);
-          return $pager.delegate('div', 'click', self.pageChanged);
+          return $pager.delegate('div', 'click', self.pageChanged).appendTo($container);
         },
         scopeChanged: function()
         {

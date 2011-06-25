@@ -14,7 +14,7 @@
             {
                $ul = self.buildOptions().delegate('li', 'click', self.select);
                $current = $('<div>');
-               $container = $('<div>', {'class': 'purdySelect'}).width($select.width() + 120).append($current).append($ul).click(self.toggle);
+               $container = $('<div>', {'class': 'purdySelect'}).append($current).append($ul).click(self.toggle);
                itemLookup[$select.val()].click();
                $select.before($container).hide();
                $(document).keydown(function(e)
@@ -24,7 +24,6 @@
                {
                   if (self.isShowing() && $(e.target).closest('div.purdySelect')[0] != $container[0]) { self.close(); }
                });
-               
             },
             buildOptions: function()
             {

@@ -13,17 +13,17 @@
       {
         initialize: function() 
         {
-          $container.append(self.buildLeaderboardChoice());
+          self.buildLeaderboardChoice($container);
           $container.show();
           self.getTopScores();
         },
-        buildLeaderboardChoice: function()
+        buildLeaderboardChoice: function($container)
         {
           if (options.lids.length == 1)
           {
-            return $('<div class="leaderboard_name">').text(options.lids[0][1]);
+            return $('<div class="leaderboard_name">').text(options.lids[0][1]).appendTo($container);
           }     
-          var $select = $('<select class="leaderboard_name">');
+          var $select = $('<select class="leaderboard_name">').appendTo($container)
           for(var i = 0; i < options.lids.length; ++i)
           {
             var lid = options.lids[i];
