@@ -33,9 +33,9 @@ class Score
       
       if changed.has_value?(true)
         #todo fix
-        score.daily = nil if score.daily.points == 0
-        score.weekly = nil if score.weekly.points == 0
-        score.overall = nil if score.overall.points == 0
+        # score.daily = nil if score.daily.points == 0
+        # score.weekly = nil if score.weekly.points == 0
+        # score.overall = nil if score.overall.points == 0
         score.save!
       end
       ScoreDaily.save(leaderboard, player, points, data) if changed[LeaderboardScope::Daily]
