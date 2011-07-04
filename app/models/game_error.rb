@@ -1,5 +1,5 @@
 class GameError
-  include Document
+  include MongoLight::Document
   mongo_accessor({:game_id => :gid, :subject => :s, :details => :d, :hash => :h, :count => :c, :dated => :dt, :updated => :ut})  
 
   class << self

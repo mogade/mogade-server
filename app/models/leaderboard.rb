@@ -1,5 +1,5 @@
 class Leaderboard
-  include Document
+  include MongoLight::Document
   include ActiveModel::Validations
   mongo_accessor({:game_id => :gid, :name => :n, :offset => :o, :type => :t})
   

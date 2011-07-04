@@ -2,7 +2,7 @@
 # This class is used specifically to enable grabbing yesterday's scores/leaderboards/whatever
 # Not crazy about duplicate data in this collection, but it's the bes
 class ScoreDaily
-  include Document
+  include MongoLight::Document
   mongo_accessor({:leaderboard_id => :lid, :unique => :u, :username => :un, :data => :d, :stamp => :s, :points => :points, :dated => :dt})
 
   class << self

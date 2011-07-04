@@ -1,5 +1,5 @@
 class Game
-  include Document
+  include MongoLight::Document
   include ActiveModel::Validations
   mongo_accessor({:name => :name, :secret => :secret, :version => :v})
   

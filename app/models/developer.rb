@@ -1,6 +1,6 @@
 require 'bcrypt'
 class Developer
-  include Document
+  include MongoLight::Document
   mongo_accessor({:name => :n, :email => :e, :password => :pw, :action => :a, :status => :s, :game_ids => :gids})
   
   class << self

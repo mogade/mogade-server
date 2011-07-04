@@ -1,5 +1,5 @@
 class Profile
-  include Document
+  include MongoLight::Document
   include ActiveModel::Validations
   mongo_accessor({:name => :n, :enabled => :e, :description => :desc, :images => :i, :leaderboard_id => :lid})
   

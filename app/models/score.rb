@@ -1,5 +1,5 @@
 class Score
-  include Document
+  include MongoLight::Document
   attr_accessor :leaderboard
   mongo_accessor({:leaderboard_id => :lid, :unique => :u, :userkey => :uk, :username => :un,
     :daily => {:field => :d, :class => ScoreData},

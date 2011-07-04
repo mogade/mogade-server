@@ -1,4 +1,4 @@
-require 'store'
+require 'store.rb'
 
 class Destroyer
   

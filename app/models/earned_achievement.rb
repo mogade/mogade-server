@@ -1,5 +1,5 @@
 class EarnedAchievement
-  include Document
+  include MongoLight::Document
   mongo_accessor({:achievement_id => :aid, :unique => :u, :username => :un, :dated => :dt})
   
   class << self

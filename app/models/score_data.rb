@@ -1,5 +1,5 @@
 class ScoreData
-  include EmbeddedDocument
+  include MongoLight::EmbeddedDocument
   mongo_accessor({:points => :p, :stamp => :s, :data => :d, :dated => :dt})
 
   class << self

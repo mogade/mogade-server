@@ -18,7 +18,7 @@ end
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.before(:each) do
-    Store.mongo_collections.each do |collection|
+    MongoLight::Connection.collections.each do |collection|
       unless collection.name.match(/^system\./)
         collection.remove
       end
