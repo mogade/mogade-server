@@ -49,8 +49,8 @@ GEM
       hoe (>= 2.5.0)
     gemcutter (0.7.0)
     hiredis (0.3.2)
-    hoe (2.9.4)
-      rake (>= 0.8.7)
+    hoe (2.10.0)
+      rake (~> 0.8)
     hoptoad_notifier (2.4.11)
       activesupport
       builder
@@ -104,8 +104,8 @@ GEM
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    tzinfo (0.3.27)
-    xml-simple (1.0.16)
+    tzinfo (0.3.29)
+    xml-simple (1.1.0)
 
 PLATFORMS
   ruby
