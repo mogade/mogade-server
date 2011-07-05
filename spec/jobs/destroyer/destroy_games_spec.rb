@@ -21,7 +21,7 @@ describe Destroyer, 'destroy games' do
     Store.redis.keys("*:#{game2.id}:*").length.should == 8
   end
   
-  it "queues all of the game's leaderboards for destruction" do
+  it "destroy's a game's leaderboard" do
     game = Factory.build(:game, {:id => Id.new})
     leaderboard1 = Factory.create(:leaderboard, {:id => Id.new, :game_id => game.id})
     leaderboard2 = Factory.create(:leaderboard, {:id => Id.new, :game_id => game.id})
@@ -29,7 +29,8 @@ describe Destroyer, 'destroy games' do
     Store.redis.sadd('cleanup:games', game.id)
     Destroyer.new.destroy_games
     
-    Store.redis.smembers('cleanup:leaderboards').should =~ [leaderboard2.id.to_s, leaderboard1.id.to_s]
+    Store['leaderboards'].count.should == 1
+    Store['leaderboards'].find({:gid => game.id}).count.should == 0
   end
   
   it "removes the game id from the destruction queue" do
