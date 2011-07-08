@@ -9,6 +9,8 @@ code{border: 1px solid #E6E6E6; background: #F0F0F0; padding: 1px 4px;}
 #right{float:right;width:220px;}
 #messages{position:relative;}
 #error, #info{text-align:center;padding:10px 0;}
+#messages.temp{position:absolute;width:960px;}
+#messages.temp #error, #messages.temp #info{padding:3px 0;}
 #error{border:1px solid #a77;background:#fdd;}
 #info{border:1px solid #7a7;background:#dfd;}
 #confirm, #confirmNone{margin-top:30px;display:none;}
@@ -76,6 +78,8 @@ h4{font-weight:bold;}
 .pager a:hover{background:#cff;}
 .pager a.active{border-color:transparent;font-weight:bold;}
 .pager .total{position:absolute;right:5px;top:6px;font-weight:bold;}
+
+#scores{display:none;}
 
 #imageList{overflow: auto;}
 #imageList > div{float:left;width:156px;margin-right:10px;height:250px;}

@@ -67,6 +67,6 @@ class Destroyer
   end
   
   def delete_keys(keys)
-    @redis.del *keys unless keys.lenght == 0
+    @redis.del *keys unless keys.length == 0
   end
 end

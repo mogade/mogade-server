@@ -32,10 +32,7 @@ class Score
       changed[LeaderboardScope::Overall] = score.update_if_better(LeaderboardScope::Overall, points, data, now)
       
       if changed.has_value?(true)
-        #todo fix
-        # score.daily = nil if score.daily.points == 0
-        # score.weekly = nil if score.weekly.points == 0
-        # score.overall = nil if score.overall.points == 0
+        #todo still not sure about this
         score.save! unless score.overall == 0
       end
       ScoreDaily.save(leaderboard, player, points, data) if changed[LeaderboardScope::Daily]
@@ -51,7 +48,7 @@ class Score
         return { :page => page, :scores => ScoreDaily.get_by_stamp_and_page(leaderboard, leaderboard.yesterday_stamp, records, offset)}
       end
       
-      prefix = @@prefixes[scope]
+      prefix = Score.scope_to_prefix(scope)
       name = Score.scope_to_name(scope)
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
@@ -71,11 +68,10 @@ class Score
       leaderboards = Leaderboard.find({:game_id => game.id})
       leaderboards.map{|leaderboard| Score.load(leaderboard, player)}
     end
-    
-    def prefixes
-      @@prefixes
-    end
 
+    def scope_to_prefix(scope)
+      @@prefixes[scope]
+    end
     def scope_to_name(scope)
       case scope
       when LeaderboardScope::Weekly

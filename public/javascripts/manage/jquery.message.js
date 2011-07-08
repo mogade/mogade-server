@@ -2,26 +2,30 @@ $.message =
 {
   $active: null,
   timerId: null,
-  show: function(contents, id)
+  show: function(contents, id, temp)
   {
     $.message.hide();
     var $message = $('#' + id).length > 0 ? $('#' + id) : $('<div id="' + id + '">');
     $message.html(contents);
     $.message.$active = $message;
     $message.stop();
-    $('#messages').html($message)
+    
+    var $container = $('#messages').html($message)
+    if (temp) { $container.addClass('temp'); } 
+    else { $message.removeClass('temp'); }
+    
     return $message;
   },
-  info: function(contents)
+  info: function(contents, timer)
   {
-    var $message = $.message.show(contents, 'info');
-    //$.message.timerId = setTimeout($.message.hide, 5000);
+    var $message = $.message.show(contents, 'info', timer ? true : false);
+    if (timer) { $.message.timerId = setTimeout($.message.hide, timer); }
     return $message
   },
-  error: function(contents)
+  error: function(contents, timer)
   {
-    var $message = $.message.show(contents, 'error');
-    //$.message.timerId = setTimeout($.message.hide, 5000);
+    var $message = $.message.show(contents, 'error', timer ? true : false);
+    if (timer) { $.message.timerId = setTimeout($.message.hide, timer); }
     return $message
   },
   hide: function()

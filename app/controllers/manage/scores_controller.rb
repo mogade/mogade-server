@@ -6,10 +6,10 @@ class Manage::ScoresController < Manage::ManageController
     @leaderboards = Leaderboard.find_for_game(@game)
   end
   
-  def count
+  def find
     return unless load_game_as_owner
     return unless ensure_leaderboard
-    render :json => {:count => ScoreDeleter.count(@leaderboard, params[:scope].to_i, params[:field].to_i, params[:operator].to_i, params[:value])}
+    render :json => ScoreDeleter.find(@leaderboard, params[:scope].to_i, params[:username])
   end
   
   def destroy

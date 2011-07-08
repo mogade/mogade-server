@@ -1,14 +1,20 @@
 class ScoreDeleter
   class << self
-    @@operator_map = {1 => '$lt', 2 => '$lte', 4 => '$gte', 5 => '$gt'}
-    
-    def count(leaderboard, scope, field, operator, value)
-      prefix = Score.prefixes[scope]
-      conditions = {:leaderboard_id => leaderboard.id, prefix => {'$ne' => nil}}.merge(conditions(field, operator, value, scope))
-      Score.count(conditions)
+    def find(leaderboard, scope, username)
+      #this is a huge repetition of of Score.get_by_page..doh!
+      #the only real difference is the limit and that we cna filter by username
+      conditions = Score.time_condition(leaderboard, scope)
+      conditions[:leaderboard_id] = leaderboard.id
+      conditions[:username] = username  unless username.blank?
+      
+      prefix = Score.scope_to_prefix(scope)
+      name = Score.scope_to_name(scope)
+      
+      cursor = Score.find(conditions, {:limit => 100, :raw => true, :sort => [prefix + '.p', leaderboard.sort], :fields => {:username => 1, prefix + '.p' => 1, prefix + '.d' => 1}})
+      cursor.map{|s| {:id => s[:_id].to_s, :username => s[:username], :points => s[name][:points], :data => s[name][:data]} }
     end
     
-    def delete(leaderboard, scope, field, operator, value)
+    def delete(leaderboard, scope, ids)
       conditions = {:leaderboard_id => leaderboard.id}.merge(conditions(field, operator, value, scope))
       redis = Store.redis
       key = Rank.get_key(leaderboard, scope)

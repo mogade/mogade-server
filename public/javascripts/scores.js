@@ -2,56 +2,52 @@ $(document).ready(function()
 {
   var $confirm = $('#confirm').hide();
   var $confirmNone = $('#confirmNone').hide();
+  var $scores = $('#scores');
 
-  var $operators = $('#operator').clone();
-  $('#field').change(function()
-  {
-    var $operator = $('#operator');
-    var $value = $('#value').val('');
-    if ($(this).val() == '1')
-    {
-      $operator.children('[value!="3"]').remove();
-      $value.numeric('unload');
-    }
-    else
-    {
-      $operator.after($operators.clone()).remove();
-      $value.numeric();
-    }
-  }).change();
-  
   var $form = $('#form').submit(function()
   {
-    $('#score_submit').val('Working...');
-    $.get('/manage/scores/count', $form.serialize(), gotCount, 'json');
+    $('#score_submit').val('working...');
+    $.get('/manage/scores/find', $form.serialize(), gotResults, 'json');
     disableForm(true);
     return false;
   });
-  
-  
+
   function disableForm(trueOrFalse)
   {
     $form.find('select, input').attr('disabled', trueOrFalse);
   }
   
-  function gotCount(r)
+  function gotResults(r)
   {
+    var $tbody = $scores.find('tbody').empty();
     $('#score_submit').val('find');
-    if (r.count > 0)
+    disableForm(false);
+    
+    if (r && r.length > 0)
     {
-      $confirm.find('#del_count').text(r.count);
-      $confirmNone.hide();
-      $confirm.show();
+      for(var i = 0; i < r.length; ++i)
+      {
+        var score = r[i];
+        var $tr = $('<tr>');
+        var $check = $('<input>', {type: 'checkbox', name: 'ids[]', value: score['id']});
+        $tr.append($('<td>').append($check));
+        $tr.append($('<td>').text(score['username']));
+        $tr.append($('<td>').text(score['points']));
+        $tr.append($('<td>').text(score['data']));
+        $tr.appendTo($tbody);
+      }
+      $scores.show();
     }
     else
     {
-      disableForm(false);
-      $confirmNone.show();
-      $confirm.hide();
+      $.message.error('No scores found', 3000);
     }
-    if (r.count > 1) { $('#leet').show(); }
-    else { $('#leet').hide(); }
   };
+  
+  $('#toggleAll').click(function()
+  {
+    $scores.find('input').attr('checked', this.checked);
+  });
   
   $('#no').click(function(){ $confirm.hide(); disableForm(false); });
   $('#yes').click(function()

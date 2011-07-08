@@ -6,7 +6,7 @@
   <h3>You should probably add a leaderboard first<h3>
 <% else -%>
   <h3>Find Scores to Delete</h3>
-  <%= form_for :score, :url => {:action => 'count' }, :html => {:id => 'form'} do |f| -%>
+  <%= form_for :score, :url => {:action => 'find' }, :html => {:id => 'form'} do |f| -%>
     <input type="hidden" name="game_id" value="<%=@game.id%>" />
     <div class="field">
       <label for="id">leaderboard</label>
@@ -18,33 +18,30 @@
     </div>
     <div class="field">
       <label for="scope">scope</label>
-      <%= enum_drop_down('scope', LeaderboardScope, LeaderboardScope::Daily, LeaderboardScope::Yesterday)%>
+      <%= enum_drop_down('scope', LeaderboardScope, nil, LeaderboardScope::Yesterday) %>
     </div>
     <div class="field">
-      <label>where</label>
-      <%= enum_drop_down('field', ScoreDeleterField, ScoreDeleterField::UserName)%>
-      <select name="operator" id="operator" style="width:175px">
-        <option value="1">is less than</option>
-        <option value="2">is less than or equal to</option>
-        <option value="3" selected="selected">equals</option>
-        <option value="4">is greater than or equals to</option>
-        <option value="5">is greater than</option>
-      </select>
-      <input type="text" name="value" id="value" class="short"/>
+      <label for="username">username</label>
+      <input id="username" name="username" type="text" />
     </div>
     <div class="buttons">
       <%= f.submit 'find', {:class => 'button'} %>
     </div>
   <% end -%>
-  <div id="confirmNone">
-    This would not delete any scores
-  </div>
-  <div id="confirm">
-    This will delete <span id="del_count"></span> score<span id="leet">s</span>. Are you sure you want to continue?
-    <div class="buttons">
-      <input type="button" value="yes" class="button" id="yes" />
-      <input type="button" value="no" class="button" id="no" />
-    </div>
+  
+  <div class="list">
+    <table id="scores">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="toggleAll" /></th>
+          <th>username</th>
+          <th>points</th>
+          <th>data</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </div>
 <% end -%>
 
