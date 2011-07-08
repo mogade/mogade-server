@@ -50,6 +50,7 @@ describe Api::Gamma::ScoresController, :index do
     json = ActiveSupport::JSON.decode(response.body)
     json['points'].should == 9000
     json['data'].should == "it's over"
+    json['username'].should == 'leto2'
   end
   
   it "returns the scores within the specific callback" do
