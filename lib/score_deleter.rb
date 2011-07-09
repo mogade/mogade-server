@@ -14,20 +14,32 @@ class ScoreDeleter
       cursor.map{|s| {:id => s[:_id].to_s, :username => s[:username], :points => s[name][:points], :data => s[name][:data]} }
     end
     
+    #deleting an overall score means adopting the user's weekly score as his new overall
+    #deleting a weekly score means adopting the user's daily score as his new weekly
+    #because it doesn't make sense for a user to have a weekly top score, but not have an overall top score
     def delete(leaderboard, scope, ids)
-      conditions = {:leaderboard_id => leaderboard.id}.merge(conditions(field, operator, value, scope))
-      redis = Store.redis
-      key = Rank.get_key(leaderboard, scope)
-      Score.find(conditions, {:fields => {:userkey => 1, :_id => -1}, :raw => true}).each do |score|
-        redis.zrem(key, score[:userkey])
+      Score.find({:leaderboard_id => leaderboard.id, :_id => {'$in' => ids}}).each do |score|
+        
+        if scope == LedaerboardScope::Overall && score.weekly
+          if score.weekly
+            score.overall.points = score.weekly.points
+            score.overall.data = score.weekly.data
+            score.overall.dated = score.weekly.dated
+          else
+            score.delete #todo handle
+            redis.zrem(key, score[:userkey])
+          end
+        elsif scope == LeaderboardScope::Weekly
+          if score.daily
+            score.weekly.points = score.daily.points
+            score.weekly.data = score.daily.data
+            score.weekly.dated = score.daily.dated
+          else
+            score.weekly = nil
+          end
+        end
+
       end
-      Score.update(conditions, {'$set' => { Score.scope_to_name(scope) => nil}}, {:multi => true})
-    end
-    
-    def conditions(field, operator, value, scope)
-      return {:username => value} if field == ScoreDeleterField::UserName
-      prefix = Score.prefixes[scope]
-      operator == 3 || !@@operator_map.include?(operator) ? {prefix + '.p' => value.to_i} : {prefix + '.p' => {@@operator_map[operator] => value.to_i}}
     end
   end
 end
