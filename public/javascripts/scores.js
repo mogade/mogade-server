@@ -1,8 +1,10 @@
 $(document).ready(function()
 {
-  var $confirm = $('#confirm').hide();
-  var $confirmNone = $('#confirmNone').hide();
   var $scores = $('#scores');
+  $('#delete').confirm(null, 'Delete these scores?', 'This scores will be permanently deleted and cannot be recovered. Are you sure?', function()
+  { 
+    return do_delete($scores.attr('action'), $scores.serializeArray());
+  });
 
   var $form = $('#form').submit(function()
   {
@@ -36,7 +38,7 @@ $(document).ready(function()
         $tr.append($('<td>').text(score['data']));
         $tr.appendTo($tbody);
       }
-      $scores.show();
+      $scores.find('input[name=id]').val($form.find('select[name=id]').val());
     }
     else
     {
@@ -47,13 +49,5 @@ $(document).ready(function()
   $('#toggleAll').click(function()
   {
     $scores.find('input').attr('checked', this.checked);
-  });
-  
-  $('#no').click(function(){ $confirm.hide(); disableForm(false); });
-  $('#yes').click(function()
-  {
-    disableForm(false);
-    do_delete('/manage/scores/' + $('#id').val(), $form.serializeArray());
-    disableForm(true);
   });
 });

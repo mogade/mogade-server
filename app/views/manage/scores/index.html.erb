@@ -29,8 +29,10 @@
     </div>
   <% end -%>
   
-  <div class="list">
-    <table id="scores">
+  <%= form_for :score, :url => {:action => 'destroy' }, :html => {:id => 'scores', 'class' => 'list'} do |f| -%>
+    <input type="hidden" name="game_id" value="<%=@game.id%>" />
+    <input type="hidden" name="id" />
+    <table>
       <thead>
         <tr>
           <th><input type="checkbox" id="toggleAll" /></th>
@@ -42,7 +44,8 @@
       <tbody>
       </tbody>
     </table>
-  </div>
+    <input type="button" value="delete" class="button" id="delete" />
+  <% end -%>
 <% end -%>
 
 

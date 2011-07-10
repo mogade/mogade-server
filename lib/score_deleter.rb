@@ -19,26 +19,23 @@ class ScoreDeleter
     #because it doesn't make sense for a user to have a weekly top score, but not have an overall top score
     def delete(leaderboard, scope, ids)
       Score.find({:leaderboard_id => leaderboard.id, :_id => {'$in' => ids}}).each do |score|
-        
-        if scope == LedaerboardScope::Overall && score.weekly
-          if score.weekly
-            score.overall.points = score.weekly.points
-            score.overall.data = score.weekly.data
-            score.overall.dated = score.weekly.dated
-          else
-            score.delete #todo handle
-            redis.zrem(key, score[:userkey])
-          end
+        rank_scopes_to_delete = nil
+        if scope == LeaderboardScope::Overall
+          Score.remove({:_id => score.id})
+          rank_scopes_to_delete = LeaderboardScope::without_yesterday
         elsif scope == LeaderboardScope::Weekly
-          if score.daily
-            score.weekly.points = score.daily.points
-            score.weekly.data = score.daily.data
-            score.weekly.dated = score.daily.dated
-          else
-            score.weekly = nil
-          end
+          score.weekly = nil
+          score.daily = nil
+          rank_scopes_to_delete = [LeaderboardScope::Weekly, LeaderboardScope::Daily]
+        else
+          score.daily = nil
+          rank_scopes_to_delete = [LeaderboardScope::Daily]
         end
-
+        score.save unless scope == LeaderboardScope::Overall
+        
+        rank_scopes_to_delete.each do |rank_scope|
+          Store.redis.zrem(Rank.get_key(leaderboard, rank_scope), score.unique)
+        end
       end
     end
   end

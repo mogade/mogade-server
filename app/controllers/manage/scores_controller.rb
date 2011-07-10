@@ -15,7 +15,7 @@ class Manage::ScoresController < Manage::ManageController
   def destroy
     return unless load_game_as_owner
     return unless ensure_leaderboard
-    ScoreDeleter.delete(@leaderboard, params[:scope].to_i, params[:field].to_i, params[:operator].to_i, params[:value])
+    #ScoreDeleter.delete(@leaderboard, params[:scope].to_i, params[:ids])
     set_info('scores have been deleted', false)
     redirect_to :action => 'index', :id => @game.id
   end
