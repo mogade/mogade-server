@@ -65,12 +65,13 @@ class Api::Gamma::ApiController < ActionController::Base
     true
   end
   
-  def render_payload(payload, params, cache_duration = 0)
+  def render_payload(payload, params, cache_duration = 0, api_cache_duration = 0)
     payload = ActiveSupport::JSON.encode(payload)
     if params.include?(:callback)
-      expires_in 3.minutes, :public => true
+      expires_in cache_duration.seconds, :public => true unless cache_duration == 0
       render :text => "#{params[:callback]}(#{payload});", :content_type => 'application/javascript'
     else
+      expires_in api_cache_duration.seconds, :public => true unless api_cache_duration == 0
       render :json => payload
     end
   end

@@ -4,6 +4,10 @@ class Rank
       Store.redis.zadd(Rank.get_key(leaderboard, scope), points, unique)
     end
     
+    def count(leaderboard, scope)
+      Store.redis.zcard(Rank.get_key(leaderboard, scope))
+    end
+    
     def get_for_player(leaderboard, unique, scopes = nil)
       score = "(#{score}" #exclusive
       scopes = LeaderboardScope::all_scopes if scopes.nil?

@@ -17,7 +17,13 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     else
       payload = Score.get_by_player(@leaderboard, player, records, scope)
     end
-    render_payload(payload, params, 300)
+    render_payload(payload, params, 180)
+  end
+  
+  def count
+    scope = params_to_i(:scope, LeaderboardScope::Daily)
+    payload = Rank.count(@leaderboard, scope) #counting off of Rank is more efficient than Score
+    render_payload(payload, params, 180, 30)
   end
   
   def overview
@@ -25,7 +31,7 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     LeaderboardScope.all_scopes.each do |scope|
       payload[scope] = Score.get_by_page(@leaderboard, 1, 3, scope)[:scores]
     end
-    render_payload(payload, params, 300)
+    render_payload(payload, params, 180)
   end
 
   def create

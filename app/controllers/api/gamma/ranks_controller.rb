@@ -10,7 +10,7 @@ class Api::Gamma::RanksController < Api::Gamma::ApiController
       scopes = scopes.to_i
     end
     payload = Rank.get_for_player(@leaderboard, @player.unique, scopes)
-    render_payload(payload, params, 300)
+    render_payload(payload, params, 180)
   end
 
 end

@@ -2,6 +2,7 @@ Mogade::Application.routes.draw do
   namespace 'api' do
     namespace 'gamma' do
       match '/scores/overview' => 'scores#overview', :via => :get
+      match '/scores/count' => 'scores#count', :via => :get
       resources :scores, :only => [:index, :create]
       resources :achievements, :only => [:index, :create]
       resources :ranks, :only => [:index]
