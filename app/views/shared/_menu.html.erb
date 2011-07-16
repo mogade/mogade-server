@@ -3,7 +3,7 @@
   <li><a href="<%= ssl_url(url_for(:controller => 'games', :action => 'show', :id => @game.id))%>">overview</a></li>
   <li><a href="<%= url_for(:controller => 'leaderboards', :action => 'index', :id => @game.id)%>">leaderboards</a>
     <% if defined? show_leaderboad && false -%>
-    <!--<ul><li><a href="<%= url_for :controller => 'scores', :action => 'index', :id => @game.id %>">delete scores</a></li></ul>-->
+    <ul><li><a href="<%= url_for :controller => 'scores', :action => 'index', :id => @game.id %>">delete scores</a></li></ul>
     <% end -%>
   </li>
   <li><a href="<%= url_for(:controller => 'achievements', :action => 'index', :id => @game.id)%>">achievements</a>

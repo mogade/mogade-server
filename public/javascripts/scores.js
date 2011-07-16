@@ -24,7 +24,6 @@ $(document).ready(function()
     var $tbody = $scores.find('tbody').empty();
     $('#score_submit').val('find');
     disableForm(false);
-    
     if (r && r.length > 0)
     {
       for(var i = 0; i < r.length; ++i)
@@ -39,6 +38,8 @@ $(document).ready(function()
         $tr.appendTo($tbody);
       }
       $scores.find('input[name=id]').val($form.find('select[name=id]').val());
+      $scores.find('input[name=scope]').val($form.find('select[name=scope]').val());
+      $scores.show();
     }
     else
     {

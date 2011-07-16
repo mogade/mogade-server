@@ -18,6 +18,10 @@ class ScoreDeleter
     #deleting a weekly score means adopting the user's daily score as his new weekly
     #because it doesn't make sense for a user to have a weekly top score, but not have an overall top score
     def delete(leaderboard, scope, ids)
+      return if ids.blank?
+      ids = ids.map{|id| Id.from_string(id)}.compact
+      return if ids.blank?
+      
       Score.find({:leaderboard_id => leaderboard.id, :_id => {'$in' => ids}}).each do |score|
         rank_scopes_to_delete = nil
         if scope == LeaderboardScope::Overall

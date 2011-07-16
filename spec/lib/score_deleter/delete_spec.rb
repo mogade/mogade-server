@@ -5,7 +5,7 @@ describe ScoreDeleter, :delete do
     leaderboard = Factory.build(:leaderboard)
     score = Factory.create(:score, {:username => 'b1', :leaderboard_id => leaderboard.id, :overall => Factory.build(:score_data, {:points => 23}), :weekly => Factory.build(:score_data, {:points => 22}), :daily => Factory.build(:score_data, {:points => 17})})
     
-    ScoreDeleter.delete(leaderboard, LeaderboardScope::Overall, [score.id])
+    ScoreDeleter.delete(leaderboard, LeaderboardScope::Overall, [score.id.to_s])
     Score.count.should == 0
   end
   
@@ -13,7 +13,7 @@ describe ScoreDeleter, :delete do
     leaderboard = Factory.build(:leaderboard)
     score = Factory.create(:score, {:username => 'b1', :unique => 'un11', :leaderboard_id => leaderboard.id, :overall => Factory.build(:score_data, {:points => 23})})
     LeaderboardScope::without_yesterday.each{|scope| Rank.save(leaderboard, scope, 'un11', 100)}
-    ScoreDeleter.delete(leaderboard, LeaderboardScope::Overall, [score.id])
+    ScoreDeleter.delete(leaderboard, LeaderboardScope::Overall, [score.id.to_s])
     LeaderboardScope::without_yesterday.each{|scope| Store.redis.zcard(Rank.get_key(leaderboard, scope)).should == 0}
   end
   
@@ -29,7 +29,7 @@ describe ScoreDeleter, :delete do
     leaderboard = Factory.build(:leaderboard)
     score = Factory.create(:score, {:username => 'b1', :unique => 'un11', :leaderboard_id => leaderboard.id, :overall => Factory.build(:score_data, {:points => 23})})
     LeaderboardScope::without_yesterday.each{|scope| Rank.save(leaderboard, scope, 'un11', 100)}
-    ScoreDeleter.delete(leaderboard, LeaderboardScope::Weekly, [score.id])
+    ScoreDeleter.delete(leaderboard, LeaderboardScope::Weekly, [score.id.to_s])
     Store.redis.zcard(Rank.get_key(leaderboard, LeaderboardScope::Overall)).should == 1
     Store.redis.zcard(Rank.get_key(leaderboard, LeaderboardScope::Weekly)).should == 0
     Store.redis.zcard(Rank.get_key(leaderboard, LeaderboardScope::Daily)).should == 0
@@ -39,7 +39,7 @@ describe ScoreDeleter, :delete do
     leaderboard = Factory.build(:leaderboard)
     score = Factory.create(:score, {:username => 'b1', :leaderboard_id => leaderboard.id, :overall => Factory.build(:score_data, {:points => 23}), :weekly => Factory.build(:score_data, {:points => 22}), :daily => Factory.build(:score_data, {:points => 17})})
     
-    ScoreDeleter.delete(leaderboard, LeaderboardScope::Daily, [score.id])
+    ScoreDeleter.delete(leaderboard, LeaderboardScope::Daily, [score.id.to_s])
     Score.count({'o.p' => 23, 'w.p' => 22, 'd' => nil}).should == 1
   end
   
@@ -47,7 +47,7 @@ describe ScoreDeleter, :delete do
     leaderboard = Factory.build(:leaderboard)
     score = Factory.create(:score, {:username => 'b1', :unique => 'un11', :leaderboard_id => leaderboard.id, :overall => Factory.build(:score_data, {:points => 23})})
     LeaderboardScope::without_yesterday.each{|scope| Rank.save(leaderboard, scope, 'un11', 100)}
-    ScoreDeleter.delete(leaderboard, LeaderboardScope::Daily, [score.id])
+    ScoreDeleter.delete(leaderboard, LeaderboardScope::Daily, [score.id.to_s])
     Store.redis.zcard(Rank.get_key(leaderboard, LeaderboardScope::Overall)).should == 1
     Store.redis.zcard(Rank.get_key(leaderboard, LeaderboardScope::Weekly)).should == 1
     Store.redis.zcard(Rank.get_key(leaderboard, LeaderboardScope::Daily)).should == 0

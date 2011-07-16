@@ -32,6 +32,7 @@
   <%= form_for :score, :url => {:action => 'destroy' }, :html => {:id => 'scores', 'class' => 'list'} do |f| -%>
     <input type="hidden" name="game_id" value="<%=@game.id%>" />
     <input type="hidden" name="id" />
+    <input type="hidden" name="scope" />
     <table>
       <thead>
         <tr>
