@@ -4,21 +4,27 @@ describe Api::Gamma::RanksController, :index do
   extend GammaApiHelper
   
   setup
-  it_ensures_a_valid_player :get, :index
   it_ensures_a_valid_leaderboard :get, :index, Proc.new { {:username => 'paul', :userkey => 'fail'} }
   
-  it "gets the ranks with no specified scope" do
+  it "gets the ranks for a player with no specified scope" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
     Rank.should_receive(:get_for_player).with(leaderboard, player.unique, nil)
     get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey}
   end
   
-  it "gets the ranks for the specified scope" do
+  it "gets the ranks for a score with no specified scope" do
     leaderboard = Factory.create(:leaderboard)
     player = Factory.build(:player)
-    Rank.should_receive(:get_for_player).with(leaderboard, player.unique, [LeaderboardScope::Daily, LeaderboardScope::Overall])
-    get :index, {:lid => leaderboard.id, :username => player.username, :userkey => player.userkey, :scopes => [LeaderboardScope::Daily, LeaderboardScope::Overall]}
+    Rank.should_receive(:get_for_score).with(leaderboard, 3, nil)
+    get :index, {:lid => leaderboard.id, :score => '3'}
+  end
+  
+  it "gets the ranks for a player for the specified scope" do
+    leaderboard = Factory.create(:leaderboard)
+    player = Factory.build(:player)
+    Rank.should_receive(:get_for_score).with(leaderboard, 3455, [LeaderboardScope::Daily, LeaderboardScope::Overall])
+    get :index, {:lid => leaderboard.id, :score => '3455', :scopes => [LeaderboardScope::Daily, LeaderboardScope::Overall]}
   end
   
   it "returns the ranks" do

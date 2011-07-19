@@ -1,5 +1,4 @@
 class Api::Gamma::RanksController < Api::Gamma::ApiController
-  before_filter :ensure_player
   before_filter :ensure_leaderboard 
   
   def index
@@ -9,7 +8,16 @@ class Api::Gamma::RanksController < Api::Gamma::ApiController
     elsif !scopes.nil?
       scopes = scopes.to_i
     end
-    payload = Rank.get_for_player(@leaderboard, @player.unique, scopes)
+    player = load_player
+    score = params_to_i(:score, nil)
+    if !player.nil?
+      payload = Rank.get_for_player(@leaderboard, player.unique, scopes)
+    elsif !score.nil?
+      payload = Rank.get_for_score(@leaderboard, score, scopes)
+    else
+      return error('need a player or a score')
+    end
+    
     render_payload(payload, params, 180)
   end
 
