@@ -8,7 +8,7 @@ class Manage::LeaderboardsController < Manage::ManageController
 
   def create
     return unless load_game_as_owner
-    leaderboard = Leaderboard.create(params[:name], params[:offset].to_i, params[:type].to_i, @game)
+    leaderboard = Leaderboard.create(params[:name], params[:offset].to_i, params[:type].to_i, params[:mode].to_i, @game)
     leaderboard.save! if leaderboard.valid?
     redirect_to :action => 'index', :id => @game.id
   end
@@ -16,7 +16,7 @@ class Manage::LeaderboardsController < Manage::ManageController
   def update
     return unless load_game_as_owner
     return unless ensure_leaderboard
-    @leaderboard.update(params[:name], params[:offset].to_i, params[:type].to_i)
+    @leaderboard.update(params[:name], params[:offset].to_i, params[:type].to_i, params[:mode].to_i)
     redirect_to :action => 'index', :id => @game.id
   end
   

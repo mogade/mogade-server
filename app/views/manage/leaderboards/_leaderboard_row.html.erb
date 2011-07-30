@@ -1,7 +1,8 @@
-<tr data-id="<%=leaderboard.id%>">
+<tr data-id="<%=leaderboard.id%>" data-type="<%= leaderboard.type %>" data-mode="<%= leaderboard.mode %>">
   <td><%= leaderboard.name %></td>
   <td><%= leaderboard.id %></td>
   <td><%= LeaderboardType::nice(leaderboard.type, true) %></td>
+  <td><%= LeaderboardMode::nice(leaderboard.mode, true) %></td>
   <td class="c"><%= leaderboard.offset || 0 %></td>
   <td class="edit"></td>
   <td class="delete"></td>

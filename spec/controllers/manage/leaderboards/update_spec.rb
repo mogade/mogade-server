@@ -23,8 +23,8 @@ describe Manage::LeaderboardsController, :update do
   it "updates the leaderboard" do
     leaderboard = Factory.build(:leaderboard, {:game_id => @game.id})
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
-    leaderboard.should_receive(:update).with('n', 3, 2)
-    put :update, {:id => leaderboard.id, :game_id => @game.id, :name => 'n', :offset => 3, :type => 2}
+    leaderboard.should_receive(:update).with('n', 3, 2, 1)
+    put :update, {:id => leaderboard.id, :game_id => @game.id, :name => 'n', :offset => '3', :type => '2', :mode => '1'}
   end
   
   it "redirect to index " do

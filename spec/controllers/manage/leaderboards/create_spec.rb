@@ -18,8 +18,13 @@ describe Manage::LeaderboardsController, :create do
   end
   
   it "saves a valid leaderboard" do
-    post :create, {:game_id => @game.id, :name => 'tlb', :offset => 4, :type => LeaderboardType::HighToLow}
-    Leaderboard.count({:game_id => @game.id, :name => 'tlb', :offset => 4, :type => LeaderboardType::HighToLow}).should == 1
+    post :create, {:game_id => @game.id, :name => 'tlb', :offset => '4', :type => '1', :mode => '2'}
+    Leaderboard.count({
+      :game_id => @game.id, 
+      :name => 'tlb', 
+      :offset => 4, 
+      :type => LeaderboardType::HighToLow,
+      :mode => LeaderboardMode::DailyTracksLatest}).should == 1
   end
   
 end

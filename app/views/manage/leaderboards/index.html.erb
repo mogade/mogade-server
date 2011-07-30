@@ -7,6 +7,7 @@
      <th>name</th>
      <th>key</th>
      <th>type</th>
+     <th>mode</th>
      <th class="c">offset</th>
      <th></th>
      <th></th>
@@ -34,6 +35,10 @@
     <label for="type">type</label>
     <%= enum_drop_down('type', LeaderboardType, LeaderboardType::HighToLow)%>
   </div>
+  <div class="field">
+    <label for="mode">mode</label>
+    <%= enum_drop_down('mode', LeaderboardMode, LeaderboardMode::Normal)%>
+  </div>
   <div class="buttons">
     <%= f.submit 'add', {:class => 'button'} %>
   </div>
@@ -41,7 +46,7 @@
 
 <% content_for :js do -%>
 $('#leaderboard_list').simpleList({})
-  .editTo({ to: '#add', map: {0: 'name', 2: 'type', 3: 'offset'}, url: '<%= url_for :action => 'create' %>' })
+  .editTo({ to: '#add', map: {0: 'name', 'data-type': 'type', 'data-mode': 'mode', 4: 'offset'}, url: '<%= url_for :action => 'create' %>' })
   .confirm('td.delete', 'Delete this leaderboard?', 'This leaderboard will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/leaderboards/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
 var rules = <%= validation_of(Leaderboard).html_safe%>;	
 $('#add').validator({rules: rules});
@@ -53,5 +58,7 @@ $('#add').validator({rules: rules});
   <p>Every leaderboard will automatically have a daily, weekly and overall scope.</p>
   <h3>Less is more</h3>
   <p>While having a number of leaderboards makes sense for some games, your users will likely appreciate if you make things as simple and straightforward as possible.</p>
+  <h3>Modes</h3>
+  <p>The <em>normal</em> mode will track a user's top score in each scope. The <em>daily tracks latest</em> will have the daily scope track the user's latest score (whether it was better or worse), while the weekly and overall continue to track only the best score</p>
 <% end -%>
 
