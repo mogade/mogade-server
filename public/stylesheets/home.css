@@ -15,7 +15,7 @@
 #steps p{font-size:1.1em;line-height:1.6em;}
 #stats {clear:both;text-align:center;}
 #stats h2{text-align:left;}
-#stats span{margin:0 80px;}
+#stats span{margin:0 50px;}
 .buttons {position:absolute;right:3px;bottom:10px;}
 .buttons a{font-weight:bold;color:#8ff;padding:10px 40px;font-size:0.8em;margin-left:20px;background:#1e1e1e;
   -moz-border-radius: 4px;-webkit-border-radius: 4px;border-radius:4px;border:1px solid transparent;}
