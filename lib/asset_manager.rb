@@ -1,4 +1,4 @@
-class Asset
+class AssetManager
   @@assets = YAML::load_file('config/assets.yml') 
   def self.js(name)
     @@assets['js'][name]

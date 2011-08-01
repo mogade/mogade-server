@@ -1,16 +1,16 @@
 module ApplicationHelper
   def include_js_bundle(name)
-    files = Rails.env.development? ? Asset.js(name) : [name]
+    files = Rails.env.development? ? AssetManager.js(name) : [name]
     javascript_include_tag files
   end
 
   def include_js_files(name)
-    files = Rails.env.development? ? Asset.js(name) : [name]
+    files = Rails.env.development? ? AssetManager.js(name) : [name]
     files.map{|file| "'#{javascript_path(file)}'" }.to_sentence({:last_word_connector => ',', :two_words_connector => ','}).html_safe
   end
     
   def include_css_bundle(name)
-    files = Rails.env.development? ? Asset.css(name) : [name]
+    files = Rails.env.development? ? AssetManager.css(name) : [name]
     stylesheet_link_tag files
   end
   

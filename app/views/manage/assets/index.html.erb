@@ -1,0 +1,47 @@
+<% content_for :title, @game.name + ' assets' -%>
+<% content_for :section_title,  @game.name + ' .. assets' -%>
+
+
+<%= form_for :asset, :url => {:action => 'create' }, :html => {:id => 'add'} do |f| -%>
+  <h3>Add Asset</h3>
+  <input type="hidden" name="game_id" value="<%=@game.id%>" />
+  <div class="field">
+    <label for="name">name</label>
+    <input type="text" name="name" id="name" />
+  </div>
+  <div class="field">
+    <label for="name">type</label>
+    <input type="text" name="type" id="type" class="numeric" maxlength="3" />
+  </div>
+  <div class="field">
+    <label for="meta">meta</label>
+    <span class="charCounter"></span>
+    <textarea name="meta" id="meta" rows="10" cols="40"></textarea>
+  </div>
+  <div class="field">
+    <label for="file">file</label>
+    <input type="file" name="file" id="file" />
+  </div>
+
+  <div class="buttons">
+    <%= f.submit 'add', {:class => 'button'} %>
+  </div>
+<% end -%>
+
+</script>
+<% content_for :js do -%>
+$('#meta').textAreaLength(1000);
+$('#add').validator({rules: <%= validation_of(Asset).html_safe%>})
+<% end -%>
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu'%>
+  <h3>Tips</h3>
+  <p>Assets can be downloaded from the internet to your game</p>
+  <p>The <em>type</em> tells you what kind of asset it is which you might use to decide how to handle/parse it. This can be any number (mogade just passes it along)</p>
+  <p>The <em>meta</em> information is whatever data you want to pass to your game. This can be any format (mogade treats it as a meaningless string).</p>
+  <p>The <em>file</em> information is a single file to associate with this asset. From the game, you'll be able to download this file.</p>
+  <p>You can provide either a meta or a file or both</p>
+
+<% end -%>
+

@@ -42,6 +42,12 @@ Factory.define :score_daily do |s|
   s.stamp nil
 end
 
+Factory.define :asset do |a|
+  a.name {Factory.next(:name)}
+  a.type 2
+  a.meta "my meta has a first name, it's h-o-m-e-r"
+end
+
 Factory.sequence :name do |n|
   "duncan-#{n}"
 end

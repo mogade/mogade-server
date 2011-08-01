@@ -27,4 +27,8 @@ describe Manage::LeaderboardsController, :create do
       :mode => LeaderboardMode::DailyTracksLatest}).should == 1
   end
   
+  it "redirects to index page" do
+    post :create, {:game_id => @game.id}
+    response.should redirect_to('http://test.host/manage/leaderboards?id=' + @game.id.to_s)
+  end
 end
