@@ -1,0 +1,13 @@
+<div class="game_profile r">
+  <h2><%= profile[:name]%></h2>
+  <div class="meta">
+    <img src="<%= profile_image_root %>profiles/<%= profile[:image] %>" width="150" height="150" />
+    <div class="about">
+      <div><label>developer</label> <span><a href="<%= profile[:developer][:link] %>"><%= profile[:developer][:name] %></a></span></div>
+      <div><label>download</label> <span><a href="<%= profile[:platform][:link] %>"><%= profile[:platform][:name] %></a></span></div>
+    </div>
+  </div>
+  <div class="description">
+    <p><%= nl2br(profile[:description])%></p>
+  </div>
+</div>

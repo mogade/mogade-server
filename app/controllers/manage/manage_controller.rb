@@ -1,4 +1,5 @@
 class Manage::ManageController < ApplicationController
+  @@profiles = YAML::load_file('./config/game_profiles.yml')
   layout 'manage_dual'
   
   def faq
@@ -15,7 +16,22 @@ class Manage::ManageController < ApplicationController
   def api
   end
   
+  def who
+    @profiles = @@profiles.clone.sort_by {rand}
+    @stats = load_stats
+    render :layout => 'manage_single'
+  end
+  
   private 
+  def load_stats
+    stats = Rails.cache.read('managecontroller:stats')
+    if Rails.env.development? || stats.nil? || (Time.now - stats.dated) > 300
+      stats = MogadeStats.load
+      Rails.cache.write('managecontroller:stats', stats)
+    end
+    return stats
+  end
+  
   def signin(developer)
     session[:dev_id] = developer.id.to_s
     redirect_to '/manage/games/'

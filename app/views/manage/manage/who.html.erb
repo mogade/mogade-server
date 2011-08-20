@@ -1,0 +1,4 @@
+<% content_for :title, "Games Using Mogade" -%>
+<% content_for :section_title do %>Some mogade-powered games : <%= @stats.scores %> scores and <%= @stats.achievements %> achievements served<% end %>
+
+<%= render :partial => 'profile', :collection => @profiles, :as => :profile -%>
