@@ -62,3 +62,48 @@
   :platform: 
     :name: Windows Phone
     :link: http://redirect.zune.net/External/LaunchZuneProtocol.aspx?pathuri=navigate?phoneAppID=754c1f1c-2fe1-4efe-914b-2af4cd7db010
+- :name: Bubble Burst
+  :image: bubbleburst.png
+  :description: The return of a Windows Phone classic! Earn points by bursting groups of 2 or more bubbles of the same color that are next to each other. The more bubbles you burst at the same time, the more points you earn. With 3 different game modes you will have a hard time putting this game down - excellent for small breaks.
+  :developer: 
+    :name: Z Games Studios
+    :link: http://www.z-games-studios.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.microsoft.com/windowsphone//s?appid=776114ed-4bda-df11-a844-00237de2db9e
+- :name: Pandemic Evolved
+  :image: pandemicevolved.png
+  :description: The cute viruses are back! The world needs you to save it from the Pandemic... again. Pandemic Evolved is Tetris meets Flowers. Pieces containing 3 viruses keep dropping and you have to match 4 or more of the same color to destroy them. Use bombs and rainbow viruses to help you in your mission. In-game awards for performing special tasks.
+  :developer: 
+    :name: Z Games Studios
+    :link: http://www.z-games-studios.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://windowsphone.com/s?appid=d99beef9-3060-e011-81d2-78e7d1fa76f8
+- :name: Pandemic
+  :image: pandemic.png
+  :description: Swarms of cute little viruses are invading your world and your objective is to stop them. Pandemic is a puzzle game where you try to achieve a high score by matching 3 or more viruses in a vertical, horizontal or diagonal line and creating combos to multiply your score. The game has 2 different game modes.
+  :developer: 
+    :name: Z Games Studios
+    :link: http://www.z-games-studios.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.microsoft.com/windowsphone//s?appid=4edb73a1-153f-e011-854c-00237de2db9e
+- :name: Slice and Throw
+  :image: sliceandthrow.png
+  :description: Swipe your finger to slice things in half, tap the screen to throw ninja stars. It's that easy and a ton of fun. Can you top the leaderboards? Can you get to level 10? You must slice all the way through things for it to count. Good luck.
+  :developer: 
+    :name: Cheese Zombie Games
+    :link: http://cheesezombiegames.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://social.zune.net/redirect?type=phoneApp&id=12fc74f5-c864-e011-81d2-78e7d1fa76f8
+- :name: Word Tangle
+  :image: wordtangle.gif
+  :description: If you like addictive word games like Boggle then you will love Word Tangle. Simply make words from the letters in the game board to score points. Some letters add extra time and some add extra points. Everyone in the family can play and each players progress is tracked.
+  :developer: 
+    :name: Cheese Zombie Games
+    :link: http://cheesezombiegames.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://social.zune.net/redirect?type=phoneApp&id=6f5faaa0-d705-e011-9264-00237de2db9e
