@@ -1,7 +1,7 @@
 <div class="game_profile r">
   <h2><%= profile[:name]%> <a href="<%= profile[:developer][:link] %>"><%= profile[:developer][:name] %></a></h2>
   <div class="meta">
-    <img src="<%= profile_image_root %>profiles/<%= profile[:image] %>" width="150" height="150" />
+    <a href="<%= profile[:platform][:link] %>"><img src="<%= profile_image_root %>profiles/<%= profile[:image] %>" width="150" height="150" border="0" /></a>
     <div class="about">
       <div><label>download</label> <span><a href="<%= profile[:platform][:link] %>"><%= profile[:platform][:name] %></a></span></div>
     </div>
