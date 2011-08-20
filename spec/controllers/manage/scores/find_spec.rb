@@ -6,13 +6,13 @@ describe Manage::ScoresController, :find do
   setup
   it_ensures_a_logged_in_user :get, :find
   it_ensures_developer_owns_the_game :get, :find, Proc.new { 
-    leaderboard = Factory.build(:leaderboard, {:game_id => ManageHelper.game_id})
+    leaderboard = FactoryGirl.build(:leaderboard, {:game_id => ManageHelper.game_id})
     Leaderboard.stub!(:find_by_id).and_return(leaderboard)
     {:id => leaderboard.id, :scope => 1} 
   }
 
   it "verifies that the leaderboard belongs to the game" do
-    leaderboard = Factory.build(:leaderboard, {:game_id => Id.new})
+    leaderboard = FactoryGirl.build(:leaderboard, {:game_id => Id.new})
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
     
     get :find, {:id => leaderboard.id, :game_id => @game.id}
@@ -21,7 +21,7 @@ describe Manage::ScoresController, :find do
   end
 
   it "gets and returns the scores from the ScoreDeleter" do
-    leaderboard = Factory.build(:leaderboard, {:game_id => @game.id})
+    leaderboard = FactoryGirl.build(:leaderboard, {:game_id => @game.id})
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
     
     ScoreDeleter.should_receive(:find).with(leaderboard, LeaderboardScope::Daily, 'my name').and_return("it doesn't matter")

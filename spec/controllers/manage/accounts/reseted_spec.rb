@@ -19,7 +19,7 @@ describe Manage::AccountsController, :reseted do
   
   it "resets the password and signs the developer in" do   
     id = Id.new
-    developer = Factory.build(:developer)
+    developer = FactoryGirl.build(:developer)
     
     Developer.stub!(:find_by_action).and_return(developer)
     developer.should_receive(:reset_password).with('new_pass').and_return(true)

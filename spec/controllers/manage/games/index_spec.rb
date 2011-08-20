@@ -9,7 +9,7 @@ describe Manage::GamesController, :index do
   it "loads the developer's games" do
     @developer.game_ids << Id.new
     @developer.game_ids << Id.new
-    games = [Factory.build(:game), Factory.build(:game)]
+    games = [FactoryGirl.build(:game), FactoryGirl.build(:game)]
     
     Game.should_receive(:find_by_ids).with(@developer.game_ids).and_return(games)
     get :index

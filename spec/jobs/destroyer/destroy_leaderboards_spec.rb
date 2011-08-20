@@ -3,8 +3,8 @@ require './deploy/jobs/destroyer'
 
 describe Destroyer, 'destroy leaderboards' do
   it "destroys the ranks associated with a leaderboard" do
-    leaderboard1 = Factory.create(:leaderboard, {:id => Id.new})
-    leaderboard2 = Factory.create(:leaderboard, {:id => Id.new})
+    leaderboard1 = FactoryGirl.create(:leaderboard, {:id => Id.new})
+    leaderboard2 = FactoryGirl.create(:leaderboard, {:id => Id.new})
     old =  Time.now - 3148843
     Rank.save(leaderboard1, LeaderboardScope::Daily, 'u1', 500)
     Rank.save(leaderboard1, LeaderboardScope::Weekly, 'u1', 500)
@@ -25,10 +25,10 @@ describe Destroyer, 'destroy leaderboards' do
   end
   
   it "destroys the high scores associated with a leaderboard" do
-    leaderboard1 = Factory.create(:leaderboard, {:id => Id.new})
-    leaderboard2 = Factory.create(:leaderboard, {:id => Id.new})
-    Factory.create(:score, {:leaderboard_id => leaderboard1.id})
-    Factory.create(:score, {:leaderboard_id => leaderboard2.id})
+    leaderboard1 = FactoryGirl.create(:leaderboard, {:id => Id.new})
+    leaderboard2 = FactoryGirl.create(:leaderboard, {:id => Id.new})
+    FactoryGirl.create(:score, {:leaderboard_id => leaderboard1.id})
+    FactoryGirl.create(:score, {:leaderboard_id => leaderboard2.id})
 
     Store.redis.sadd('cleanup:leaderboards', leaderboard1.id)
     Destroyer.new.destroy_leaderboards
@@ -38,7 +38,7 @@ describe Destroyer, 'destroy leaderboards' do
   end
   
   it "removes the leaderboard id from the destruction queue" do
-    leaderboard = Factory.build(:leaderboard, {:id => Id.new})
+    leaderboard = FactoryGirl.build(:leaderboard, {:id => Id.new})
     Store.redis.sadd('cleanup:leaderboards', leaderboard.id)
     Destroyer.new.destroy_leaderboards
     Store.redis.scard('cleanup:leaderboards').should == 0

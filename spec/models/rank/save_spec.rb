@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Rank, :save do
   it "saves a daily rank" do
-    leaderboard = Factory.build(:leaderboard)
+    leaderboard = FactoryGirl.build(:leaderboard)
     key = "lb:d:#{leaderboard.id}:#{leaderboard.daily_stamp.strftime("%y%m%d%H")}"
     
     Rank.save(leaderboard, LeaderboardScope::Daily, "leto-one", 200)
@@ -14,7 +14,7 @@ describe Rank, :save do
   end
   
   it "saves a weekly rank" do
-    leaderboard = Factory.build(:leaderboard, {:offset => -4})
+    leaderboard = FactoryGirl.build(:leaderboard, {:offset => -4})
     key = "lb:w:#{leaderboard.id}:#{leaderboard.weekly_stamp.strftime("%y%m%d%H")}"
     
     Rank.save(leaderboard, LeaderboardScope::Weekly, "paul-d", 328)
@@ -26,7 +26,7 @@ describe Rank, :save do
   end
   
   it "saves an overall rank" do
-    leaderboard = Factory.build(:leaderboard, {:offset => 6})
+    leaderboard = FactoryGirl.build(:leaderboard, {:offset => 6})
     key = "lb:o:#{leaderboard.id}"
     
     Rank.save(leaderboard, LeaderboardScope::Overall, "jessica-b", 948)
@@ -38,7 +38,7 @@ describe Rank, :save do
   end
   
   it "overwrites a player's existing rank" do
-    leaderboard = Factory.build(:leaderboard, {:offset => 6})
+    leaderboard = FactoryGirl.build(:leaderboard, {:offset => 6})
     key = "lb:o:#{leaderboard.id}"
     
     Rank.save(leaderboard, LeaderboardScope::Overall, "jessica-b", 222)

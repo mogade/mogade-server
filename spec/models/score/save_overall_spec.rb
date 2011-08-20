@@ -7,15 +7,15 @@ describe Score, 'save overall' do
   end
 
   it "saves a new score if the player doesn't have a score" do
-    @player = Factory.build(:player)
-    @leaderboard = Factory.build(:leaderboard)
+    @player = FactoryGirl.build(:player)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     Score.save(@leaderboard, @player, 100)
     score_should_exist(100)
   end
 
   it "saves a score if the player's current overall is lower than the new one" do
-    @player = Factory.build(:player)
-    @leaderboard = Factory.build(:leaderboard)
+    @player = FactoryGirl.build(:player)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     create_high_score(99)
   
     Score.save(@leaderboard, @player, 100)
@@ -23,8 +23,8 @@ describe Score, 'save overall' do
   end
   
   it "does not save the score if the user's current overall is higher than the new one" do
-    @player = Factory.build(:player)
-    @leaderboard = Factory.build(:leaderboard)
+    @player = FactoryGirl.build(:player)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     create_high_score(150)
     
     Score.save(@leaderboard, @player, 149)
@@ -32,8 +32,8 @@ describe Score, 'save overall' do
   end
   
   it "saves the rank if the player's new score is better" do
-    @player = Factory.build(:player)
-    @leaderboard = Factory.build(:leaderboard)
+    @player = FactoryGirl.build(:player)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     create_high_score(99)
     #either I, or rspec, suck..go ahead, try to do this without the next two stupid lines
     Rank.should_receive(:save).with(@leaderboard, LeaderboardScope::Daily, @player.unique, 100)
@@ -43,8 +43,8 @@ describe Score, 'save overall' do
   end
   
   it "does not save the rank if the player's current score is better" do
-    @player = Factory.build(:player)
-    @leaderboard = Factory.build(:leaderboard)
+    @player = FactoryGirl.build(:player)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     create_high_score(150)
     Rank.should_not_receive(:save).with(anything(), LeaderboardScope::Overall, anything(), anything())
     Score.save(@leaderboard, @player, 149)
@@ -55,6 +55,6 @@ describe Score, 'save overall' do
     Score.count(selector).should == 1
   end
   def create_high_score(points)
-    Factory.create(:score, {:leaderboard_id => @leaderboard.id, :username => @player.username, :userkey => @player.userkey, :unique => @player.unique, :overall => Factory.build(:score_data, {:points => points,  :dated => @now})})
+    FactoryGirl.create(:score, {:leaderboard_id => @leaderboard.id, :username => @player.username, :userkey => @player.userkey, :unique => @player.unique, :overall => FactoryGirl.build(:score_data, {:points => points,  :dated => @now})})
   end
 end

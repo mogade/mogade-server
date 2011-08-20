@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Achievement, :update do
   it "updates the achievement" do
-    achievement = Factory.build(:achievement, {:name => 'old name', :description => 'old description', :points => 86})
+    achievement = FactoryGirl.build(:achievement, {:name => 'old name', :description => 'old description', :points => 86})
     achievement.update('new name', 'new description', 56)
     achievement.name.should == 'new name'
     achievement.description.should == 'new description'

@@ -9,12 +9,12 @@ describe Developer, :find_by_email do
   end
   
   it "returns nil if the email isn't found" do
-    Factory.create(:developer, {:email => 'leto@dune.gov'})
+    FactoryGirl.create(:developer, {:email => 'leto@dune.gov'})
     Developer.find_by_email('paul@dune.gov').should be_nil
   end
   
   it "returns the found developer" do
-    developer = Factory.create(:developer, {:email => 'ghanima@dune.gov'})
+    developer = FactoryGirl.create(:developer, {:email => 'ghanima@dune.gov'})
     Developer.find_by_email('ghanima@dune.gov').should == developer
   end
   

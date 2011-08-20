@@ -8,7 +8,7 @@ describe Manage::LeaderboardsController, :index do
   it_ensures_developer_owns_the_game :get, :index
   
   it "loads the leaderboards and renders the view" do
-    leaderboards = [Factory.build(:leaderboard)]
+    leaderboards = [FactoryGirl.build(:leaderboard)]
     
     Leaderboard.should_receive(:find_for_game).with(@game).and_return(leaderboards)
     get :index, {:id => @game.id}

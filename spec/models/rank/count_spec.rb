@@ -2,19 +2,19 @@ require 'spec_helper'
 
 describe Rank, :count do
   it "gets the count of ranks for daily" do
-    @leaderboard = Factory.build(:leaderboard)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     add_daily_ranks(10)
     Rank.count(@leaderboard, LeaderboardScope::Daily).should == 10
   end
 
   it "gets the count of ranks for weekly" do
-    @leaderboard = Factory.build(:leaderboard)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     add_weekly_ranks(9)
     Rank.count(@leaderboard, LeaderboardScope::Weekly).should == 9
   end
   
   it "gets the count of ranks for overall" do
-    @leaderboard = Factory.build(:leaderboard)
+    @leaderboard = FactoryGirl.build(:leaderboard)
     add_overall_ranks(8)
     Rank.count(@leaderboard, LeaderboardScope::Overall).should == 8
   end

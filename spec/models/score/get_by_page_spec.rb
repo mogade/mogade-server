@@ -8,7 +8,7 @@ describe Score, :get_by_page do
   end
   
   it "should start at the specified page" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_daily_scores(6)
     scores = Score.get_by_page(@leaderboard, 2, 4, LeaderboardScope::Daily)[:scores].to_a
     scores[0][:points].should == 1
@@ -16,21 +16,21 @@ describe Score, :get_by_page do
   end
   
   it "should limit the results to the specified number" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_weekly_scores(4)
     scores = Score.get_by_page(@leaderboard, 1, 2, LeaderboardScope::Weekly)[:scores].to_a
     scores.length.should == 2
   end
   
   it "should limit to 50 records regardless of what was specified" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_daily_scores(60)
     scores = Score.get_by_page(@leaderboard, 1, 75, LeaderboardScope::Daily)[:scores].to_a
     scores.length.should == 50
   end
     
   it "should get the scores ordered by points from high to low" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_overall_scores(3)
     scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Overall)[:scores].to_a
     scores[0][:points].should == 2
@@ -39,7 +39,7 @@ describe Score, :get_by_page do
   end
   
   it "should get the scores ordered by points from low to high" do
-    @leaderboard = Factory.create(:leaderboard, {:type => LeaderboardType::LowToHigh})
+    @leaderboard = FactoryGirl.create(:leaderboard, {:type => LeaderboardType::LowToHigh})
     create_overall_scores(3)
     scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Overall)[:scores].to_a
     scores[0][:points].should == 0
@@ -48,7 +48,7 @@ describe Score, :get_by_page do
   end
   
   it "should get all the fields" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_overall_scores(1)
     scores = Score.get_by_page(@leaderboard, 1, 1, LeaderboardScope::Overall)[:scores].to_a
     scores[0][:points].should == 0
@@ -59,7 +59,7 @@ describe Score, :get_by_page do
   end
   
   it "should limit the daily scores to today" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_daily_scores(2)
     create_daily_scores(2, @leaderboard.daily_stamp - 86400)
     scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Daily)[:scores].to_a
@@ -69,7 +69,7 @@ describe Score, :get_by_page do
   end
   
   it "relies on the ScoreDaily for yesterday's scope" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     ScoreDaily.should_receive(:get_by_stamp_and_page).with(@leaderboard, @leaderboard.yesterday_stamp, 10, 0).and_return([1, 2, 3])
     r = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Yesterday)
     r[:scores].should == [1,2,3]
@@ -77,7 +77,7 @@ describe Score, :get_by_page do
   end
   
   it "should limit the weekly scores to this week" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_weekly_scores(4, @leaderboard.weekly_stamp - 2)
     create_weekly_scores(2)
     scores = Score.get_by_page(@leaderboard, 1, 10, LeaderboardScope::Weekly)[:scores].to_a
@@ -87,7 +87,7 @@ describe Score, :get_by_page do
   end
   
   it "should set the page" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     Score.get_by_page(@leaderboard, 32, 10, LeaderboardScope::Weekly)[:page].should == 32
   end
   
@@ -106,7 +106,7 @@ describe Score, :get_by_page do
   end
   def create_scores(count, scope_name, stamp = nil)
     count.times do |i|
-      score_data = Factory.build(:score_data, {:points => @created, :data => "data#{@created}", :dated => @now - 100 * @created})
+      score_data = FactoryGirl.build(:score_data, {:points => @created, :data => "data#{@created}", :dated => @now - 100 * @created})
       score_data.stamp = stamp  unless stamp.nil?
       params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :unique => "unique_#{@created}", scope_name => score_data}
       Score.new(params).save      

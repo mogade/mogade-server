@@ -3,8 +3,8 @@ require './deploy/jobs/destroyer'
 
 describe Destroyer, 'destroy games' do
   it "destroys the stats associated with a game" do
-    game1 = Factory.build(:game, {:id => Id.new})
-    game2 = Factory.build(:game, {:id => Id.new})
+    game1 = FactoryGirl.build(:game, {:id => Id.new})
+    game2 = FactoryGirl.build(:game, {:id => Id.new})
     old =  Time.now - 3148843
     Stat.hit(game1, 'unique1')
     Stat.hit(game2, 'unique2')
@@ -22,10 +22,10 @@ describe Destroyer, 'destroy games' do
   end
   
   it "destroy's a game's leaderboard" do
-    game = Factory.build(:game, {:id => Id.new})
-    leaderboard1 = Factory.create(:leaderboard, {:id => Id.new, :game_id => game.id})
-    leaderboard2 = Factory.create(:leaderboard, {:id => Id.new, :game_id => game.id})
-    leaderboard3 = Factory.create(:leaderboard, {:id => Id.new, :game_id => Id.new})
+    game = FactoryGirl.build(:game, {:id => Id.new})
+    leaderboard1 = FactoryGirl.create(:leaderboard, {:id => Id.new, :game_id => game.id})
+    leaderboard2 = FactoryGirl.create(:leaderboard, {:id => Id.new, :game_id => game.id})
+    leaderboard3 = FactoryGirl.create(:leaderboard, {:id => Id.new, :game_id => Id.new})
     Store.redis.sadd('cleanup:games', game.id)
     Destroyer.new.destroy_games
     
@@ -34,7 +34,7 @@ describe Destroyer, 'destroy games' do
   end
   
   it "removes the game id from the destruction queue" do
-    game = Factory.build(:game, {:id => Id.new})
+    game = FactoryGirl.build(:game, {:id => Id.new})
     Store.redis.sadd('cleanup:games', game.id)
     Destroyer.new.destroy_games
     Store.redis.scard('cleanup:games').should == 0

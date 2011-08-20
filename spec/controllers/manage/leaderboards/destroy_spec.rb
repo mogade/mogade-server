@@ -6,13 +6,13 @@ describe Manage::LeaderboardsController, :destroy do
   setup
   it_ensures_a_logged_in_user :delete, :destroy
   it_ensures_developer_owns_the_game :delete, :destroy, Proc.new { 
-    leaderboard = Factory.build(:leaderboard, {:game_id => ManageHelper.game_id})
+    leaderboard = FactoryGirl.build(:leaderboard, {:game_id => ManageHelper.game_id})
     Leaderboard.stub!(:find_by_id).and_return(leaderboard)
     {:id => leaderboard.id} 
   }
   
   it "verifies that the leaderboard belongs to the game" do
-    leaderboard = Factory.build(:leaderboard, {:game_id => Id.new})
+    leaderboard = FactoryGirl.build(:leaderboard, {:game_id => Id.new})
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
     
     delete :destroy, {:id => leaderboard.id, :game_id => @game.id}
@@ -21,14 +21,14 @@ describe Manage::LeaderboardsController, :destroy do
   end
   
   it "destroys the leaderboard" do
-    leaderboard = Factory.build(:leaderboard, {:game_id => @game.id})
+    leaderboard = FactoryGirl.build(:leaderboard, {:game_id => @game.id})
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
     leaderboard.should_receive(:destroy)
     delete :destroy, {:id => leaderboard.id, :game_id => @game.id}
   end
   
   it "redirect to index with message" do
-    leaderboard = Factory.build(:leaderboard, {:game_id => @game.id})
+    leaderboard = FactoryGirl.build(:leaderboard, {:game_id => @game.id})
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
     
     delete :destroy, {:id => leaderboard.id, :game_id => @game.id}

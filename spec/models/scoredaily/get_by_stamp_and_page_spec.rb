@@ -8,7 +8,7 @@ describe ScoreDaily, 'get by stamp and page' do
   end
 
   it "returns the leaderboard from high to low" do
-    leaderboard = Factory.build(:leaderboard, {:type => LeaderboardType::HighToLow})
+    leaderboard = FactoryGirl.build(:leaderboard, {:type => LeaderboardType::HighToLow})
     create_scores(10, leaderboard.yesterday_stamp, leaderboard)
     
     scores = ScoreDaily.get_by_stamp_and_page(leaderboard, leaderboard.yesterday_stamp, 5, 0).to_a
@@ -17,7 +17,7 @@ describe ScoreDaily, 'get by stamp and page' do
   end
   
   it "returns the leaderboard from low to high" do
-    leaderboard = Factory.build(:leaderboard, {:type => LeaderboardType::LowToHigh})
+    leaderboard = FactoryGirl.build(:leaderboard, {:type => LeaderboardType::LowToHigh})
     create_scores(10, leaderboard.yesterday_stamp, leaderboard )
     
     scores = ScoreDaily.get_by_stamp_and_page(leaderboard, leaderboard.yesterday_stamp, 3, 0).to_a
@@ -26,8 +26,8 @@ describe ScoreDaily, 'get by stamp and page' do
   end
   
   it "returns the scores for the specific leaderboard" do
-    leaderboard1 = Factory.build(:leaderboard, {:id => Id.new})
-    leaderboard2 = Factory.build(:leaderboard, {:id => Id.new})
+    leaderboard1 = FactoryGirl.build(:leaderboard, {:id => Id.new})
+    leaderboard2 = FactoryGirl.build(:leaderboard, {:id => Id.new})
     create_scores(5, leaderboard1.yesterday_stamp, leaderboard1)
     create_scores(5, leaderboard1.yesterday_stamp, leaderboard2)
     
@@ -37,7 +37,7 @@ describe ScoreDaily, 'get by stamp and page' do
   end
   
   it "returns the scores for the specific stamp" do
-    leaderboard = Factory.build(:leaderboard, {:id => Id.new})
+    leaderboard = FactoryGirl.build(:leaderboard, {:id => Id.new})
     create_scores(5, leaderboard.yesterday_stamp, leaderboard)
     create_scores(5, leaderboard.daily_stamp, leaderboard)
   
@@ -47,7 +47,7 @@ describe ScoreDaily, 'get by stamp and page' do
   end
   
   it "returns all the data" do
-    leaderboard = Factory.build(:leaderboard, {:type => LeaderboardType::LowToHigh})
+    leaderboard = FactoryGirl.build(:leaderboard, {:type => LeaderboardType::LowToHigh})
     create_scores(1, leaderboard.yesterday_stamp, leaderboard )
     
     score = ScoreDaily.get_by_stamp_and_page(leaderboard, leaderboard.yesterday_stamp, 1, 0).to_a[0]

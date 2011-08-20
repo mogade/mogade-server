@@ -40,7 +40,7 @@ Mogade::Application.routes.draw do
     resources :errors, :only => [:index, :destroy]
     resources :scores, :only => [:index, :destroy]
     resources :facebook, :only => [:index, :create, :destroy]
-    resources :assets, :only => [:index, :create]  
+    resources :assets, :only => [:index, :create, :destroy, :update]  
 
     match '/:action', :controller => 'manage'
   end

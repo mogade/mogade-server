@@ -8,7 +8,7 @@ describe Api::Gamma::AchievementsController, :index do
   it_ensures_a_valid_player :get, :index
   
   it "gets the player's achievements" do
-    player = Factory.build(:player)
+    player = FactoryGirl.build(:player)
     EarnedAchievement.should_receive(:earned_by_player).with(@game, player).and_return([1, 2])
     
     get :index, GammaApiHelper.signed_params(@game, {:username => player.username, :userkey => player.userkey})    

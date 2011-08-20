@@ -11,16 +11,16 @@ describe Api::Gamma::AchievementsController, :create do
   it_ensures_achievement_belongs_to_game :post, :create, Proc.new { {:username => 'leto', :userkey => 'one'} }
   
   it "saves the achievement" do
-    achievement = Factory.create(:achievement)
-    player = Factory.build(:player)
+    achievement = FactoryGirl.create(:achievement)
+    player = FactoryGirl.build(:player)
     EarnedAchievement.should_receive(:create).with(achievement, player).and_return({})
     post :create, GammaApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
   end
   
   
   it "renders the achievement info when first time earned" do
-    achievement = Factory.create(:achievement, {:points => 123, :id => Id.new})
-    player = Factory.build(:player)
+    achievement = FactoryGirl.create(:achievement, {:points => 123, :id => Id.new})
+    player = FactoryGirl.build(:player)
     EarnedAchievement.stub!(:create).with(achievement, player).and_return({})
     post :create, GammaApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})
     
@@ -31,8 +31,8 @@ describe Api::Gamma::AchievementsController, :create do
   end
   
   it "renders a blank response when already earned" do
-    achievement = Factory.create(:achievement, {:points => 123, :id => Id.new})
-    player = Factory.build(:player)
+    achievement = FactoryGirl.create(:achievement, {:points => 123, :id => Id.new})
+    player = FactoryGirl.build(:player)
     
     EarnedAchievement.stub!(:create).with(achievement, player).and_return(nil)
     post :create, GammaApiHelper.signed_params(@game, {:aid => achievement.id, :username => player.username, :userkey => player.userkey})

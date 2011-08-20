@@ -8,7 +8,7 @@ describe Manage::AchievementsController, :index do
   it_ensures_developer_owns_the_game :get, :index
   
   it "loads the achievements and renders the view" do
-    achievements = [Factory.build(:achievement)]
+    achievements = [FactoryGirl.build(:achievement)]
     
     Achievement.should_receive(:find_for_game).with(@game).and_return(achievements)
     get :index, {:id => @game.id}

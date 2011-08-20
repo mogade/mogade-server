@@ -23,7 +23,7 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
   def count
     scope = params_to_i(:scope, LeaderboardScope::Daily)
     payload = Rank.count(@leaderboard, scope) #counting off of Rank is more efficient than Score
-    render_payload(payload, params, 180, 30)
+    render_payload(payload, params, 180, 10)
   end
   
   def overview

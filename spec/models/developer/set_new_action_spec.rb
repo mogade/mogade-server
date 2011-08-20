@@ -8,7 +8,7 @@ describe Developer, :set_new_action do
   
   it "Sets a new action for the developer" do
     Id.stub!(:new).and_return("abctheid")
-    expected = Factory.create(:developer, {:email => 'goku@dbz.org'})
+    expected = FactoryGirl.create(:developer, {:email => 'goku@dbz.org'})
     actual = Developer.set_new_action('goku@dbz.org')
     actual.should == expected
     actual.action.should == "abctheid"

@@ -15,4 +15,15 @@ class Asset
       Asset.new({:name => name, :type => type, :meta => meta, :game_id => game.id})
     end
   end
+  
+  def update(name, type, meta)
+    self.name = name
+    self.type = type
+    self.meta = meta
+    save!
+  end
+  
+  def destroy
+    Asset.remove({:_id => id})
+  end
 end

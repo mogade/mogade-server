@@ -27,7 +27,7 @@ describe Manage::AccountsController, :activate do
   
   it "activate the developer and signs her it" do
     action = Id.new
-    developer = Factory.build(:developer)
+    developer = FactoryGirl.build(:developer)
     
     Developer.should_receive(:find_by_action).with(action).and_return(developer)
     Id.stub!(:expired?).and_return(false)

@@ -7,7 +7,7 @@ describe FacebookController, :index do
   end
   
   it "returns a 404 if the profile is disabled" do
-    factory = Factory.create(:profile, {:enabled => false})
+    factory = FactoryGirl.create(:profile, {:enabled => false})
     get :index, {:id => factory.id.to_s}
     response.should render_template('facebook/404_profile')
   end

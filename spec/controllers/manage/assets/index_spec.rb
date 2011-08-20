@@ -8,7 +8,7 @@ describe Manage::AssetsController, :index do
   it_ensures_developer_owns_the_game :get, :index
   
   it "loads the assets and renders the view" do
-    assets = [Factory.build(:asset)]
+    assets = [FactoryGirl.build(:asset)]
     
     Asset.should_receive(:find_for_game).with(@game).and_return(assets)
     get :index, {:id => @game.id}

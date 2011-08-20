@@ -8,7 +8,7 @@ describe Score, :get_by_player do
   end
   
   it "should get the start of the leaderboard if the player doesn't have a score" do
-    @leaderboard = Factory.create(:leaderboard)
+    @leaderboard = FactoryGirl.create(:leaderboard)
     create_daily_scores(20)
     data = Score.get_by_player(@leaderboard, Player.new('x', 'y'), 5, LeaderboardScope::Daily)
     data[:page].should == 1
@@ -16,8 +16,8 @@ describe Score, :get_by_player do
   end
  
   it "should return yesterdays's leaderboard from the player's position" do
-    @leaderboard = Factory.create(:leaderboard)
-    player = Factory.build(:player)
+    @leaderboard = FactoryGirl.create(:leaderboard)
+    player = FactoryGirl.build(:player)
     player.stub!(:unique).and_return('punique2')
     create_yesterday_scores(20)
     
@@ -26,8 +26,8 @@ describe Score, :get_by_player do
   end
    
   it "should return the daily leaderboard from the player's position" do
-    @leaderboard = Factory.create(:leaderboard)
-    player = Factory.build(:player)
+    @leaderboard = FactoryGirl.create(:leaderboard)
+    player = FactoryGirl.build(:player)
     create_daily_scores(20)
     
     player.stub!(:unique).and_return('punique10')
@@ -36,8 +36,8 @@ describe Score, :get_by_player do
   end
   
   it "should return the weekly leaderboard from the player's position" do
-    @leaderboard = Factory.create(:leaderboard)
-    player = Factory.build(:player)
+    @leaderboard = FactoryGirl.create(:leaderboard)
+    player = FactoryGirl.build(:player)
     create_weekly_scores(20)
     
     player.stub!(:unique).and_return('punique9')
@@ -47,8 +47,8 @@ describe Score, :get_by_player do
   end
   
   it "should return the overall leaderboard from the player's position" do
-    @leaderboard = Factory.create(:leaderboard)
-    player = Factory.build(:player)
+    @leaderboard = FactoryGirl.create(:leaderboard)
+    player = FactoryGirl.build(:player)
     create_overall_scores(20)
     
     player.stub!(:unique).and_return('punique0')
@@ -79,7 +79,7 @@ describe Score, :get_by_player do
   end
   def create_scores(count, scope_name, scope, stamp = nil)
     count.times do |i|
-      score_data = Factory.build(:score_data, {:points => @created, :data => "data#{@created}", :dated => @now - 100 * @created})
+      score_data = FactoryGirl.build(:score_data, {:points => @created, :data => "data#{@created}", :dated => @now - 100 * @created})
       score_data.stamp = stamp  unless stamp.nil?
       params = {:leaderboard_id => @leaderboard.id, :username => "player_#{@created}", :unique => "unique_#{@created}", scope_name => score_data}
       Score.new(params).save      

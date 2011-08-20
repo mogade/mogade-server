@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Profile, :create_or_update do
   
   it "updates an existing profile" do
-    game = Factory.build(:game)
+    game = FactoryGirl.build(:game)
     leaderboard_id = Id.new
-    Factory.create(:profile, {:id => game.id, :name => 'first name', :enabled => false, :description => 'description', :leaderboard_id => Id.new})
+    FactoryGirl.create(:profile, {:id => game.id, :name => 'first name', :enabled => false, :description => 'description', :leaderboard_id => Id.new})
     
     profile = Profile.create_or_update('new name',  'description_new', 1, leaderboard_id, game)
     profile.id.should == game.id
@@ -16,9 +16,9 @@ describe Profile, :create_or_update do
   end
   
   it "create a new profile" do
-    game = Factory.build(:game)
+    game = FactoryGirl.build(:game)
     leaderboard_id = Id.new
-    Factory.create(:profile, {:id => game.id, :name => 'first name', :enabled => false, :description => 'description'})
+    FactoryGirl.create(:profile, {:id => game.id, :name => 'first name', :enabled => false, :description => 'description'})
     profile = Profile.create_or_update('new name', 'description_new', 1, leaderboard_id, game)
     profile.name.should == 'new name'
     profile.description.should == 'description_new'
@@ -27,8 +27,8 @@ describe Profile, :create_or_update do
   end
   
   it "adds http infront of urls if needed" do
-    game = Factory.build(:game)
-    Factory.create(:profile, {:id => game.id, :name => 'first name', :enabled => false, :description => 'description'})
+    game = FactoryGirl.build(:game)
+    FactoryGirl.create(:profile, {:id => game.id, :name => 'first name', :enabled => false, :description => 'description'})
     profile = Profile.create_or_update('new name', 'incomplete_url', 'new_developer', 'incomplete_url2', 'description_new', 1, nil, game)
     profile.game_url.should == 'http://incomplete_url'
     profile.developer_url.should == 'http://incomplete_url2'

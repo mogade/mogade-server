@@ -14,12 +14,12 @@ describe Developer, :find_by_credential do
   end
   
   it "returns nil the password doesn't match" do
-    Factory.create(:developer, {:email => 'leto@dune.gov'})
+    FactoryGirl.create(:developer, {:email => 'leto@dune.gov'})
     Developer.find_by_credential('leto@dune.gov', 'spice').should be_nil
   end
   
   it "returns the found developer" do
-    developer = Factory.create(:developer, {:email => 'leto@dune.gov', :password => BCrypt::Password.create('ghanima')})
+    developer = FactoryGirl.create(:developer, {:email => 'leto@dune.gov', :password => BCrypt::Password.create('ghanima')})
     Developer.find_by_credential('leto@dune.gov', 'ghanima').should == developer
   end
   

@@ -7,13 +7,13 @@ describe Api::Gamma::ScoresController, :count do
   it_ensures_a_valid_leaderboard :get, :count
   
   it "gets the counts from the ranks" do
-    leaderboard = Factory.create(:leaderboard)
+    leaderboard = FactoryGirl.create(:leaderboard)
     Rank.should_receive(:count).with(leaderboard, LeaderboardScope::Weekly)
     get :count, {:lid => leaderboard.id, :scope => LeaderboardScope::Weekly}
   end
   
   it "gets the counts from the ranks" do
-    leaderboard = Factory.create(:leaderboard)
+    leaderboard = FactoryGirl.create(:leaderboard)
     Rank.stub!(:count).and_return(2394)
     get :count, {:lid => leaderboard.id, :scope => LeaderboardScope::Weekly}
     response.status.should == 200

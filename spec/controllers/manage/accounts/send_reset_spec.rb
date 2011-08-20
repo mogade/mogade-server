@@ -9,7 +9,7 @@ describe Manage::AccountsController, :send_reset do
   end
   
   it "does a password reset" do
-    developer = Factory.build(:developer, {:action => 'the_key'})
+    developer = FactoryGirl.build(:developer, {:action => 'the_key'})
     Developer.should_receive(:set_new_action).with('gohan@dbz.org').and_return(developer)
     Notifier.should_receive(:reset_password).with(developer, 'http://test.host/manage/accounts/reset/the_key')
     

@@ -4,7 +4,7 @@ require './deploy/jobs/cleaner'
 describe Cleaner, 'shrink rank lookups' do
 
   it "deletes the worst ranks over the maximum for a high to low leaderboard" do
-    leaderboard = Factory.create(:leaderboard, {:type => LeaderboardType::HighToLow})
+    leaderboard = FactoryGirl.create(:leaderboard, {:type => LeaderboardType::HighToLow})
     key = "lb:d:#{leaderboard.id}:#{Time.now.strftime('%y%m%d%H')}"
     10.times{|i| Store.redis.zadd key, i, i.to_s }
     
@@ -15,7 +15,7 @@ describe Cleaner, 'shrink rank lookups' do
   end
   
   it "deletes the worst ranks over the maximum for a low to high leaderboard" do
-    leaderboard = Factory.create(:leaderboard, {:type => LeaderboardType::LowToHigh})
+    leaderboard = FactoryGirl.create(:leaderboard, {:type => LeaderboardType::LowToHigh})
     key = "lb:w:#{leaderboard.id}:#{Time.now.strftime('%y%m%d%H')}"
     10.times{|i| Store.redis.zadd key, i, i.to_s }
     

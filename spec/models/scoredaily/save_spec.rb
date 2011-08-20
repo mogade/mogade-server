@@ -7,8 +7,8 @@ describe ScoreDaily, 'save' do
   end
 
   it "saves a new score" do
-    leaderboard = Factory.build(:leaderboard)
-    player = Factory.build(:player)
+    leaderboard = FactoryGirl.build(:leaderboard)
+    player = FactoryGirl.build(:player)
     ScoreDaily.save(leaderboard, player, 100, 'd1')
     
     ScoreDaily.count.should == 1
@@ -16,8 +16,8 @@ describe ScoreDaily, 'save' do
   end
   
   it "saves a score with no data" do
-    leaderboard = Factory.build(:leaderboard)
-    player = Factory.build(:player)
+    leaderboard = FactoryGirl.build(:leaderboard)
+    player = FactoryGirl.build(:player)
     ScoreDaily.save(leaderboard, player, 100)
     
     ScoreDaily.count.should == 1
@@ -25,8 +25,8 @@ describe ScoreDaily, 'save' do
   end
   
   it "limits the data to 50 characters" do
-    leaderboard = Factory.build(:leaderboard)
-    player = Factory.build(:player)
+    leaderboard = FactoryGirl.build(:leaderboard)
+    player = FactoryGirl.build(:player)
     ScoreDaily.save(leaderboard, player, 100, 'z' * 55)
     
     ScoreDaily.count.should == 1
@@ -34,9 +34,9 @@ describe ScoreDaily, 'save' do
   end
   
   it "updates the score at the giving stamp" do
-    leaderboard = Factory.build(:leaderboard)
-    player = Factory.build(:player)
-    Factory.create(:score_daily, {:leaderboard_id => leaderboard.id, :unique => player.unique, :stamp => leaderboard.daily_stamp, :points => 33})
+    leaderboard = FactoryGirl.build(:leaderboard)
+    player = FactoryGirl.build(:player)
+    FactoryGirl.create(:score_daily, {:leaderboard_id => leaderboard.id, :unique => player.unique, :stamp => leaderboard.daily_stamp, :points => 33})
     ScoreDaily.save(leaderboard, player, 22, 'd2')
     
     ScoreDaily.count.should == 1
@@ -44,9 +44,9 @@ describe ScoreDaily, 'save' do
   end
   
   it "inserts a second score for a different stamp" do
-    leaderboard = Factory.build(:leaderboard)
-    player = Factory.build(:player)
-    Factory.create(:score_daily, {:leaderboard_id => leaderboard.id, :unique => player.unique, :stamp => @now - 1000000, :points => 33})
+    leaderboard = FactoryGirl.build(:leaderboard)
+    player = FactoryGirl.build(:player)
+    FactoryGirl.create(:score_daily, {:leaderboard_id => leaderboard.id, :unique => player.unique, :stamp => @now - 1000000, :points => 33})
     ScoreDaily.save(leaderboard, player, 22, 'd2')
     
     ScoreDaily.count.should == 2
@@ -55,9 +55,9 @@ describe ScoreDaily, 'save' do
   end
   
   it "inserts a second score for a different unique" do
-    leaderboard = Factory.build(:leaderboard)
-    player = Factory.build(:player)
-    Factory.create(:score_daily, {:leaderboard_id => leaderboard.id, :unique => 'u111', :stamp => leaderboard.daily_stamp, :points => 33})
+    leaderboard = FactoryGirl.build(:leaderboard)
+    player = FactoryGirl.build(:player)
+    FactoryGirl.create(:score_daily, {:leaderboard_id => leaderboard.id, :unique => 'u111', :stamp => leaderboard.daily_stamp, :points => 33})
     ScoreDaily.save(leaderboard, player, 22, 'd2')
     
     ScoreDaily.count.should == 2
@@ -66,10 +66,10 @@ describe ScoreDaily, 'save' do
   end
   
   it "inserts a second score for a different leaerboard" do
-    leaderboard = Factory.build(:leaderboard)
+    leaderboard = FactoryGirl.build(:leaderboard)
     other_id = Id.new
-    player = Factory.build(:player)
-    Factory.create(:score_daily, {:leaderboard_id => other_id, :unique => player.unique, :stamp => leaderboard.daily_stamp, :points => 33})
+    player = FactoryGirl.build(:player)
+    FactoryGirl.create(:score_daily, {:leaderboard_id => other_id, :unique => player.unique, :stamp => leaderboard.daily_stamp, :points => 33})
     ScoreDaily.save(leaderboard, player, 22, 'd2')
     
     ScoreDaily.count.should == 2

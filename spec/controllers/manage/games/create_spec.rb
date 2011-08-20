@@ -12,7 +12,7 @@ describe Manage::GamesController, :create do
   end
   
   it "saves the game and goes to its view" do
-    game = Factory.build(:game)
+    game = FactoryGirl.build(:game)
     
     Game.should_receive(:create).with('chicken chasers').and_return(game)
     game.should_receive(:save!)
@@ -22,7 +22,7 @@ describe Manage::GamesController, :create do
   end
   
   it "tells the current developer about the new game" do
-    game = Factory.build(:game)
+    game = FactoryGirl.build(:game)
     
     Game.stub!(:create).and_return(game)
     @developer.should_receive(:created_game!).with(game)

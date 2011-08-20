@@ -10,7 +10,7 @@ describe Stat, :load_data do
       Store.redis.incrby("s:daily_new:game_id:#{date.strftime("%y%m%d")}", i)
       date += 86400
     end
-    @game = Factory.build(:game, {:id => 'game_id'})
+    @game = FactoryGirl.build(:game, {:id => 'game_id'})
   end
   
   it "returns the number of daily hits for the specified date range" do

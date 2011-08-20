@@ -2,7 +2,7 @@ module GammaApiHelper
   def setup      
     before :each do
       Rails.cache.clear   
-      @game = Factory.create(:game)
+      @game = FactoryGirl.create(:game)
     end
   end
   
@@ -82,7 +82,7 @@ module GammaApiHelper
       json['error'].should == "id doesn't belong to a leaderboard"
     end
     it "loads a valid leaderboard into the context" do
-      leaderboard = Factory.create(:leaderboard)
+      leaderboard = FactoryGirl.create(:leaderboard)
       params = block.nil? ? {} : block.call
       self.send verb, action, GammaApiHelper.signed_params(@game, params.merge({:lid => leaderboard.id}))
       assigns[:leaderboard].should == leaderboard
@@ -91,7 +91,7 @@ module GammaApiHelper
   
   def it_ensures_leaderboard_belongs_to_game(verb, action, block = nil)
     it "renders an error if the leaderboard's game id isn't correct" do
-      leaderboard = Factory.create(:leaderboard, {:game_id => Id.new})
+      leaderboard = FactoryGirl.create(:leaderboard, {:game_id => Id.new})
       params = block.nil? ? {} : block.call
       self.send verb, action, GammaApiHelper.signed_params(@game, params.merge({:lid => leaderboard.id}))
       json = ActiveSupport::JSON.decode(response.body)
@@ -160,7 +160,7 @@ module GammaApiHelper
       json['error'].should == "id doesn't belong to an achievement"
     end
     it "loads a valid achievement into the context" do
-      achievement = Factory.create(:achievement)
+      achievement = FactoryGirl.create(:achievement)
       params = block.nil? ? {} : block.call
       self.send verb, action, GammaApiHelper.signed_params(@game, params.merge({:aid => achievement.id}))
       assigns[:achievement].should == achievement
@@ -169,7 +169,7 @@ module GammaApiHelper
   
   def it_ensures_achievement_belongs_to_game(verb, action, block = nil)
     it "renders an error if the achievement's game id isn't correct" do
-      achievement = Factory.create(:achievement, {:game_id => Id.new})
+      achievement = FactoryGirl.create(:achievement, {:game_id => Id.new})
       params = block.nil? ? {} : block.call
       self.send verb, action, GammaApiHelper.signed_params(@game, params.merge({:aid => achievement.id}))
       json = ActiveSupport::JSON.decode(response.body)

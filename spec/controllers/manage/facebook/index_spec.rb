@@ -17,7 +17,7 @@ describe Manage::FacebookController, :index do
   end
   
   it "loads the leaderboards " do
-    leaderboards = [Factory.build(:leaderboard)]
+    leaderboards = [FactoryGirl.build(:leaderboard)]
     
     Leaderboard.should_receive(:find_for_game).with(@game).and_return(leaderboards)
     get :index, {:id => @game.id}

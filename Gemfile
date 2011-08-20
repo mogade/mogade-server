@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
   
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.10'
 gem 'mongo'
 gem 'mongo_ext', :require => 'mongo'
 gem 'bson_ext', :require => 'mongo'

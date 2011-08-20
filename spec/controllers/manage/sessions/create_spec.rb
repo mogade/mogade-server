@@ -10,14 +10,14 @@ describe Manage::SessionsController, :create do
   end
   
   it "renders an error if the developer isn't enabled" do
-    Developer.stub!(:find_by_credential).and_return(Factory.build(:developer, {:status => DeveloperStatus::Pending}))
+    Developer.stub!(:find_by_credential).and_return(FactoryGirl.build(:developer, {:status => DeveloperStatus::Pending}))
     get :create
     response.should render_template('manage/sessions/new')
     flash[:error].should == "this account is not activated"
   end
   
   it "signs the developer in" do
-    developer = Factory.build(:developer)
+    developer = FactoryGirl.build(:developer)
     Developer.should_receive(:find_by_credential).with('duncan@sword.org', 'ghola').and_return(developer)
     
     get :create, {:email => 'duncan@sword.org', :password => 'ghola'}

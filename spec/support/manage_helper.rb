@@ -7,10 +7,10 @@ module ManageHelper
   def setup      
     before :each do
       Rails.cache.clear
-      @developer = Factory.create(:developer)
+      @developer = FactoryGirl.create(:developer)
       session[:dev_id] = @developer.id
       
-      @game = Factory.create(:game, {:id => ManageHelper.game_id})
+      @game = FactoryGirl.create(:game, {:id => ManageHelper.game_id})
       @developer.game_ids = [@game.id]
       
       Developer.stub!(:find_by_id).with(@developer.id).and_return(@developer)
@@ -49,8 +49,8 @@ module ManageHelper
       flash[:error].should == 'you do not have access to perform that action'
     end
     it "redirect to home if developer doesn't own the game" do
-      Game.stub!(:find_by_id).with(anything()).and_return(Factory.build(:game))
-      game = Factory.create(:game, {:id => Id.new})
+      Game.stub!(:find_by_id).with(anything()).and_return(FactoryGirl.build(:game))
+      game = FactoryGirl.create(:game, {:id => Id.new})
       self.send verb, action, {:id => game.id}
       response.should redirect_to('/manage/games')
       flash[:error].should == 'you do not have access to perform that action'

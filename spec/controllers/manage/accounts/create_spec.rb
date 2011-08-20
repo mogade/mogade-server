@@ -9,7 +9,7 @@ describe Manage::AccountsController, :create do
   end
   
   it "renders the registartion page if the email is already in use" do
-    Factory.create(:developer, {:email => 'my@email.com'})
+    FactoryGirl.create(:developer, {:email => 'my@email.com'})
     post :create, {:email => 'my@email.com', :name => 'my name', :password => 'pass1234', :confirm_password => 'pass1234', :human => 'luigi'}
     response.should render_template('manage/accounts/new')
     assigns[:signup].errors[:email][0].should == 'email is already taken'

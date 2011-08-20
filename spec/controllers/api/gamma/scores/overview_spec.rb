@@ -8,7 +8,7 @@ describe Api::Gamma::ScoresController, :overview do
   
   
   it "gets the top score for each of the scopes" do
-    leaderboard = Factory.create(:leaderboard)
+    leaderboard = FactoryGirl.create(:leaderboard)
     scores = {:page => 4, :scores =>[{'blah' => 1}]}
     
     Score.should_receive(:get_by_page).with(leaderboard, 1, 3, LeaderboardScope::Yesterday).and_return({:scores => nil})
@@ -19,7 +19,7 @@ describe Api::Gamma::ScoresController, :overview do
   end
   
   it "returns the scores without ta callback" do
-    leaderboard = Factory.create(:leaderboard)
+    leaderboard = FactoryGirl.create(:leaderboard)
     scores = {:page => 4, :scores =>[{'blah' => 1}]}
     
     Score.stub!(:get_by_page).and_return{|lb, page, count, scope| {:scores => scope}}
@@ -30,7 +30,7 @@ describe Api::Gamma::ScoresController, :overview do
   end
   
   it "returns the scores within the specific callback" do
-    leaderboard = Factory.create(:leaderboard)
+    leaderboard = FactoryGirl.create(:leaderboard)
     scores = {:page => 4, :scores =>[{'blah' => 1}]}
     
     Score.stub!(:get_by_page).and_return{|lb, page, count, scope| {:scores => scope}}
@@ -41,7 +41,7 @@ describe Api::Gamma::ScoresController, :overview do
   end
   
   it "sets output cache set when callback is used" do
-    leaderboard = Factory.create(:leaderboard)
+    leaderboard = FactoryGirl.create(:leaderboard)
     
     Score.stub!(:get_by_page).and_return{|lb, page, count, scope| {:scores => scope}}
     get :overview, {:lid => leaderboard.id, :callback => 'gotScores'}
@@ -50,7 +50,7 @@ describe Api::Gamma::ScoresController, :overview do
   end
   
   it "does not set output cache when callback is not used" do
-    leaderboard = Factory.create(:leaderboard)
+    leaderboard = FactoryGirl.create(:leaderboard)
     
     Score.stub!(:get_by_page).and_return{|lb, page, count, scope| {:scores => scope}}
     get :overview, {:lid => leaderboard.id}

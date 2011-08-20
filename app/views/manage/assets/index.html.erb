@@ -1,6 +1,22 @@
 <% content_for :title, @game.name + ' assets' -%>
 <% content_for :section_title,  @game.name + ' .. assets' -%>
 
+<div class="list" id="asset_list">
+  <table>
+   <thead>
+     <th>name</th>
+     <th>key</th>
+     <th>type</th>
+     <th></th>
+     <th></th>
+   </thead>
+   <tbody>
+     <%= render :partial => 'asset_row', :collection => @assets, :as => :asset unless @assets.blank?-%>
+   </tbody>
+  </table>
+  <h3>You don't have any assets.</h3>
+</div>
+
 
 <%= form_for :asset, :url => {:action => 'create' }, :html => {:id => 'add'} do |f| -%>
   <h3>Add Asset</h3>
@@ -32,6 +48,10 @@
 <% content_for :js do -%>
 $('#meta').textAreaLength(1000);
 $('#add').validator({rules: <%= validation_of(Asset).html_safe%>})
+
+$('#asset_list').simpleList({})
+  .editTo({ to: '#add', map: {0: 'name', 2: 'type', 'data-meta': 'meta'}, url: '<%= url_for :action => 'create' %>' })
+  .confirm('td.delete', 'Delete this asset?', 'This asset will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/assets/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
 <% end -%>
 
 <% content_for :right do -%>
