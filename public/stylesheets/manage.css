@@ -89,3 +89,10 @@ h4{font-weight:bold;}
 #bannerImage .button, #imageList .button{display:inline;position:relative;top:8px;}
 #bannerImage .uploading, #imageList .uploading{background-image:url('../images/loading.gif');background-repeat:no-repeat;}
 #bannerImage .deleteButton, #imageList .deleteButton{color:#933;border:1px solid #caa;left:-25px;padding:6px 5px;}
+
+div.game_profile {width:420px;float:left;border:1px solid #f6f6f6;padding:10px;margin:5px;height:225px;}
+div.game_profile h2 a{color:#C35617;float:right;}
+div.game_profile div.meta{float:left}
+div.game_profile .about{clear:both;}
+div.game_profile div{padding:5px 0;}
+div.game_profile label{font-weight:bold;}
