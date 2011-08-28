@@ -5,7 +5,7 @@ describe Destroyer, 'destroy profile images' do
   it "skips images deleted today" do
     key = "cleanup:images:#{Time.now.strftime("%y%m%d")}"
     Store.redis.sadd(key, "an image")
-    Destroyer.new.destroy_profile_images('bucket')
+    Destroyer.new.destroy_profile_images('bucket', false)
     Store.redis.scard(key).should == 1
   end
   
@@ -23,7 +23,7 @@ describe Destroyer, 'destroy profile images' do
     AWS::S3::S3Object.should_receive(:delete).with('image1.png', 'tb')
     AWS::S3::S3Object.should_receive(:delete).with('thumbimage2.jpg', 'tb')
     AWS::S3::S3Object.should_receive(:delete).with('image2.jpg', 'tb')
-    Destroyer.new.destroy_profile_images('tb')
+    Destroyer.new.destroy_profile_images('tb', false)
     Store.redis.keys.length.should == 0
   end
 end

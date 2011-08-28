@@ -20,6 +20,25 @@ describe Manage::AssetsController, :update do
     flash[:error].should == 'you do not have access to perform that action'
   end
   
+  it "replaces the file with a new one" do    
+    asset = FactoryGirl.build(:asset, {:game_id => @game.id, :file => 'existing'})
+    Asset.stub!(:find_by_id).with(asset.id).and_return(asset)
+    FileStorage.should_receive(:replace_asset).with('existing', 'new').and_return('the new name')
+    
+    put :update, {:id => asset.id, :game_id => @game.id, :name => 'n', :type => '4', :meta => 'm', :fileChoice => '2', :file => 'new'}
+    asset.file.should == 'the new name'
+  end
+  
+  it "deletes the file" do
+    asset = FactoryGirl.build(:asset, {:game_id => @game.id, :file => 'existing'})
+    Asset.stub!(:find_by_id).with(asset.id).and_return(asset)
+    FileStorage.should_receive(:delete_asset).with('existing')
+    
+    put :update, {:id => asset.id, :game_id => @game.id, :name => 'n', :type => '4', :meta => 'm', :fileChoice => '3'}
+    asset.file.should be_nil
+  end
+
+
   it "updates the asset" do
     asset = FactoryGirl.build(:asset, {:game_id => @game.id})
     Asset.stub!(:find_by_id).with(asset.id).and_return(asset)

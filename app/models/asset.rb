@@ -24,6 +24,7 @@ class Asset
   end
   
   def destroy
+    FileStorage.delete_asset(file) if file
     Asset.remove({:_id => id})
   end
 end

@@ -23,9 +23,29 @@ class FileStorage
     Store.redis.sadd("cleanup:images:#{Time.now.strftime("%y%m%d")}", name) unless name.nil?
   end
   
+  def self.save_asset(file)
+    buffer = FileStorage.stream_to_buffer(file.tempfile)
+    name = Id.new.to_s + '_' + file.original_filename
+    FileStorage.save_to_aws(name, buffer, {'Cache-Control' => 'public,max-age=31536000'}, 'assets')
+    name
+  end
+  
+  def self.delete_asset(file)
+    return unless file
+    path = '/assets/' + file
+    AWS::S3::S3Object.delete(path, Settings.aws['bucket'])
+  end
+  
+  def self.replace_asset(existing, file)
+    FileStorage.delete_asset(existing)
+    FileStorage.save_asset(file)
+  end
+
   private
-  def self.save_to_aws(name, buffer, options = {})
-    AWS::S3::S3Object.store(name, buffer, Settings.aws['bucket'], options)
+  def self.save_to_aws(name, buffer, options = {}, folder = nil)
+    path = Settings.aws['bucket']
+    path += '/' + folder if folder
+    AWS::S3::S3Object.store(name, buffer, path, options)
   end
   def self.stream_to_buffer(stream) #solves performance inconsistencies across different servers
     return stream if stream.is_a?(StringIO) 

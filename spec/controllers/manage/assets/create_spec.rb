@@ -26,6 +26,18 @@ describe Manage::AssetsController, :create do
       :meta => 'my meta'}).should == 1
   end
   
+  it "saves the file if present" do
+    FileStorage.should_receive(:save_asset).with('the file').and_return('saved_file')
+    post :create, {:game_id => @game.id, :name => 'tab', :type => '4', :meta => 'my meta', :file => 'the file'}
+    
+    Asset.count({
+      :game_id => @game.id, 
+      :name => 'tab', 
+      :file => 'saved_file',
+      :type => 4, 
+      :meta => 'my meta'}).should == 1
+  end
+  
   it "redirects to index page" do
     post :create, {:game_id => @game.id}
     response.should redirect_to('http://test.host/manage/assets?id=' + @game.id.to_s)

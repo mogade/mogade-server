@@ -1,6 +1,6 @@
 (function($) 
 {
-  var defaults = { to: null, map: {}, url: null};
+  var defaults = { to: null, map: {}, url: null, onEdit: null, onDone: null};
   $.fn.editTo = function(options, commandOptions) 
   {
     var opts = $.extend({}, defaults, options);
@@ -30,11 +30,12 @@
             if (isFirst){ $field.focus(); isFirst = false; }
           }
           self.swapTitle(/Add/, 'Edit');
-          $to.find(':submit').val('edit').click(self.submitClicked)
+          $to.find(':submit').val('edit').click(self.submitClicked);
           if ($to.find('.reset').length == 0) 
           {
             $to.find('.buttons').append($('<input type="button" class="button r reset" value="cancel" />'));
           }
+          if (opts.onEdit) { opts.onEdit($row); }
         },
         getValue: function($row, key)
         {
@@ -66,6 +67,7 @@
           $to.find('.reset').remove();
           $to.find(':submit').unbind('click', self.actual_click).val('add');
           $to.resetForm();
+          if (opts.onDone) { opts.onDone(); }
           $row = null;
         },
       };

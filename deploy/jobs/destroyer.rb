@@ -5,10 +5,6 @@ class Destroyer
   
   def initialize
     @redis = Store.redis
-    AWS::S3::Base.establish_connection!(
-      :access_key_id => Settings.aws['key'],
-      :secret_access_key => Settings.aws['secret']
-    )
   end
   
   def destroy_games
@@ -38,7 +34,10 @@ class Destroyer
     end
   end
   
-  def destroy_profile_images(bucket)
+  def destroy_profile_images(bucket, connect_to_aws = true)
+    if connect_to_aws #for testing
+      AWS::S3::Base.establish_connection!(:access_key_id => Settings.aws['key'], :secret_access_key => Settings.aws['secret'])
+    end
     @redis.keys('cleanup:images:*').each do |key|
       timestamp = Date.strptime(key.split(':')[2], '%y%m%d').to_time
       next unless Time.now.utc - timestamp > 86400

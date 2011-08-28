@@ -18,7 +18,7 @@
 </div>
 
 
-<%= form_for :asset, :url => {:action => 'create' }, :html => {:id => 'add'} do |f| -%>
+<%= form_for :asset, :url => {:action => 'create' }, :html => {:id => 'add',  :multipart => true} do |f| -%>
   <h3>Add Asset</h3>
   <input type="hidden" name="game_id" value="<%=@game.id%>" />
   <div class="field">
@@ -34,7 +34,12 @@
     <span class="charCounter"></span>
     <textarea name="meta" id="meta" rows="10" cols="40"></textarea>
   </div>
-  <div class="field">
+  <div class="field" style="display:none" id="fileChoiceField">
+    <label for="file">file action</label>
+    <select name="fileChoice" id="fileChoice"><option value="1">don't change</option><option value="2">replace</option><option value="3">remove</option></select>
+    <span id="fileName"></span>
+  </div>
+  <div class="field" id="fileField">
     <label for="file">file</label>
     <input type="file" name="file" id="file" />
   </div>
@@ -50,8 +55,31 @@ $('#meta').textAreaLength(1000);
 $('#add').validator({rules: <%= validation_of(Asset).html_safe%>})
 
 $('#asset_list').simpleList({})
-  .editTo({ to: '#add', map: {0: 'name', 2: 'type', 'data-meta': 'meta'}, url: '<%= url_for :action => 'create' %>' })
+  .editTo({ to: '#add', map: {0: 'name', 2: 'type', 'data-meta': 'meta'}, url: '<%= url_for :action => 'create' %>', onEdit: editing, onDone: doneEditing })
   .confirm('td.delete', 'Delete this asset?', 'This asset will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/assets/' + $td.closest('tr').data('id') + '?game_id=<%=@game.id%>'); });
+
+var $fileChoiceField = $('#fileChoiceField');
+var $fileField = $('#fileField');
+var $fileChoice = $('#fileChoice');
+var $fileName = $('#fileName');
+
+$fileChoice.change(function() {
+  if ($fileChoice.val() == '2') {
+    $fileField.show();
+  } else {
+    $fileField.hide();
+  }
+});
+function editing($row) {
+  $fileField.hide();
+  $fileChoiceField.val('1').show();
+  $fileName.text($row.attr('data-file') || 'none');
+}
+
+function doneEditing() {
+  $fileChoiceField.hide();
+  $fileField.show();
+}
 <% end -%>
 
 <% content_for :right do -%>
@@ -60,8 +88,7 @@ $('#asset_list').simpleList({})
   <p>Assets can be downloaded from the internet to your game</p>
   <p>The <em>type</em> tells you what kind of asset it is which you might use to decide how to handle/parse it. This can be any number (mogade just passes it along)</p>
   <p>The <em>meta</em> information is whatever data you want to pass to your game. This can be any format (mogade treats it as a meaningless string).</p>
-  <p>The <em>file</em> information is a single file to associate with this asset. From the game, you'll be able to download this file.</p>
+  <p>The <em>file</em> information is a single file to associate with this asset. From the game, you'll be able to download this file. The file is limited to 200KB</p>
   <p>You can provide either a meta or a file or both</p>
-
 <% end -%>
 

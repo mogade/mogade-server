@@ -42,6 +42,7 @@ FactoryGirl.define do
   factory :asset do
     sequence(:name) {|n| "asset-#{n}" }
     type 2
+    file nil
     meta "my meta has a first name, it's h-o-m-e-r"
   end
   
