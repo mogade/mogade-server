@@ -8,6 +8,7 @@ Mogade::Application.routes.draw do
       resources :ranks, :only => [:index]
       resources :stats, :only => [:create]
       resources :errors, :only => [:create]
+      resources :assets, :only => [:index]
     end
   
     #v1 crap

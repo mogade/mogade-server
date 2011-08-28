@@ -5,7 +5,7 @@
     return this.each(function() 
     {
       var $form = $(this);
-      $(':password, :text', $form).val('');
+      $(':password, :text, textarea', $form).val('');
       $('input.numeric', $form).numeric('reset'); 
     });
   };
