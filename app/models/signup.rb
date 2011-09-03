@@ -21,7 +21,7 @@ class Signup
     return nil unless valid?
     Developer.new({
       :name => name, 
-      :email => email, 
+      :email => email.downcase, 
       :password => BCrypt::Password.create(password),
       :status => DeveloperStatus::Pending,
       :action => Id.new

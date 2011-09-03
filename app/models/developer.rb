@@ -12,7 +12,7 @@ class Developer
     
     def find_by_email(email)
       return nil if email.blank?
-      find_one({:email => email})
+      find_one({:email => email.downcase})
     end
     
     def find_by_action(action)
