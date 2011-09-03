@@ -68,6 +68,20 @@ class Score
       leaderboards = Leaderboard.find({:game_id => game.id})
       leaderboards.map{|leaderboard| Score.load(leaderboard, player)}
     end
+    
+    def get_rivals(leaderboard, player, scope)    
+      score = Score.load(leaderboard, player).for_scope(scope)
+      return unless score.dated
+      
+      prefix = Score.scope_to_prefix(scope)
+      name = Score.scope_to_name(scope)
+      conditions = Score.time_condition(leaderboard, scope)
+      conditions[:leaderboard_id] = leaderboard.id
+      conditions[prefix + '.p'] = {leaderboard.score_comparer => score.points}
+      options = {:fields => {prefix + '.p' => 1, :username => 1, prefix + '.d' => 1, prefix + '.dt' => 1, :_id => 0}, :sort => [prefix + '.p', leaderboard.sort], :limit => 3, :raw => true}
+      
+      find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}
+    end
 
     def scope_to_prefix(scope)
       @@prefixes[scope]

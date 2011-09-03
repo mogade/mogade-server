@@ -26,6 +26,10 @@ class Leaderboard
     type == LeaderboardType::LowToHigh ? :asc : :desc
   end
   
+  def score_comparer
+    type == LeaderboardType::LowToHigh ? '$lt' : '$gt'
+  end
+  
   def daily_stamp
     now = Time.now.utc
     time = now.midnight + -3600 * (offset || 0)

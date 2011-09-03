@@ -1,7 +1,7 @@
 class Api::Gamma::ScoresController < Api::Gamma::ApiController
   before_filter :ensure_context, :only => :create
   before_filter :ensure_signed, :only => :create
-  before_filter :ensure_player, :only => :create
+  before_filter :ensure_player, :only => [:create, :rivals]
   before_filter :ensure_leaderboard
   before_filter :ensures_leaderboard_for_game, :only => :create
   
@@ -24,6 +24,12 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     scope = params_to_i(:scope, LeaderboardScope::Daily)
     payload = Rank.count(@leaderboard, scope) #counting off of Rank is more efficient than Score
     render_payload(payload, params, 180, 10)
+  end
+  
+  def rivals
+    scope = params_to_i(:scope, LeaderboardScope::Daily)
+    payload = Score.get_rivals(@leaderboard, @player, scope)
+    render_payload(payload || [], params, 180, 10)
   end
   
   def overview
