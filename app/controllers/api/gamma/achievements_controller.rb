@@ -7,7 +7,7 @@ class Api::Gamma::AchievementsController < Api::Gamma::ApiController
   def index
     player = load_player
     if player.nil?
-      payload = Achievement.find_for_game(@game, true).each{|a| a[:key] = (a.delete(:_id)).to_s }
+      payload = Achievement.find_for_game(@game, true).each{|a| a[:id] = (a.delete(:_id)).to_s }
       render_payload(payload, params, 180, 30)
     else
       render :json => EarnedAchievement.earned_by_player(@game, player).map{|a| a.to_s}
@@ -16,7 +16,7 @@ class Api::Gamma::AchievementsController < Api::Gamma::ApiController
 
   def create
     earned = EarnedAchievement.create(@achievement, @player)
-    render :json => earned.nil? ? {} : {:points => @achievement.points, :id => @achievement.id.to_s}
+    render :json => earned.nil? ? {} : {:points => @achievement.points, :id => @achievement.id.to_s, :name => @achievement.name, :description => @achievement.description}
   end
   
   private

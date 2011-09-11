@@ -16,7 +16,7 @@ describe Api::Gamma::AchievementsController, :index do
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
     json.length.should == 1
-    json[0].should == {'c' => 'a', 'key' => id.to_s}
+    json[0].should == {'c' => 'a', 'id' => id.to_s}
   end
 
   it "gets the player's achievements" do

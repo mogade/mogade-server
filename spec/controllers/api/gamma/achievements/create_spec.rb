@@ -28,6 +28,8 @@ describe Api::Gamma::AchievementsController, :create do
     json = ActiveSupport::JSON.decode(response.body)
     json['id'].should == achievement.id.to_s
     json['points'].should == 123
+    json['name'].should == achievement.name
+    json['description'].should == achievement.description
   end
   
   it "renders a blank response when already earned" do
