@@ -1,11 +1,17 @@
 class Api::Gamma::AchievementsController < Api::Gamma::ApiController
   before_filter :ensure_context
   before_filter :ensure_signed, :only => :create
-  before_filter :ensure_player
+  before_filter :ensure_player, :only => :create
   before_filter :ensure_achievement, :only => :create
   
   def index
-    render :json => EarnedAchievement.earned_by_player(@game, @player).map{|a| a.to_s}
+    player = load_player
+    if player.nil?
+      payload = Achievement.find_for_game(@game, true).each{|a| a[:key] = (a.delete(:_id)).to_s }
+      render_payload(payload, params, 180, 30)
+    else
+      render :json => EarnedAchievement.earned_by_player(@game, player).map{|a| a.to_s}
+    end
   end
 
   def create

@@ -9,8 +9,8 @@ class Achievement
   validates_inclusion_of :points, :in => 0..500, :message => 'please enter the amount of points (0-500)'
   
   class << self
-    def find_for_game(game)
-      find({:game_id => game.id}, {:sort => [:name, :ascending]}).to_a
+    def find_for_game(game, raw = false)
+      find({:game_id => game.id}, {:fields => {:game_id => false}, :sort => [:name, :ascending], :raw => raw}).to_a
     end
     def create(name, description, points, game)
       Achievement.new({:name => name, :description => description, :points => points, :game_id => game.id})
