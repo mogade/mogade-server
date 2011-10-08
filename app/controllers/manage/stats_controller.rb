@@ -3,6 +3,7 @@ class Manage::StatsController < Manage::ManageController
 
   def index
     return unless load_game_as_owner
+    @weekly_unique = Stat.weekly_unique(@game)
   end
   
   def data

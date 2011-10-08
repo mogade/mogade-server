@@ -12,6 +12,16 @@ class Stat
       end
     end
     
+    def weekly_unique(game)
+      redis = Store.redis
+      now = Time.now.utc
+      keys = Array.new(7) do |i| 
+        time = (now - (i*86400)).strftime("%y%m%d")
+        "s:daily_lookup:#{game.id}:#{time}"
+      end
+      redis.sunion(*keys).length
+    end
+    
     def load_data(game, from, to)
       days = ((to - from)/86400).round
       days = 30 if days > 30 || days < 0

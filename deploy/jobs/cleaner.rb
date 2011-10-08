@@ -7,7 +7,7 @@ class Cleaner
   end
   
   def clean_statistic_lookups
-    delete_stale_keys(@redis.keys('s:daily_lookup:*'), 2 * 86400, '%y%m%d')
+    delete_stale_keys(@redis.keys('s:daily_lookup:*'), 8 * 86400, '%y%m%d')
   end
   
   def clean_rank_lookups

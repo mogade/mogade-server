@@ -3,6 +3,8 @@
 <% content_for :title, @game.name + ' usage statistics' -%>
 <% content_for :section_title,  @game.name + ' .. usage statistics' -%>
 
+<p>There have been <%= @weekly_unique %> unique users in the last 7 days</p>
+
 <input type="hidden" id="id" value="<%= @game.id%>" />
 <label for="date">date range</label>
 <input type="text" id="date" />
