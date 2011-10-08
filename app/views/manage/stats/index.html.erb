@@ -15,9 +15,13 @@
   <tbody id="raw"></tobdy>
 </table>
 
+<iframe id="downloadFrame" style="display:none"></iframe>
+
 <% content_for :right do -%>
-  <%= render :partial => 'shared/menu'%>
+  <%= render :partial => 'shared/menu', :locals => {:show_stats => true} %>
   <h3>Help</h3>
   <p><strong>Unique users</strong> are the number of unique users for that day, whereas <strong>new users</strong> are users which are totally new to your game.</p>
   <p>Note that some platforms keep a &quot;closed&quot; process running in the background. Depending on when you call the log method, this could have an impact on the <strong>game load<strong> statistic.</p>
 <% end -%>
+
+

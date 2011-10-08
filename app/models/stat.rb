@@ -31,5 +31,22 @@ class Stat
         ]
       }
     end
+    
+    def load_data_for_year(game, year)
+      redis = Store.redis
+      data = load_one_for_year(redis, "s:daily_hits:#{game.id}:#{year}*")
+      data.deep_merge!(load_one_for_year(redis, "s:daily_unique:#{game.id}:#{year}*"))
+      data.deep_merge!(load_one_for_year(redis, "s:daily_new:#{game.id}:#{year}*"))
+      data
+    end
+    
+    def load_one_for_year(redis, pattern)
+      keys = redis.keys(pattern)
+      values = redis.mget(*keys)
+      Hash[keys.each_with_index.map do |key, i| 
+        parts = key.split(':') 
+        [parts[-1], {parts[1] => values[i]}]
+      end]
+    end
   end
 end

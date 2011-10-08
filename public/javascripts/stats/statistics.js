@@ -64,5 +64,13 @@ $(document).ready(function()
     if (existing.s == meta.s && existing.d == meta.d) { return; }
     $tip.text(item.datapoint[1]).show().css({top: item.pageY-20, left: item.pageX+10}).data('meta', meta);
   });
+  
+  
+  //Download stuff
+  $('#downloadMenu a').click(function() { 
+    var frame = $('#downloadFrame')[0];
+    frame.src = '/manage/stats/data?id=' + $('#id').val() + '&year=' + $(this).attr('data-year');
+    return false;
+  });
 });
   
