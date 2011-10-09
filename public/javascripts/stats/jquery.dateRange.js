@@ -1,6 +1,10 @@
 (function($){
   $.fn.dateRange = function(options)
   {
+    if (options && options.command && options.command == 'getRange') {
+      return this.get(0).dateRange.getRange();
+    }
+    
     var defaults = {selected: null, startWith: null, minimumDate: null, maximumDate: null};
     var opts = $.extend({}, defaults, options);
     var months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
@@ -177,6 +181,10 @@
         format: function(date)
         {
           return abbreviations[date.getMonth()] + ' ' + date.getDate() + ' ' + date.getFullYear();
+        },
+        getRange: function() 
+        {
+          return selected;
         }
       };
       this.dateRange = self;

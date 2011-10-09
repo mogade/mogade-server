@@ -12,5 +12,5 @@ div.calendar td.highlight{background:#ccc;}
 #legend td{padding:10px;}
 #date{padding:5px;width:250px;border:1px solid #aaa;}
 #reportTip{position:absolute;background:#fff;padding:5px;border:1px solid #eee;}
-#raw{width:100%;margin-top:20px;}
+#raw{width:100%;margin-top:20px;margin-bottom:20px;}
 #raw td, #raw th{text-align:center;}

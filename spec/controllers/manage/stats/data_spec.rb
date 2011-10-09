@@ -15,6 +15,14 @@ describe Manage::StatsController, :data do
     json['stats'].should be_true
   end
   
+  it "returns the custom data" do
+    data = {:stats => true}
+    Stat.should_receive(:load_custom_data).with(@game, Time.utc(2010, 1, 1), Time.utc(2010, 1, 15)).and_return(data)
+    get :data, {:id => @game.id, :from => 1262304000, :to => 1263513600, :custom => 'true'}
+    json = ActiveSupport::JSON.decode(response.body)
+    json['stats'].should be_true
+  end
+  
   it "returns the data for a year" do
     data = {:stats => true}
     Stat.should_receive(:load_data_for_year).with(@game, '13').and_return(data)

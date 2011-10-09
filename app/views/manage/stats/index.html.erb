@@ -17,6 +17,10 @@
   <tbody id="raw"></tobdy>
 </table>
 
+<% content_for :js do -%>
+custom = false;
+<% end -%>
+
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu', :locals => {:show_stats => true} %>
   <h3>Help</h3>

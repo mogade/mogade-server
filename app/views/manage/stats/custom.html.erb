@@ -3,6 +3,24 @@
 <% content_for :title, @game.name + ' custom statistics' -%>
 <% content_for :section_title,  @game.name + ' .. custom statistics' -%>
 
+<label for="date">date range</label>
+<input type="text" id="date" />
+
+<div id="graph" style="width:675px;height:300px;"></div> 
+<div id="legend"></div>
+
+<table class="list" id="raw">
+  <thead>
+    <tr>
+      <th>date</th>
+      <% for i in (0..4) %>
+        <th><%= @game.stat_name(i) %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody id="raw"></tobdy>
+</table>
+
 <a href="#" class="button" id="editButton">edit labels</a>
 <%= form_for :leaderboard, :url => {:action => 'update' }, :html => {:id => 'save', :style => 'display:none'} do |f| -%>
   <h3>Stat Names</h3>
@@ -35,7 +53,8 @@ $editButton.click(function() {
 $('#cancel').click(function() {
   $form.hide().get(0).reset();
   $editButton.show();
-})
+});
+custom = true;
 <% end -%>
 
 <% content_for :right do -%>
