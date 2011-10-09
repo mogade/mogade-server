@@ -66,6 +66,7 @@ $(document).ready(function()
   });
   
   
+  $('<iframe>').attr('id', 'downloadFrame').css('display', 'none').appendTo($('body'));
   //Download stuff
   $('#downloadMenu a').click(function() { 
     var frame = $('#downloadFrame')[0];

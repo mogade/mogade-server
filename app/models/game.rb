@@ -1,7 +1,7 @@
 class Game
   include MongoLight::Document
   include ActiveModel::Validations
-  mongo_accessor({:name => :name, :secret => :secret, :version => :v})
+  mongo_accessor({:name => :name, :secret => :secret, :version => :v, :stats => :s})
   
   validates_length_of :name, :minimum => 1, :maximum => 50, :allow_blank => false, :message => 'please enter a name'
   
@@ -19,6 +19,16 @@ class Game
   def update(name)
     self.name = name
     save!
+  end
+  
+  def set_stat_names(names)
+    return if names.blank?
+    self.stats = (names.map{|name| name[0..19]})[0..4]
+    save!
+  end
+  
+  def stat_name(index)
+    stats && stats[index] || (index + 1).to_s
   end
   
   def destroy

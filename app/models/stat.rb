@@ -12,6 +12,11 @@ class Stat
       end
     end
     
+    def hit_custom(game, index)
+      return unless index > 0 && index < 6
+      Store.redis.incr("s:custom:#{game.id}:#{index}:#{Time.now.utc.strftime("%y%m%d")}")
+    end
+    
     def weekly_unique(game)
       redis = Store.redis
       now = Time.now.utc
@@ -44,18 +49,18 @@ class Stat
     
     def load_data_for_year(game, year)
       redis = Store.redis
-      data = load_one_for_year(redis, "s:daily_hits:#{game.id}:#{year}*")
-      data.deep_merge!(load_one_for_year(redis, "s:daily_unique:#{game.id}:#{year}*"))
-      data.deep_merge!(load_one_for_year(redis, "s:daily_new:#{game.id}:#{year}*"))
+      data = load_one_for_year(redis, 'game_loads', "s:daily_hits:#{game.id}:#{year}*")
+      data.deep_merge!(load_one_for_year(redis, 'unique_users', "s:daily_unique:#{game.id}:#{year}*"))
+      data.deep_merge!(load_one_for_year(redis, 'new_users', "s:daily_new:#{game.id}:#{year}*"))
       data
     end
     
-    def load_one_for_year(redis, pattern)
+    def load_one_for_year(redis, name, pattern)
       keys = redis.keys(pattern)
       values = redis.mget(*keys)
       Hash[keys.each_with_index.map do |key, i| 
         parts = key.split(':') 
-        [parts[-1], {parts[1] => values[i]}]
+        [parts[-1], {name => values[i]}]
       end]
     end
   end

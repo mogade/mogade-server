@@ -14,4 +14,14 @@ class Manage::StatsController < Manage::ManageController
       render :json => Stat.load_data(@game, Time.at(params[:from].to_f).utc.midnight, Time.at(params[:to].to_f).utc.midnight)
     end
   end
+  
+  def custom
+    return unless load_game_as_owner
+  end
+  
+  def update
+    return unless load_game_as_owner
+    @game.set_stat_names(Array.new(5){|i| params["stat_#{i}"] || (i + 1).to_s})
+    redirect_to :action => 'custom', :id => @game.id
+  end
 end

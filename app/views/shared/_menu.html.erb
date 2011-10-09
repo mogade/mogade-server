@@ -10,10 +10,13 @@
   <li><a href="<%= url_for(:controller => 'facebook', :action => 'index', :id => @game.id)%>">facebook pages</a></li>
   <li><a href="<%= url_for(:controller => 'stats', :action => 'index', :id => @game.id)%>">usage statistics</a>
     <% if defined? show_stats -%>
-    <ul id="downloadMenu">
+    <ul>
+      <li><a href="<%= url_for :controller => 'stats', :action => 'custom', :id => @game.id %>">custom stats</a></li>
+      <div id="downloadMenu">
       <% for i in (2011 .. Date.today.year) %>
       <li><a href="#" data-year="<%= i - 2000%>">download <%= i %></a></li>
       <% end%>
+      </div>
     </ul>
     <% end -%>
   </li>

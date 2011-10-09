@@ -1,0 +1,48 @@
+<% content_for :head do %><%= include_css_bundle 'stats' %><% end -%>
+<% content_for :js_include do %><%= include_js_files 'stats' %>,<% end -%>
+<% content_for :title, @game.name + ' custom statistics' -%>
+<% content_for :section_title,  @game.name + ' .. custom statistics' -%>
+
+<a href="#" class="button" id="editButton">edit labels</a>
+<%= form_for :leaderboard, :url => {:action => 'update' }, :html => {:id => 'save', :style => 'display:none'} do |f| -%>
+  <h3>Stat Names</h3>
+  <input type="hidden" name="id" id="id" value="<%= @game.id%>" />
+  <% for i in (0..4) %>
+  <div class="field">
+    <label for="stat_<%=i%>">name <%= i + 1 %></label>
+    <input type="text" name="stat_<%=i%>" id="stat_<%=i%>" maxlength="20" value="<%= @game.stat_name(i) %>" />
+  </div>
+  <% end %>
+  <div class="buttons">
+    <%= f.submit 'save', {:class => 'button'} %>
+    <input type="button" class="button" id="cancel" value="cancel" />
+  </div>
+<% end -%>
+
+<% content_for :js do -%>
+var $form = $('#save');
+var $editButton = $('#editButton');
+$editButton.click(function() {
+  if ($form.is(':visible')) {
+    $form.hide();
+  } else {
+    $form.show();
+    $editButton.hide();
+  }
+  return false;
+});
+
+$('#cancel').click(function() {
+  $form.hide().get(0).reset();
+  $editButton.show();
+})
+<% end -%>
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu', :locals => {:show_stats => true} %>
+  <h3>Help</h3>
+  <p><strong>Unique users</strong> are the number of unique users for that day, whereas <strong>new users</strong> are users which are totally new to your game.</p>
+  <p>Note that some platforms keep a &quot;closed&quot; process running in the background. Depending on when you call the log method, this could have an impact on the <strong>game load</strong> statistic.</p>
+<% end -%>
+
+

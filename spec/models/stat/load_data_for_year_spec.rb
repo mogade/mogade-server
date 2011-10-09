@@ -22,7 +22,7 @@ describe Stat, :load_data_for_year do
   
   it "returns the stats" do
     stats = Stat.load_data_for_year(@game, 12)
-    stats.should == {"120511"=>{"daily_hits"=>"1001", "daily_unique"=>"101", "daily_new"=>"1"}, "120512"=>{"daily_hits"=>"1002", "daily_unique"=>"102", "daily_new"=>"2"}, "120513"=>{"daily_hits"=>"1003", "daily_unique"=>"103", "daily_new"=>"3"}, "120514"=>{"daily_hits"=>"1004", "daily_unique"=>"104", "daily_new"=>"4"}, "120510"=>{"daily_hits"=>"1000", "daily_unique"=>"100", "daily_new"=>"0"}}
+    stats.should == {"120511"=>{"game_loads"=>"1001", "unique_users"=>"101", "new_users"=>"1"}, "120512"=>{"game_loads"=>"1002", "unique_users"=>"102", "new_users"=>"2"}, "120513"=>{"game_loads"=>"1003", "unique_users"=>"103", "new_users"=>"3"}, "120514"=>{"game_loads"=>"1004", "unique_users"=>"104", "new_users"=>"4"}, "120510"=>{"game_loads"=>"1000", "unique_users"=>"100", "new_users"=>"0"}}
   end
   
 end
