@@ -50,7 +50,7 @@
   
   <% if @game.id.to_s == "4d63b0f89ae3e77998000099" %>
   <div style="margin-top:200px">
-    <a href="/manage/scores/wipe/<%= @game.id.to_s %>" class="button">wipe all leaderboards</a>
+    <a href="/manage/scores/wipe/<%= @game.id.to_s %>" onclick="return confirm('Are you sure?');" class="button">wipe all leaderboards</a>
   </div>
   <% end %>
 <% end -%>
