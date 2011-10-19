@@ -42,5 +42,15 @@ class ScoreDeleter
         end
       end
     end
+    
+    def wipe(game)
+      Leaderboard.find_for_game(game).each do |leaderboard|
+        Score.remove({lid: leaderboard.id})
+        Score.daily_collection.remove({lid: leaderboard.id})
+        LeaderboardScope.all_scopes.each do |scope|
+          Store.redis.del(Rank.get_key(leaderboard, scope))
+        end      
+      end
+    end
   end
 end
