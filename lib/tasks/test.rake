@@ -1,3 +1,5 @@
+require 'rspec'
+require 'rspec/core/rake_task'
 namespace :test do
   desc 'Running specification tests' 
   RSpec::Core::RakeTask.new(:specs) do |t|

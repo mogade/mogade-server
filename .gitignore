@@ -7,3 +7,4 @@ Capfile
 deploy/deploy.rb
 deploy/jobs/runner.rb
 tmp/
+public/assets

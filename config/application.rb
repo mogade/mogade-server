@@ -15,5 +15,6 @@ module Mogade
     config.action_controller.default_charset = "utf-8"
     config.filter_parameters += [:password]
     config.assets.enabled = true
+    config.assets.precompile += %w(*.js  *.css)
   end
 end
