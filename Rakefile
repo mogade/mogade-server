@@ -8,7 +8,7 @@ module ::Mogade
 end
 
 module ::RakeFileUtils
-  extend Rake::FileUtilsExt
+  extend Rake::FileUtilsExt if defined?(Rake::FileUtilsExt)
 end
 
 Mogade::Application.load_tasks
