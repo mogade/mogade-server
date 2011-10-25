@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
   
 gem 'rails', '3.1.1'
+gem 'capistrano', '2.9.0'
 gem 'mongo'
 gem 'mongo_ext', :require => 'mongo'
 gem 'bson_ext', :require => 'mongo'
@@ -25,4 +26,9 @@ group :development do
 	gem 'rspec'
 	gem 'rspec-rails'
 	gem 'factory_girl'
+end
+
+group :production do
+  gem 'execjs'
+  gem 'therubyracer'
 end
