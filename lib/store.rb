@@ -7,8 +7,8 @@ module Store
     if Settings.mongo['replica_set']
       mongo_connection = Mongo::ReplSetConnection.new([Settings.mongo['host'], Settings.mongo['port']], 
       {
-        :read_secondary => true,
-        :rs_name => Settings.mongo['replica_set']
+        :read => :secondary,
+        :name => Settings.mongo['replica_set']
       })
     else
       mongo_connection = Mongo::Connection.new(Settings.mongo['host'], Settings.mongo['port'])
