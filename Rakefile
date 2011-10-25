@@ -11,4 +11,4 @@ module ::RakeFileUtils
   extend Rake::FileUtilsExt
 end
 
-#Mogade::Application.load_tasks
+Mogade::Application.load_tasks
