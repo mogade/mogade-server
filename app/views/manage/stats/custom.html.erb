@@ -1,10 +1,10 @@
-<% content_for :head do %><%= include_css_bundle 'stats' %><% end -%>
-<% content_for :js_include do %><%= include_js_files 'stats' %>,<% end -%>
+<% content_for :head do %><%= stylesheet_link_tag 'stats' %><%= javascript_include_tag 'stats' %><% end -%>
 <% content_for :title, @game.name + ' custom statistics' -%>
 <% content_for :section_title,  @game.name + ' .. custom statistics' -%>
 
 <label for="date">date range</label>
 <input type="text" id="date" />
+<input type="hidden" id="custom" value="1" />
 
 <div id="graph" style="width:675px;height:300px;"></div> 
 <div id="legend"></div>
@@ -54,7 +54,6 @@ $('#cancel').click(function() {
   $form.hide().get(0).reset();
   $editButton.show();
 });
-custom = true;
 <% end -%>
 
 <% content_for :right do -%>

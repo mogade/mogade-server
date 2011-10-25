@@ -1,6 +1,6 @@
 <% content_for :title, @game.name + ' score management' -%>
 <% content_for :section_title,  @game.name + ' .. score management' -%>
-<% content_for :js_include do%> <%= include_js_files 's' %>,<% end -%>
+<% content_for :head do%><%= javascript_include_tag 'scores' %><% end -%>
 
 <% if @leaderboards.blank?%>
   <h3>You should probably add a leaderboard first<h3>
@@ -47,12 +47,6 @@
     </table>
     <input type="button" value="delete" class="button" id="delete" />
   <% end -%>
-  
-  <% if @game.id.to_s == "4d63b0f89ae3e77998000099" %>
-  <div style="margin-top:200px">
-    <a href="/manage/scores/wipe/<%= @game.id.to_s %>" onclick="return confirm('Are you sure?');" class="button">wipe all leaderboards</a>
-  </div>
-  <% end %>
 <% end -%>
 
 

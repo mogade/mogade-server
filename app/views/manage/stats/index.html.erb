@@ -1,11 +1,11 @@
-<% content_for :head do %><%= include_css_bundle 'stats' %><% end -%>
-<% content_for :js_include do %><%= include_js_files 'stats' %>,<% end -%>
+<% content_for :head do %><%= stylesheet_link_tag 'stats' %><%= javascript_include_tag 'stats' %><% end -%>
 <% content_for :title, @game.name + ' usage statistics' -%>
 <% content_for :section_title,  @game.name + ' .. usage statistics' -%>
 
 <p>There have been <%= @weekly_unique %> unique users in the last 7 days</p>
 
 <input type="hidden" id="id" value="<%= @game.id%>" />
+<input type="hidden" id="custom" value="0" />
 <label for="date">date range</label>
 <input type="text" id="date" />
 
@@ -16,10 +16,6 @@
   <thead><tr><th>date</th><th>game loads</th><th>unique users</th><th>new users<th></tr></thead>
   <tbody id="raw"></tobdy>
 </table>
-
-<% content_for :js do -%>
-custom = false;
-<% end -%>
 
 <% content_for :right do -%>
   <%= render :partial => 'shared/menu', :locals => {:show_stats => true} %>

@@ -1,19 +1,4 @@
 module ApplicationHelper
-  def include_js_bundle(name)
-    files = Rails.env.development? ? AssetManager.js(name) : [name]
-    javascript_include_tag files
-  end
-
-  def include_js_files(name)
-    files = Rails.env.development? ? AssetManager.js(name) : [name]
-    files.map{|file| "'#{javascript_path(file)}'" }.to_sentence({:last_word_connector => ',', :two_words_connector => ','}).html_safe
-  end
-    
-  def include_css_bundle(name)
-    files = Rails.env.development? ? AssetManager.css(name) : [name]
-    stylesheet_link_tag files
-  end
-  
   def enum_drop_down(name, enum, selected, *ignore)
     values = enum.lookup.reject{|pair| ignore.include?(pair[1])}
     ("<select name=\"#{name}\" id=\"#{name}\">" + options_for_select(values, selected) + "</select>").html_safe
@@ -28,12 +13,12 @@ module ApplicationHelper
   end
 
   def profile_image(profile, index)
-    return '/images/trans.gif' unless profile_has_image(profile, index)
+    return '/assets/trans.gif' unless profile_has_image(profile, index)
     profile_image_root + profile.images[index]
   end
   
   def profile_thumb(profile, index)
-    return '/images/trans.gif' unless profile_has_image(profile, index)
+    return '/assets/trans.gif' unless profile_has_image(profile, index)
     profile_image_root + 'thumb' + profile.images[index]
   end
   
@@ -54,8 +39,8 @@ module ApplicationHelper
   
   def validation_init(model)
     init = {}
-    model.errors.each_pair do |k, v|
-      init[k] = v[0]
+    model.errors.each do |e|
+      init[e] = model.errors[e][0]
     end
     return init.to_json
   end

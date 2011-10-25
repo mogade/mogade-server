@@ -1,7 +1,5 @@
 ---
 js:
-  h:
-    - head
   m:
     - manage/jquery.tip
     - manage/jquery.validator

@@ -2,14 +2,23 @@
 <html lang="en-US" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title><%= yield :title %></title>
-  <%= include_css_bundle 'fb' %>
-  <%= include_js_bundle 'h' %>
+  <%= stylesheet_link_tag 'facebook' %>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/v1/jquery.purdySelect.js"></script>
+  <script type="text/javascript" src="/js/v1/jquery.leaderboard.js"></script>
+  <script type="text/javascript" src="/js/v1/jquery.topScores.js"></script>
+  <%= javascript_include_tag 'facebook' %>
 </head>
 <body>
 <% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
 <div id="site"><%= yield %></div>
-<script>
-head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", <%= include_js_files 'fb' %>, '/js/v1/jquery.purdySelect.js', '/js/v1/jquery.leaderboard.js', '/js/v1/jquery.topScores.js', function(){<%= yield :js%>});
+<% if content_for?(:js) %>
+<script type="text/javascript">
+$(document).ready(function(){
+  <%= yield(:js) %>
+})
 </script>
+<% end %>
 </body>
 </html>
+

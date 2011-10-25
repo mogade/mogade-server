@@ -20,11 +20,11 @@ class Manage::ScoresController < Manage::ManageController
     redirect_to :action => 'index', :id => @game.id
   end
   
-  def wipe
-    return unless load_game_as_owner
-    ScoreDeleter.wipe(@game)
-    set_info('scores have been wipe', false)
-    redirect_to :action => 'index', :id => @game.id
-  end
+  # def wipe
+  #   return unless load_game_as_owner
+  #   ScoreDeleter.wipe(@game)
+  #   set_info('scores have been wipe', false)
+  #   redirect_to :action => 'index', :id => @game.id
+  # end
 
 end

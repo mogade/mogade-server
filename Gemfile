@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
   
-gem 'rails', '3.0.10'
+gem 'rails', '3.1.1'
 gem 'mongo'
 gem 'mongo_ext', :require => 'mongo'
 gem 'bson_ext', :require => 'mongo'
@@ -15,6 +15,10 @@ gem 'mail'
 gem 'aws-s3'
 gem 'RubyInline'
 gem 'g1nn13-image_science'
+
+group :assets do
+  gem 'uglifier'
+end
 
 group :development do  
 	gem 'spork'

@@ -3,9 +3,9 @@
 <head>
   <title>mogade <%= yield :title %></title>
   <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" %>
-  <%= include_css_bundle 'main' %>
-  <%= include_js_bundle 'h' %>
-  <%= yield :head -%>
+  <%= stylesheet_link_tag 'main' %>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+  <% if content_for?(:head)%><%= yield :head -%><% end %>
 </head>
 <body>
 <% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
@@ -32,8 +32,12 @@
     <a href="/manage/tos">terms of use</a>
   </div>
 </div>
-<script>
-head.js("//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js", <% if content_for?(:js_include) %><%=yield :js_include%>,<% end %> function(){<%= yield :js%>});
+<% if content_for?(:js) %>
+<script type="text/javascript">
+$(document).ready(function(){
+  <%= yield(:js) %>
+})
 </script>
+<% end %>
 </body>
 </html>

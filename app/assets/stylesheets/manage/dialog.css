@@ -1,0 +1,9 @@
+.dialogOverlay{position:fixed;left:0px;top:0px;display:none;background:#000;}
+.dialog{background:#f6f6f6;padding:2px;}
+.dialog .controls{float:right;}
+.dialog .controls input{margin:0px 0px 0px 20px;}
+.dialog h1{margin-bottom:10px;}
+.dialog .buttons{position:absolute;bottom:10px;right:10px;}
+h1{position:relative;}
+h1 a{cursor:pointer;width:20px;height:20px;background:url('../assets/close.png?f074bfac') no-repeat;display:block;position:absolute;right:10px;bottom:7px;}
+h1 a:hover{background:url('../assets/close_o.png?79cd8b76') no-repeat}

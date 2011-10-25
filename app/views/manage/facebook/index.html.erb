@@ -1,6 +1,6 @@
 <% content_for :title, @game.name + ' profile' -%>
 <% content_for :section_title,  @game.name + ' .. profile' -%>
-<% content_for :js_include do -%><%= include_js_files 'pi' %>,<% end -%>
+<% content_for :head do -%><%= javascript_include_tag 'profile_images' %><% end -%>
 
 <h2>General Information</h2>
 <%= form_for :profiles, :url => {:action => 'create', :id => @profile.id}, :html => {:id => 'information'} do |f| %>	
