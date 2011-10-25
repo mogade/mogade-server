@@ -3,12 +3,12 @@ require 'rake'
 
 module ::Mogade
   class Application
-    include Rake::DSL if defined?(Rake::DSL)
+    include Rake::DSL
   end
 end
 
 module ::RakeFileUtils
-  extend Rake::FileUtilsExt if defined?(Rake::FileUtilsExt)
+  extend Rake::FileUtilsExt
 end
 
 Mogade::Application.load_tasks
