@@ -24,11 +24,11 @@ describe Manage::ScoresController, :find do
     leaderboard = FactoryGirl.build(:leaderboard, {:game_id => @game.id})
     Leaderboard.stub!(:find_by_id).with(leaderboard.id).and_return(leaderboard)
     
-    ScoreDeleter.should_receive(:find).with(leaderboard, LeaderboardScope::Daily, 'my name').and_return("it doesn't matter")
+    ScoreDeleter.should_receive(:find).with(leaderboard, LeaderboardScope::Daily, 'my name').and_return(["it doesn't matter"])
     get :find, {:id => leaderboard.id, :game_id => @game.id, :scope => '1', :username => 'my name' }
     
     json = ActiveSupport::JSON.decode(response.body)
-    json.should == "it doesn't matter"
+    json.should == ["it doesn't matter"]
   end
 
 end

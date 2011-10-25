@@ -79,7 +79,7 @@ describe Api::Gamma::ScoresController, :index do
     Score.stub!(:get_by_page).and_return({})
     get :index, {:lid => leaderboard.id, :page => '4'}
     
-    response.headers['Cache-Control'].should == 'max-age=0, private, must-revalidate'
+    response.headers['Cache-Control'].should be_nil
   end
   
   it "gets a score with the player" do

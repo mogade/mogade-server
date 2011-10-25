@@ -41,7 +41,10 @@ class Manage::AssetsController < Manage::ManageController
   
   private
   def ensure_asset
-    @asset = Asset.find_by_id(params[:id])
+    id = params[:id]
+    return handle_access_denied unless Id.valid? id
+    
+    @asset = Asset.find_by_id(Id.from_string(id))
     return handle_access_denied if @asset.nil? || @asset.game_id != @game.id
     true
   end

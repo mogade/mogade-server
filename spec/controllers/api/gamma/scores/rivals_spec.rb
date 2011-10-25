@@ -11,10 +11,10 @@ describe Api::Gamma::ScoresController, :rivals do
     leaderboard = FactoryGirl.create(:leaderboard)
     player = FactoryGirl.build(:player)
     
-    Score.should_receive(:get_rivals).with(leaderboard, player, 3).and_return('h@ck')
+    Score.should_receive(:get_rivals).with(leaderboard, player, 3).and_return(['h@ck'])
     get :rivals, {:lid => leaderboard.id, :scope => '3', :username => player.username, :userkey => player.userkey}
     response.status.should == 200
     json = ActiveSupport::JSON.decode(response.body)
-    json.should == 'h@ck'
+    json.should == ['h@ck']
   end
 end

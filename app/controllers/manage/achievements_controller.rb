@@ -30,7 +30,10 @@ class Manage::AchievementsController < Manage::ManageController
   
   private
   def ensure_achievement
-    @achievement = Achievement.find_by_id(params[:id])
+    id = params[:id]
+    return handle_access_denied unless Id.valid? id
+        
+    @achievement = Achievement.find_by_id(Id.from_string(id))
     return handle_access_denied if @achievement.nil? || @achievement.game_id != @game.id
     true
   end

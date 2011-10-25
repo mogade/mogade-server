@@ -55,7 +55,7 @@ describe Api::Gamma::ScoresController, :overview do
     Score.stub!(:get_by_page).and_return{|lb, page, count, scope| {:scores => scope}}
     get :overview, {:lid => leaderboard.id}
     
-    response.headers['Cache-Control'].should == 'max-age=0, private, must-revalidate'
+    response.headers['Cache-Control'].should be_nil
   end
   
 end

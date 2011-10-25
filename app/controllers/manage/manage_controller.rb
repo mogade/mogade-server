@@ -15,8 +15,6 @@ class Manage::ManageController < ApplicationController
   def api
   end
   
-
-  
   private 
   def signin(developer)
     session[:dev_id] = developer.id.to_s
@@ -37,7 +35,10 @@ class Manage::ManageController < ApplicationController
   end
   
   def ensure_leaderboard
-    @leaderboard = Leaderboard.find_by_id(params[:id])
+    id = params[:id]
+    return handle_access_denied unless Id.valid? id
+    
+    @leaderboard = Leaderboard.find_by_id(Id.from_string(id))
     return handle_access_denied if @leaderboard.nil? || @leaderboard.game_id != @game.id
     true
   end
@@ -52,7 +53,7 @@ class Manage::ManageController < ApplicationController
     id = params.include?(:game_id) ? params[:game_id] : params[:id]
     return handle_access_denied unless Id.valid? id
   
-    @game = Game.find_by_id(id)
+    @game = Game.find_by_id(Id.from_string(id))
     return handle_access_denied if @game.nil?
   end
   
