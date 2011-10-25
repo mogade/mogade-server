@@ -1,5 +1,4 @@
 require File.expand_path('../config/application', __FILE__)
-require 'rake/dsl_definition'
 require 'rake'
 
 module ::Mogade
@@ -12,4 +11,4 @@ module ::RakeFileUtils
   extend Rake::FileUtilsExt
 end
 
-Mogade::Application.load_tasks
+#Mogade::Application.load_tasks
