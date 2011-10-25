@@ -16,6 +16,8 @@ gem 'mail'
 gem 'aws-s3'
 gem 'RubyInline'
 gem 'g1nn13-image_science'
+gem 'rspec'
+gem 'rspec-rails'
 
 group :assets do
   gem 'uglifier'
@@ -23,8 +25,6 @@ end
 
 group :development do  
 	gem 'spork'
-	gem 'rspec'
-	gem 'rspec-rails'
 	gem 'factory_girl'
 end
 
