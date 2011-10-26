@@ -18,6 +18,7 @@ gem 'RubyInline'
 gem 'g1nn13-image_science'
 gem 'rspec'
 gem 'rspec-rails'
+gem 'newrelic_rpm'
 
 group :assets do
   gem 'uglifier'
