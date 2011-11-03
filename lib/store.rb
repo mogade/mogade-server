@@ -5,7 +5,7 @@ require 'settings'
 module Store  
   def self.setup
     if Settings.mongo['replica_set']
-      mongo_connection = Mongo::ReplSetConnection.new([Settings.mongo['host1'], Settings.mongo['port1']], [Settings.mongo['host2'], Settings.mongo['port2']] 
+      mongo_connection = Mongo::ReplSetConnection.new([Settings.mongo['host1'], Settings.mongo['port1']], [Settings.mongo['host2'], Settings.mongo['port2']], 
       {
         :read => :secondary,
         :name => Settings.mongo['replica_set']
