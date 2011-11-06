@@ -143,3 +143,12 @@
   :platform: 
     :name: Windows Phone
     :link: http://windowsphone.com/s?appid=c09d2ec7-ca8c-407f-9a32-1aad3ca36dea
+- :name: Unscrambled
+  :image: unscrambled.png
+  :description: "Test your knowledge of English by unscrambling words within 45 seconds. Each time you correctly unscramble a word, you are presented with a new word that is just a little bit more difficult. The more you play, the more difficult the game gets. Look to word meanings for hints."
+  :developer: 
+    :name: RJ Software
+    :link: http://www.windowsphone.com/en-US/publishers/RJ%20Software?appid=057e1444-e745-4557-8ea3-20e03b065125&name=RJ%20Software
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/057e1444-e745-4557-8ea3-20e03b065125  
