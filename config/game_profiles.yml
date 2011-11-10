@@ -143,7 +143,7 @@
   :platform: 
     :name: Windows Phone
     :link: http://windowsphone.com/s?appid=c09d2ec7-ca8c-407f-9a32-1aad3ca36dea
-- :name: Unscramble
+- :name: Unscramble 
   :image: unscramble.png
   :description: "Test your knowledge of English by unscrambling words within 45 seconds. Each time you correctly unscramble a word, you are presented with a new word that is just a little bit more difficult. The more you play, the more difficult the game gets. Look to word meanings for hints."
   :developer: 
@@ -151,4 +151,13 @@
     :link: http://www.windowsphone.com/en-US/publishers/RJ%20Software?appid=057e1444-e745-4557-8ea3-20e03b065125&name=RJ%20Software
   :platform: 
     :name: Windows Phone
-    :link: http://www.windowsphone.com/en-US/apps/057e1444-e745-4557-8ea3-20e03b065125  
+    :link: http://www.windowsphone.com/en-US/apps/057e1444-e745-4557-8ea3-20e03b065125
+- :name: Galaxy Jet
+  :image: galaxyjet.png
+  :description: "Survive the waves of asteroids in this ultimate side-scrolling space shooter game. Shoot-em-up all and beware of the yellow planets. Use the lasers and shock waves to get extra bonus points! Compare your score in the online leaderboards. This unique game was specifically designed for the Windows Phones, it's free and without ads!"
+  :developer: 
+    :name: Tomas Slavicek
+    :link: http://www.windowsphone.com/en-US/apps/ba54f5cb-09c5-4949-b703-2db370abfcc7
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/ba54f5cb-09c5-4949-b703-2db370abfcc7
