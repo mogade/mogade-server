@@ -161,3 +161,12 @@
   :platform: 
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-US/apps/ba54f5cb-09c5-4949-b703-2db370abfcc7
+- :name: Linerous
+  :image: linerous.png
+  :description: "Linerous je jednoduchá logická hra postavená na notně přepracovaném principu hledání min. Najdete zde jak normální herní mód, kde si hru nastavíte přesně podle libosti, tak i závod s časem, s jehož výsledkem se následně budete moci pochlubit v online žebříčcích. Nechybí zde ale ani achievementy."
+  :developer: 
+    :name: Petr Houška
+    :link: "http://twitter.com/#!/petrroll"
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/cs-CZ/apps/4fa849bb-6a20-4c8a-b6ed-0b51a94f4ac5
