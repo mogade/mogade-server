@@ -12,7 +12,7 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     player = load_player
     if params[:with_player] || player.nil?
       payload = Score.get_by_page(@leaderboard, params_to_i(:page, 1), records, scope)
-      if params[:with_player]
+      if params[:with_player] && player
         payload = {:scores => payload}
         payload[:player] = Score.load(@leaderboard, player).for_scope(scope).attributes.merge({:username => player.username})
         payload[:rank] = Rank.get_for_player(@leaderboard, player.unique, scope)
