@@ -54,7 +54,15 @@ class Score
       conditions[:leaderboard_id] = leaderboard.id
       options = {:fields => {prefix + '.p' => 1, :username => 1, prefix + '.d' => 1, prefix + '.dt' => 1, :_id => 0}, :sort => [prefix + '.p', leaderboard.sort], :skip => offset, :limit => records, :raw => true}
       
-      {:page => page,  :scores => find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}}
+      found = find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}
+      fix_names(found) if leaderboard.id.to_s == '4e657c876d574806b1000002'
+      {:page => page,  :scores => found}
+    end
+    
+    def fix_names(scores)
+      scores.each do |s|
+        scores[:username].gsub!(/[\x80-\xff]/, '?')
+      end
     end
 
     def get_by_player(leaderboard, player, records, scope)
