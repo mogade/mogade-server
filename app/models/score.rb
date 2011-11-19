@@ -62,6 +62,7 @@ class Score
     def fix_names(scores)
       scores.each do |s|
         s[:username] = s[:username].scan(/[A-z0-9]/).join()
+        s[:username] = '??' unless s[:username]
       end
     end
 
