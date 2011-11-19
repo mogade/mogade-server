@@ -61,7 +61,7 @@ class Score
     
     def fix_names(scores)
       scores.each do |s|
-        s[:username] = s[:username].force_encoding('ASCII')
+        s[:username] = s[:username].scan(/[A-z0-9]/).join()
       end
     end
 
