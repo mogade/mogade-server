@@ -61,8 +61,7 @@ class Score
     
     def fix_names(scores)
       scores.each do |s|
-        username = s[:username].force_encoding('ASCII')
-        s[:username] = username.gsub(/[\x80-\xff]/, '?')
+        s[:username] = s[:username].force_encoding('ASCII')
       end
     end
 
