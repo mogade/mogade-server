@@ -61,7 +61,7 @@ class Score
     
     def fix_names(scores)
       scores.each do |s|
-        scores[:username].gsub!(/[\x80-\xff]/, '?')
+        s[:username].gsub!(/[\x80-\xff]/, '?')
       end
     end
 
