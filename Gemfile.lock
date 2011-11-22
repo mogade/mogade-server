@@ -38,8 +38,8 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (3.0.1)
-    bson (1.4.1)
-    bson_ext (1.4.1)
+    bson (1.4.0)
+    bson_ext (1.4.0)
     builder (3.0.0)
     capistrano (2.9.0)
       highline
@@ -73,10 +73,10 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.1)
-    mongo (1.4.1)
-      bson (= 1.4.1)
+    mongo (1.4.0)
+      bson (= 1.4.0)
     mongo_ext (0.19.3)
-    mongo_light (0.0.2)
+    mongo_light (0.0.7)
     multi_json (1.0.3)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -154,7 +154,7 @@ DEPENDENCIES
   RubyInline
   aws-s3
   bcrypt-ruby
-  bson_ext
+  bson_ext (= 1.4.0)
   capistrano (= 2.9.0)
   erubis
   execjs
@@ -163,7 +163,7 @@ DEPENDENCIES
   hiredis (~> 0.3.1)
   hoptoad_notifier
   mail
-  mongo
+  mongo (= 1.4.0)
   mongo_ext
   mongo_light
   newrelic_rpm

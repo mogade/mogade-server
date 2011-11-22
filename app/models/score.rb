@@ -33,7 +33,7 @@ class Score
       
       if changed.has_value?(true)
         #todo still not sure about this
-        score.save! unless score.overall == 0
+        score.save(:w => :majority) unless score.overall == 0
       end
       ScoreDaily.save(leaderboard, player, points, data) if changed[LeaderboardScope::Daily]
       changed

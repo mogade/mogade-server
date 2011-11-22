@@ -14,7 +14,11 @@ module Store
       mongo_connection = Mongo::Connection.new(Settings.mongo['host'], Settings.mongo['port'])
     end
     
-    MongoLight::Connection.setup(mongo_connection, Settings.mongo['name'])
+    MongoLight.configure do |config|
+      config.connection = mongo_connection
+      config.database = Settings.mongo['name']
+      config.skip_replica_concern = Rails.env.test?
+    end
 
     @@redis = Redis.new(:host => Settings.redis['host'], :port => Settings.redis['port'])
     @@redis.select(Settings.redis['database'])

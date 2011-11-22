@@ -11,7 +11,6 @@ class Api::Gamma::ApiController < ActionController::Base
   def ensure_signed
     signature = params.delete(:sig)
     raw = params.reject{|key, value| key == 'action' || key == 'controller'}.sort{|a, b| a[0] <=> b[0]}.join('|') + '|' + @game.secret
-
     return error('invalid signature') unless Digest::SHA1.hexdigest(raw) == signature
     @signed = true
   end
