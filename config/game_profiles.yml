@@ -170,3 +170,12 @@
   :platform: 
     :name: Windows Phone
     :link: http://www.windowsphone.com/cs-CZ/apps/4fa849bb-6a20-4c8a-b6ed-0b51a94f4ac5
+- :name: aPuzzleIntrusion
+  :image: aPuzzleIntrusion.png
+  :description: "Another classic puzzle game? WRONG! aPuzzleIntrusion is not another classic puzzle game, you must solve 20 puzzles for each month avoiding to hit and smash the various cockroaches intruders, otherwise they'll squeeze out the puzzle! Each puzzle solved will bring you to the next level, for each level will increase the cockroaches number!"
+  :developer: 
+    :name: Carucci Fabio
+    :link: "http://blogs.ugidotnet.org/FabioCarucci/Default.aspx"
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/0ae15251-8f9a-413d-b5dc-3df1288e4834
