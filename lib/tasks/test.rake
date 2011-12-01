@@ -1,11 +1,10 @@
 require 'rspec'
 require 'rspec/core/rake_task'
-namespace :test do
-  desc 'Running specification tests' 
-  RSpec::Core::RakeTask.new(:specs) do |t|
-    t.pattern = "spec/**/*_spec.rb"
-    t.rcov = false
-  end
-  
-  task :all => [:specs] 
+
+desc 'Running specification tests'
+RSpec::Core::RakeTask.new(:test) do |t|
+  t.pattern = "spec/**/*_spec.rb"
+  t.rcov = false
 end
+
+
