@@ -1,6 +1,7 @@
 module LeaderboardMode
   Normal = 1
   DailyTracksLatest = 2
+  AllTrackLatest = 3
   
   def self.nice(value, short = false)
     v = value.is_a?(Integer) ? value : const_get(value)
@@ -9,6 +10,8 @@ module LeaderboardMode
         short ? 'Nrml' : 'Normal'
       when 2
         short ? 'Daily' : 'Daily Tracks Latest'
+      when 3
+        short ? 'Ltst' : 'All Track Latest'
     end
   end
 

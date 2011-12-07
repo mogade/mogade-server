@@ -48,4 +48,16 @@ describe Leaderboard, :score_is_better? do
     leaderboard.score_is_better?(300, 200, LeaderboardScope::Weekly).should be_false
     leaderboard.score_is_better?(300, 200, LeaderboardScope::Overall).should be_false
   end
+  
+  it "returns true for a lower score for special all track latest mode" do
+    leaderboard = FactoryGirl.build(:leaderboard, {:type => LeaderboardType::HighToLow, :mode => LeaderboardMode::AllTrackLatest})
+    leaderboard.score_is_better?(1, 200, LeaderboardScope::Daily).should be_true
+    leaderboard.score_is_better?(1, 200, LeaderboardScope::Weekly).should be_true
+    leaderboard.score_is_better?(1, 200, LeaderboardScope::Overall).should be_true
+    
+    leaderboard = FactoryGirl.build(:leaderboard, {:type => LeaderboardType::LowToHigh, :mode => LeaderboardMode::AllTrackLatest})
+    leaderboard.score_is_better?(300, 200, LeaderboardScope::Daily).should be_true
+    leaderboard.score_is_better?(300, 200, LeaderboardScope::Weekly).should be_true
+    leaderboard.score_is_better?(300, 200, LeaderboardScope::Overall).should be_true
+  end
 end

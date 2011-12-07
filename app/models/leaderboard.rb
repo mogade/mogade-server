@@ -19,6 +19,7 @@ class Leaderboard
   def score_is_better?(new_score, old_score, scope)
     return true if old_score.nil? || old_score == 0
     return true if scope == LeaderboardScope::Daily && mode == LeaderboardMode::DailyTracksLatest
+    return true if mode == LeaderboardMode::AllTrackLatest
     type == LeaderboardType::LowToHigh ? new_score < old_score : new_score > old_score
   end
   
