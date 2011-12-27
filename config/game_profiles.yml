@@ -197,3 +197,12 @@
   :platform: 
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-us/apps/04b9c82d-68f2-4b8f-b05c-acd3be7c0bdf
+- :name: BuzzWords
+  :image: buzzwords.png
+  :description: "Buzzwords is a fast paced arcade style word game. Find words in any direction for points. The more words you chain together, the larger your score. Beware of those pesky bugs, and don’t let them fall in your honey pot!  Full version includes two game modes and the option to select boosters for an enhanced experience!"
+  :developer: 
+    :name: M80 Games
+    :link: http://www.m80games.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/c98c9011-84ce-4c78-831b-13a278dc26a7
