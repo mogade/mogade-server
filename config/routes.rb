@@ -10,6 +10,9 @@ Mogade::Application.routes.draw do
       resources :stats, :only => [:create]
       resources :errors, :only => [:create]
       resources :assets, :only => [:index]
+      resources :users, :only => [] do
+        post 'rename', :on => :collection
+      end
     end
   
     #v1 crap

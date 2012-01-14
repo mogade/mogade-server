@@ -3,6 +3,16 @@ class Rank
     def save(leaderboard, scope, unique, points)
       Store.redis.zadd(Rank.get_key(leaderboard, scope), points, unique)
     end
+
+    def rename(leaderboard, scope, oldunique, newunique)
+      key = Rank.get_key(leaderboard, scope)
+      redis = Store.redis
+      score = redis.zscore(key, oldunique)
+      return if score.nil?
+
+      redis.zrem(key, oldunique)
+      redis.zadd(key, score, newunique)
+    end
     
     def count(leaderboard, scope)
       Store.redis.zcard(Rank.get_key(leaderboard, scope))

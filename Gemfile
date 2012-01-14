@@ -25,7 +25,7 @@ group :assets do
 end
 
 group :development do  
-	gem 'spork'
+	gem 'spork', '~> 0.9.0.rc9'
 	gem 'factory_girl'
 end
 
