@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/karlseguin/image_science.git
-  revision: 43a4835ae34376350227a1cbd612998a6578d819
+  revision: d0bd2ca65f8e8edd992eb144904d4e6f3dd06368
   specs:
-    g1nn13-image_science (1.0)
+    g1nn13-image_science (1.1)
 
 GEM
   remote: http://rubygems.org/
@@ -159,7 +159,7 @@ DEPENDENCIES
   erubis
   execjs
   factory_girl
-  g1nn13-image_science (= 1.0)!
+  g1nn13-image_science (= 1.1)!
   hiredis (~> 0.3.1)
   hoptoad_notifier
   mail
