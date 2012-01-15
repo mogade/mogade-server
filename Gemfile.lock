@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/karlseguin/image_science.git
+  revision: 43a4835ae34376350227a1cbd612998a6578d819
+  specs:
+    g1nn13-image_science (1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -53,15 +59,9 @@ GEM
       multi_json (~> 1.0)
     factory_girl (2.2.0)
       activesupport
-    g1nn13-image_science (1.2.10)
-      gemcutter (>= 0.3.0)
-      hoe (>= 2.5.0)
-    gemcutter (0.7.0)
     highline (1.6.2)
     hike (1.2.1)
     hiredis (0.3.2)
-    hoe (2.12.3)
-      rake (~> 0.8)
     hoptoad_notifier (2.4.11)
       activesupport
       builder
@@ -159,7 +159,7 @@ DEPENDENCIES
   erubis
   execjs
   factory_girl
-  g1nn13-image_science
+  g1nn13-image_science (= 1.0)!
   hiredis (~> 0.3.1)
   hoptoad_notifier
   mail
