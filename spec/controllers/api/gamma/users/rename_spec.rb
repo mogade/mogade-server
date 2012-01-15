@@ -32,7 +32,6 @@ describe Api::Gamma::UsersController, :rename do
     player.should_receive(:rename).with(@game, 'new-name').and_return(true)
     post :rename, GammaApiHelper.signed_params(@game, {:newname => 'new-name', :username => player.username, :userkey => player.userkey})
     response.status.should == 200
-    json = ActiveSupport::JSON.decode(response.body)
-    json['success'].should == true
+    response.body.should == 'true'
   end
 end

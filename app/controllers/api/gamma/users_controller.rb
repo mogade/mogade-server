@@ -6,6 +6,6 @@ class Api::Gamma::UsersController < Api::Gamma::ApiController
   def rename
     return unless ensure_params(:newname)
     error('newname must be 30 or less characters') and return unless @player.rename(@game, params[:newname])
-    render :json => {:success => true}
+    render :json => true
   end
 end
