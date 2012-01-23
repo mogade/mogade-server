@@ -206,3 +206,21 @@
   :platform: 
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-US/apps/c98c9011-84ce-4c78-831b-13a278dc26a7
+- :name: RGB Ninja
+  :image: rgbninja.png
+  :description: "Defeat the enemy ninja clan by matching their color and hitting them! Don't miss a single one to increase your combo and try to beat the highest scores! The controls are simple, you just have to tap on the left side of the screen to change the lane your ninja is going, and on the right side to change his color!"
+  :developer: 
+    :name: Panela Games
+    :link: http://panelagames.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/5606a89c-eee7-4e69-a15b-d5c498d79c0c
+- :name: Pop Pop Pop
+  :image: poppoppop.png
+  :description: "This game is all about popping bubbles! Feel the joy of popping bubbles, and challenge your friends on Time Attack Mode! Share your highscore online, and compete against the world! Or if you just feel like relaxing, play Zen Mode, and make bubbles by blowing on the mic, or Double Tap the screen to make bubbles appear automatically!"
+  :developer: 
+    :name: Panela Games
+    :link: http://panelagames.com/
+  :platform: 
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/4ce6e0d6-b9b0-4903-bbdc-7a49358f987f
