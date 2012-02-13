@@ -233,3 +233,12 @@
   :platform:
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-US/apps/a1c87648-5390-459a-8f36-3f257adf1359
+- :name: Escape
+  :image: escape.png
+  :description: "Escape is a game that measures your reflex speed. Try to escape with the blue square out of the evil red squares that chasing you, without hitting them or the borders of the screen. Survive for the longest time, upload your score, then share it with your friends and family via our online leaderboards."
+  :developer:
+    :name: sherif kandel
+    :link: "http://twitter.com/sherifkandeel"
+  :platform:
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/ce9d3356-7dce-4b12-8bc1-031634425531
