@@ -237,8 +237,17 @@
   :image: escape.png
   :description: "Escape is a game that measures your reflex speed. Try to escape with the blue square out of the evil red squares that chasing you, without hitting them or the borders of the screen. Survive for the longest time, upload your score, then share it with your friends and family via our online leaderboards."
   :developer:
-    :name: sherif kandel
+    :name: Sherif Kandel
     :link: "http://twitter.com/sherifkandeel"
   :platform:
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-US/apps/ce9d3356-7dce-4b12-8bc1-031634425531
+- :name: Delivery Driver
+  :image: deliverydriver  .png
+  :description: "You are the Delivery Driver. Your mission is to make all your deliveries. Once all your deliveries are made you will progress on to the next level."
+  :developer:
+    :name: Jim Clinton
+    :link: "http://www.windowsphone.com/en-US/publishers/Jim%20Clinton"
+  :platform:
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/4781effd-8a3f-453b-972b-139268e6f34b
