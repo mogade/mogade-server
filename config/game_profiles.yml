@@ -243,7 +243,7 @@
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-US/apps/ce9d3356-7dce-4b12-8bc1-031634425531
 - :name: Delivery Driver
-  :image: deliverydriver  .png
+  :image: deliverydriver.png
   :description: "You are the Delivery Driver. Your mission is to make all your deliveries. Once all your deliveries are made you will progress on to the next level."
   :developer:
     :name: Jim Clinton
@@ -251,3 +251,12 @@
   :platform:
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-US/apps/4781effd-8a3f-453b-972b-139268e6f34b
+- :name: River Race
+  :image: riverrace.png
+  :description: "River Race is a strategy game where you compete against your phone to get as many boats as far down the river as you can. Are you smarter than your phone? Give it a try and find out."
+  :developer:
+    :name: Jim Clinton
+    :link: "http://www.windowsphone.com/en-US/publishers/Jim%20Clinton"
+  :platform:
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/d1577fb8-1541-4a6c-9e24-d21841186e4d
