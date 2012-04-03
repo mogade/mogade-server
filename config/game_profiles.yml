@@ -260,3 +260,12 @@
   :platform:
     :name: Windows Phone
     :link: http://www.windowsphone.com/en-US/apps/d1577fb8-1541-4a6c-9e24-d21841186e4d
+- :name: HyperDodge
+  :image: hyperdodge.png
+  :description: "HyperDodge is all about dodging meteorites. Move down with them, plan a route up again, and go for it! Use your timed laser to blast openings, receive HyperTime Checkpoints, and get your name on the Global or Local leaderboards. Free and add-free."
+  :developer:
+    :name: "KeeWeed & de Vries"
+    :link: "http://www.keeweed.com"
+  :platform:
+    :name: Windows Phone
+    :link: http://windowsphone.com/s?appid=64436dd9-0767-4f95-9a9f-3aa2c1b12a07
