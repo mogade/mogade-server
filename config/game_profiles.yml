@@ -269,3 +269,12 @@
   :platform:
     :name: Windows Phone
     :link: http://windowsphone.com/s?appid=64436dd9-0767-4f95-9a9f-3aa2c1b12a07
+- :name: Old Wild Tales Ep.1
+  :image: owt1.png
+  :description: "A tower defense style game saga and in this first episode the story takes place in 20 mysterious places where the player will face more than 65 enemies with the help of 6 outlaws with different features who will be joined in the game."
+  :developer:
+    :name: "Fabio Carucci"
+    :link: "http://www.twitter.com/CarucciGames"
+  :platform:
+    :name: Windows Phone
+    :link: http://windowsphone.com/s?appid=e95192e5-3835-41af-9a17-1af04e8b7845
