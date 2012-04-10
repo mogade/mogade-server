@@ -278,12 +278,12 @@
   :platform:
     :name: Windows Phone
     :link: http://windowsphone.com/s?appid=e95192e5-3835-41af-9a17-1af04e8b7845
-- :name: Super Sledding '86
-:image: ss86.png
-:description: "Old school 8-bit style sport game for the nostalgics. Control the super sled as it glides through the air and perform tricks by tapping the screen at the right time. Gain points by succeeding in tricks and jumping high and far. Simple and addictive."
-:developer:
-  :name: "Papana"
-  :link: "http://www.windowsphone.com/en-US/publishers/Papana?appid=122e80d2-cde4-45ab-bec1-8b1ffa0fc738&name=Papana"
-:platform:
-  :name: Windows Phone
-  :link: http://www.windowsphone.com/en-US/apps/122e80d2-cde4-45ab-bec1-8b1ffa0fc738
+- :name: "Super Sledding '86"
+  :image: ss86.png
+  :description: "Old school 8-bit style sport game for the nostalgics. Control the super sled as it glides through the air and perform tricks by tapping the screen at the right time. Gain points by succeeding in tricks and jumping high and far. Simple and addictive."
+  :developer:
+    :name: "Papana"
+    :link: "http://www.windowsphone.com/en-US/publishers/Papana?appid=122e80d2-cde4-45ab-bec1-8b1ffa0fc738&name=Papana"
+  :platform:
+    :name: Windows Phone
+    :link: http://www.windowsphone.com/en-US/apps/122e80d2-cde4-45ab-bec1-8b1ffa0fc738
