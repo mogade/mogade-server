@@ -17,3 +17,7 @@ div.calendar td.highlight{background:#ccc;}
 #reportTip{position:absolute;background:#fff;padding:5px;border:1px solid #eee;}
 #raw{width:100%;margin-top:20px;margin-bottom:20px;}
 #raw td, #raw th{text-align:center;}
+#custom_select{position:absolute;top:0;left:300px;width:225px;-webkit-user-select: none;-khtml-user-select: none; -moz-user-select: none; -o-user-select: none; user-select: none;}
+#custom_select_control{border:1px solid #bbb;border-bottom:0;border-radius:3px;background:#fff;z-index:1000000;height:28px;overflow:hidden;margin-top:2px;cursor:pointer;}
+#custom_select_control > div{padding:5px;border-bottom:1px solid #bbb;height:16px;}
+#custom_select_control span{margin-left:5px;}
