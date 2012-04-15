@@ -18,4 +18,10 @@ describe Game, :set_stat_names do
     game.set_stat_names(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22'])
     Game.find_one.stats.should == ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
   end
+
+  it "blank names are nilled" do
+    game = Game.create('ham zapper')
+    game.set_stat_names(['1', ''])
+    Game.find_one.stats.should == ['1', nil]
+  end
 end

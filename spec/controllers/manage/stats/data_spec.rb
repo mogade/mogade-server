@@ -17,8 +17,8 @@ describe Manage::StatsController, :data do
   
   it "returns the custom data" do
     data = {:stats => true}
-    Stat.should_receive(:load_custom_data).with(@game, Time.utc(2010, 1, 1), Time.utc(2010, 1, 15)).and_return(data)
-    get :data, {:id => @game.id, :from => 1262304000, :to => 1263513600, :custom => 'true'}
+    Stat.should_receive(:load_custom_data).with(@game, ['1', '2'], Time.utc(2010, 1, 1), Time.utc(2010, 1, 15)).and_return(data)
+    get :data, {:id => @game.id, :from => 1262304000, :to => 1263513600, :custom => 'true', :custom_ids => ['1', '2']}
     json = ActiveSupport::JSON.decode(response.body)
     json['stats'].should be_true
   end
@@ -28,7 +28,7 @@ describe Manage::StatsController, :data do
     Stat.should_receive(:load_data_for_year).with(@game, '13').and_return(data)
     get :data, {:id => @game.id, :year => '13'}
     response.headers['Content-Disposition'].should == 'attachment; filename="mogade.stats.power level?.2013.json"'
-    response.body.should == "{:stats=>true}"
+    response.body.should == '{"stats":true}'
   end
 
 end

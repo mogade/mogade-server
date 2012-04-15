@@ -9,10 +9,10 @@ class Manage::StatsController < Manage::ManageController
   def data
     return unless load_game_as_owner
     if (params[:year])
-      send_data Stat.load_data_for_year(@game, params[:year]), :filename => "mogade.stats.#{@game.name}.#{2000 + params[:year].to_i}.json", :type => 'application/json'
+      send_data Stat.load_data_for_year(@game, params[:year]).to_json, :filename => "mogade.stats.#{@game.name}.#{2000 + params[:year].to_i}.json", :type => 'application/json'
     else    
       if (params[:custom])
-        render :json => Stat.load_custom_data(@game, Time.at(params[:from].to_f).utc.midnight, Time.at(params[:to].to_f).utc.midnight)
+        render :json => Stat.load_custom_data(@game, params[:custom_ids], Time.at(params[:from].to_f).utc.midnight, Time.at(params[:to].to_f).utc.midnight)
       else
         render :json => Stat.load_data(@game, Time.at(params[:from].to_f).utc.midnight, Time.at(params[:to].to_f).utc.midnight)
       end

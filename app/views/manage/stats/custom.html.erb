@@ -2,8 +2,26 @@
 <% content_for :title, @game.name + ' custom statistics' -%>
 <% content_for :section_title,  @game.name + ' .. custom statistics' -%>
 
-<label for="date">date range</label>
-<input type="text" id="date" />
+<div id="filters">
+  <label for="date">date range</label>
+  <input type="text" id="date" />
+
+  <div id="custom_select">
+    <label>select custom stats</label>
+     <div id="custom_select_control">
+       <div><span>select up to 5</span></div>
+       <% 
+        found = 0
+        for i in (0..Stat::CUSTOM_COUNT-1)
+          name = @game.stat_name(i)
+          next if name.nil?
+          found += 1
+        %>
+          <div><input type="checkbox" name="custom_id"<% if found < 6 %> checked="checked" <% end %>value="<%= i %>"><span><%=name%></span></div>
+       <% end %>
+     </div>
+  </div>
+</div>
 <input type="hidden" id="custom" value="1" />
 
 <div id="graph" style="width:675px;height:300px;"></div> 
@@ -13,8 +31,8 @@
   <thead>
     <tr>
       <th>date</th>
-      <% for i in (0..Stat::CUSTOM_COUNT-1) %>
-        <th><%= @game.stat_name(i) %></th>
+      <% for i in (0..4) %>
+        <th></th>
       <% end %>
     </tr>
   </thead>
@@ -61,6 +79,7 @@ $('#cancel').click(function() {
   <h3>Help</h3>
   <p><strong>Unique users</strong> are the number of unique users for that day, whereas <strong>new users</strong> are users which are totally new to your game.</p>
   <p>Note that some platforms keep a &quot;closed&quot; process running in the background. Depending on when you call the log method, this could have an impact on the <strong>game load</strong> statistic.</p>
+  <p>You must name a custom stat in order to use it in a report</p> 
 <% end -%>
 
 

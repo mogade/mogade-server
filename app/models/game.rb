@@ -23,12 +23,12 @@ class Game
   
   def set_stat_names(names)
     return if names.blank?
-    self.stats = (names.map{|name| name[0..19]})[0..Stat::CUSTOM_COUNT-1]
+    self.stats = (names.map{|name| name.blank? ? nil : name[0..19]})[0..Stat::CUSTOM_COUNT-1]
     save!
   end
   
   def stat_name(index)
-    stats && stats[index] || (index + 1).to_s
+    stats && stats[index]
   end
   
   def destroy

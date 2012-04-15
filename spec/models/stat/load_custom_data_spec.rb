@@ -16,8 +16,8 @@ describe Stat, :load_custom_data do
   end
   
   it "returns the custom stats for the specified date" do
-    stats = Stat.load_custom_data(@game, @start, @start + 4 * 86400)
-    stats[:data].should == [["1000", "1001", "1002", "1003", "1004"], ["100", "101", "102", "103", "104"], ["0", "1", "2", "3", "4"], ["10000", "10001", "10002", "10003", "10004"], ["100000", "100001", "100002", "100003", "100004"]]
+    stats = Stat.load_custom_data(@game, ['1', '2', '3'], @start, @start + 4 * 86400)
+    stats[:data].should == [["1000", "1001", "1002", "1003", "1004"], ["100", "101", "102", "103", "104"], ["0", "1", "2", "3", "4"]]
   end
   
 end
