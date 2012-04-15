@@ -49,6 +49,8 @@ class Stat
     end
     
     def load_custom_data(game, ids, from, to)
+      ids = ['1', '2', '3', '4', '5'] if ids.nil? #some clients seem to be caching the js file or something
+      
       return if ids.length == 0 || ids.length > 5
 
       days = ((to - from)/86400).round
