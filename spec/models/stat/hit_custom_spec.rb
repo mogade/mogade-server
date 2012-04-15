@@ -10,7 +10,7 @@ describe Stat, :hit_custom do
   
   it "does nothing if the index is invalid" do
     Stat.hit_custom(@game, 0)
-    Stat.hit_custom(@game, 6)
+    Stat.hit_custom(@game, 21)
     Store.redis.dbsize.should == 0
   end
 

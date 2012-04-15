@@ -13,7 +13,7 @@ class Stat
     end
     
     def hit_custom(game, index)
-      return unless index > 0 && index < 6
+      return unless index > 0 && index < 21
       Store.redis.incr("s:custom:#{game.id}:#{index}:#{Time.now.utc.strftime("%y%m%d")}")
     end
     
