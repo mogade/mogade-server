@@ -1,4 +1,5 @@
 class Stat
+  CUSTOM_COUNT = 20
   class << self
     def hit(game, userkey)
       redis = Store.redis
@@ -13,7 +14,7 @@ class Stat
     end
     
     def hit_custom(game, index)
-      return unless index > 0 && index < 21
+      return unless index > 0 && index <= Stat::CUSTOM_COUNT
       Store.redis.incr("s:custom:#{game.id}:#{index}:#{Time.now.utc.strftime("%y%m%d")}")
     end
     

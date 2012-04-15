@@ -23,7 +23,7 @@ class Game
   
   def set_stat_names(names)
     return if names.blank?
-    self.stats = (names.map{|name| name[0..19]})[0..4]
+    self.stats = (names.map{|name| name[0..19]})[0..Stat::CUSTOM_COUNT-1]
     save!
   end
   

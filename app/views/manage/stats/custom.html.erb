@@ -13,7 +13,7 @@
   <thead>
     <tr>
       <th>date</th>
-      <% for i in (0..4) %>
+      <% for i in (0..Stat::CUSTOM_COUNT-1) %>
         <th><%= @game.stat_name(i) %></th>
       <% end %>
     </tr>
@@ -25,7 +25,7 @@
 <%= form_for :leaderboard, :url => {:action => 'update' }, :html => {:id => 'save', :style => 'display:none'} do |f| -%>
   <h3>Stat Names</h3>
   <input type="hidden" name="id" id="id" value="<%= @game.id%>" />
-  <% for i in (0..4) %>
+  <% for i in (0..Stat::CUSTOM_COUNT-1) %>
   <div class="field">
     <label for="stat_<%=i%>">name <%= i + 1 %></label>
     <input type="text" name="stat_<%=i%>" id="stat_<%=i%>" maxlength="20" value="<%= @game.stat_name(i) %>" />

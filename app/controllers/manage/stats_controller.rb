@@ -25,7 +25,7 @@ class Manage::StatsController < Manage::ManageController
   
   def update
     return unless load_game_as_owner
-    @game.set_stat_names(Array.new(5){|i| params["stat_#{i}"] || (i + 1).to_s})
+    @game.set_stat_names(Array.new(Stat::CUSTOM_COUNT){|i| params["stat_#{i}"] || (i + 1).to_s})
     redirect_to :action => 'custom', :id => @game.id
   end
 end

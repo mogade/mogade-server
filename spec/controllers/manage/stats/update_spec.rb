@@ -8,7 +8,7 @@ describe Manage::StatsController, :update do
   it_ensures_developer_owns_the_game :post, :update
 
   it "updates the stat names " do
-    @game.should_receive(:set_stat_names).with(['name-1', 'name-2', 'name-3', '4', '5'])
+    @game.should_receive(:set_stat_names).with(['name-1', 'name-2', 'name-3',  "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"])
     post :update, {:id => @game.id, :stat_0 => 'name-1', :stat_1 => 'name-2', :stat_2 => 'name-3'}
     response.should redirect_to('http://test.host/manage/manage/stats/custom/' + @game.id.to_s)
   end
