@@ -1,7 +1,7 @@
 /*
  *= require_self
 */
-div.calendarWrap{position:relative;z-index:2;}
+div.calendarWrap{position:relative;z-index:2;width:300px;}
 div.calendar{border:1px solid #e6e6e6;overflow:auto;width:400px;background:#f0f0f0;position:absolute;line-height:1em;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px-moz-user-select:none;-webkit-user-select: none;-khtml-user-select: none;user-select: none;}
 div.calendar div.nav{height:24px;}
 div.calendar div.nav div{cursor:pointer;background:#e6e6e6;width:25px;padding:7px 0;height:15px;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;font-weight:bold;}
