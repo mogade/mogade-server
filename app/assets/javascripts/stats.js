@@ -27,8 +27,16 @@ $(document).ready(function() {
     $customSelect.data.expanded = false;  
   }
 
-  $customSelect.children('div').not(':first').click(function() {
+  $customSelect.children('div').not(':first').click(function(e) {
     var $input = $(this).children('input');
+    if (e.target.nodeName == 'INPUT')  {
+      if ($input.is(':checked') && selectCustomInputs().length > 5) {
+        $input.attr('checked', null);
+      }
+      e.stopPropagation();
+      return true;
+    }
+    
     if ($input.is(':checked')) {
       $input.attr('checked', null);
     } else if (selectCustomInputs().length < 5) {
