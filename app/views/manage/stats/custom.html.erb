@@ -17,7 +17,7 @@
           next if name.nil?
           found += 1
         %>
-          <div><input type="checkbox" name="custom_id"<% if found < 6 %> checked="checked" <% end %>value="<%= i %>"><span><%=name%></span></div>
+          <div><input type="checkbox" name="custom_id"<% if found < 6 %> checked="checked" <% end %>value="<%= i+1 %>"><span><%=name%></span></div>
        <% end %>
      </div>
   </div>
