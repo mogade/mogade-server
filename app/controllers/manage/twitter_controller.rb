@@ -7,10 +7,11 @@ class Manage::TwitterController < Manage::ManageController
 
   def access
     return unless load_game_as_owner
-    consumer = OAuth::Consumer.new("zJlTKtwjELfAJlSSvKDtYg","P3uq7Yih2YeYWGG6sTpiPj7Kd65hHSoZtGSnVdDURsg", :site => "https://api.twitter.com")
-    request_token = consumer.get_request_token(:oauth_callback => "http://#{request.host}:#{request.port}/manage/twitter/callback")
+    callback = "http://#{request.host}:#{request.port}/manage/twitter/callback?id=#{@game.id}"
+    consumer = OAuth::Consumer.new(Settings.twitter['key'], Settings.twitter['secret'], :site => "https://api.twitter.com")
+    request_token = consumer.get_request_token(:oauth_callback => callback)
     session[:rt] = request_token
-    redirect_to request_token.authorize_url(:oauth_callback => "http://#{request.host}:#{request.port}/manage/twitter/callback?id=#{game.id}")
+    redirect_to request_token.authorize_url(:oauth_callback => callback)
   end
 
   def callback
