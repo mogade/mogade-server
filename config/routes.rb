@@ -47,7 +47,10 @@ Mogade::Application.routes.draw do
     resources :scores, :only => [:index, :destroy]
     resources :facebook, :only => [:index, :create, :destroy]
     resources :assets, :only => [:index, :create, :destroy, :update]
-    resources :twitter, :only => [:index, :update]
+    resources :twitter, :only => [:index, :update] do
+      get 'access', :on => :collection
+      get 'callback', :on => :collection
+    end
 
     match '/:action', :controller => 'manage'
   end

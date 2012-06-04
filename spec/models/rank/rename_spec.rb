@@ -28,7 +28,7 @@ describe Rank, :rename do
     Rank.rename(FactoryGirl.build(:leaderboard), LeaderboardScope::Daily, 'member1', 'new')
     ranks = Store.redis.zrange(Rank.get_key(@leaderboard, LeaderboardScope::Daily), 0, 10)
     ranks.should == ['member0', 'new']
-    Store.redis.zscore(Rank.get_key(@leaderboard, LeaderboardScope::Daily), 'new').should == '1'
+    Store.redis.zscore(Rank.get_key(@leaderboard, LeaderboardScope::Daily), 'new').should == 1.0
   end
 
   private

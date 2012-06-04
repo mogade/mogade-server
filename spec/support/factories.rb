@@ -6,31 +6,31 @@ FactoryGirl.define do
     secret "it's over 9000"
     name "power level?"
   end
-  
+
   factory :leaderboard do
     id Id.from_string('222222222222222222222222')
     offset 0
     game_id Id.from_string('111111111111111111111111')
     type LeaderboardType::HighToLow
   end
-  
+
   factory :player do
     username 'leto'
     userkey 'golden path'
   end
-  
+
   factory :score do
     leaderboard_id Id.from_string('222222222222222222222222')
     sequence(:unique) {|n| "unique-#{n}" }
     sequence(:username) {|n| "username-#{n}" }
   end
-  
+
   factory :score_data do
     points 0
     stamp nil
-    data nil  
+    data nil
   end
-  
+
   factory :score_daily do
     leaderboard_id Id.from_string('222222222222222222222222')
     sequence(:unique) {|n| "unique-#{n}" }
@@ -38,14 +38,14 @@ FactoryGirl.define do
     points 0
     stamp nil
   end
-  
+
   factory :asset do
     sequence(:name) {|n| "asset-#{n}" }
     type 2
     file nil
     meta "my meta has a first name, it's h-o-m-e-r"
   end
-  
+
   factory :developer do
     sequence(:name) {|n| "duncan-#{n}" }
     sequence(:email) {|n| "duncan#{n}@dune.gov" }
@@ -54,7 +54,7 @@ FactoryGirl.define do
     action 'the_action'
     game_ids {[]}
   end
-  
+
   factory :achievement do
     name 'My achievement has a first name'
     description 'Its h-o-m-e-r'
