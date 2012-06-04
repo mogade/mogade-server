@@ -1,4 +1,4 @@
-Mogade::Application.routes.draw do  
+Mogade::Application.routes.draw do
   namespace 'api' do
     namespace 'gamma' do
       match '/scores/overview' => 'scores#overview', :via => :get
@@ -14,7 +14,7 @@ Mogade::Application.routes.draw do
         post 'rename', :on => :collection
       end
     end
-  
+
     #v1 crap
     match '/scores' => 'legacy::Scores#get_scores', :via => :post
     match '/scores' => 'legacy::Scores#save_score', :via => :put
@@ -25,9 +25,9 @@ Mogade::Application.routes.draw do
     match '/conf/version' => 'legacy::Configurations#version', :via => :post
     match '/conf' => 'legacy::Configurations#get_game_configuration', :via => :post
     match '/conf/my' => 'legacy::Configurations#get_player_configuration', :via => :post
-    match '/logging/error' => 'legacy::Logs#log_error', :via => :put    
+    match '/logging/error' => 'legacy::Logs#log_error', :via => :put
   end
-  
+
   namespace 'manage' do
     match '/accounts/:action/(:key)', :controller => 'accounts'
     match '/sessions/logout' => 'sessions#logout'
@@ -46,7 +46,8 @@ Mogade::Application.routes.draw do
     resources :errors, :only => [:index, :destroy]
     resources :scores, :only => [:index, :destroy]
     resources :facebook, :only => [:index, :create, :destroy]
-    resources :assets, :only => [:index, :create, :destroy, :update]  
+    resources :assets, :only => [:index, :create, :destroy, :update]
+    resources :twitter, :only => [:index, :update]
 
     match '/:action', :controller => 'manage'
   end
