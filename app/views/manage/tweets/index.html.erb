@@ -3,7 +3,7 @@
 
 <% if @twitter.nil? -%>
   <p>To proceed, you must grant mogade access to your twitter account.</p>
-  <a href="<%= url_for(:controller => 'twitter', :action => 'access', :id => @game.id)%>" class="button">grant access</a>
+  <a href="<%= url_for(:controller => 'tweets', :action => 'access', :id => @game.id)%>" class="button">grant access</a>
 <% else -%>
 
   <%= form_for :tweets, :url => {:action => :update} do |f| -%>
