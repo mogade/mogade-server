@@ -17,3 +17,5 @@ EarnedAchievement.collection.ensure_index([['aid', Mongo::ASCENDING], ['u', Mong
 GameError.collection.ensure_index([['gid', Mongo::ASCENDING], ['uat', Mongo::DESCENDING]])
 GameError.collection.ensure_index([['h', Mongo::ASCENDING]], {:unique => true})
 Asset.collection.ensure_index([['gid', Mongo::ASCENDING]])
+Twitter.collection.ensure_index([['gid', Mongo::ASCENDING]])
+Twitter.collection.ensure_index([['lid', Mongo::ASCENDING]])

@@ -4,11 +4,11 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
   before_filter :ensure_player, :only => [:create, :rivals]
   before_filter :ensure_leaderboard
   before_filter :ensures_leaderboard_for_game, :only => :create
-  
+
   def index
     records = params_to_i(:records, 10)
     scope = params_to_i(:scope, LeaderboardScope::Daily)
-    
+
     player = load_player
     if params[:with_player] || player.nil?
       payload = Score.get_by_page(@leaderboard, params_to_i(:page, 1), records, scope)
@@ -24,19 +24,19 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     end
     render_payload(payload, params, 180)
   end
-  
+
   def count
     scope = params_to_i(:scope, LeaderboardScope::Daily)
     payload = Rank.count(@leaderboard, scope) #counting off of Rank is more efficient than Score
     render_payload(payload, params, 180, 10)
   end
-  
+
   def rivals
     scope = params_to_i(:scope, LeaderboardScope::Daily)
     payload = Score.get_rivals(@leaderboard, @player, scope)
     render_payload(payload || [], params, 180, 10)
   end
-  
+
   def overview
     payload = {}
     LeaderboardScope.all_scopes.each do |scope|
@@ -48,9 +48,10 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
   def create
     return unless ensure_params(:points)
     points = params[:points].to_i
-    
+
     high_scores = Score.save(@leaderboard, @player, points, params[:data])
     ranks =  Rank.get_for_score(@leaderboard, points)
+    Twitter.new_daily_leader(@leaderboard) if ranks[LeaderboardScope::Daily] == 1
     render :json => {:ranks => ranks, :highs => high_scores}
   end
 end

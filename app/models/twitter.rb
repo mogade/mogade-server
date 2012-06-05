@@ -14,6 +14,14 @@ class Twitter
     find_one({:game_id => game.id})
   end
 
+  def self.new_daily_leader(leaderboard)
+    twitter = find_one({:leaderboard_id => leaderboard.id})
+    return if twitter.nil?
+    if Store.redis.sadd("twitter:daily:lookup", leaderboard.id) == true
+      Store.redis.rpush("twitter:daily", leaderboard.id)
+    end
+  end
+
   def update(message, leaderboard_id)
     self.message = message
     self.leaderboard_id = leaderboard_id
