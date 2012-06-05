@@ -1,14 +1,14 @@
 <ul class="menu">
-  <li><a href="<%= url_for(:controller => 'games', :action => 'index') %>">game list</a></li>
+  <li><a href="<%= url_for(:controller => 'games', :action => :index) %>">game list</a></li>
   <li><a href="<%= ssl_url(url_for(:controller => 'games', :action => 'show', :id => @game.id))%>">overview</a></li>
-  <li><a href="<%= url_for(:controller => 'leaderboards', :action => 'index', :id => @game.id)%>">leaderboards</a>
+  <li><a href="<%= url_for(:controller => 'leaderboards', :action => :index, :id => @game.id)%>">leaderboards</a>
     <% if defined? show_leaderboad -%>
-    <ul><li><a href="<%= url_for :controller => 'scores', :action => 'index', :id => @game.id %>">delete scores</a></li></ul>
+    <ul><li><a href="<%= url_for :controller => 'scores', :action => :index, :id => @game.id %>">delete scores</a></li></ul>
     <% end -%>
   </li>
-  <li><a href="<%= url_for(:controller => 'achievements', :action => 'index', :id => @game.id)%>">achievements</a>
-  <li><a href="<%= url_for(:controller => 'facebook', :action => 'index', :id => @game.id)%>">facebook pages</a></li>
-  <li><a href="<%= url_for(:controller => 'stats', :action => 'index', :id => @game.id)%>">usage statistics</a>
+  <li><a href="<%= url_for(:controller => 'achievements', :action => :index, :id => @game.id)%>">achievements</a>
+  <li><a href="<%= url_for(:controller => 'facebook', :action => :index, :id => @game.id)%>">facebook pages</a></li>
+  <li><a href="<%= url_for(:controller => 'stats', :action => :index, :id => @game.id)%>">usage statistics</a>
     <% if defined? show_stats -%>
     <ul>
       <li><a href="<%= url_for :controller => 'stats', :action => 'custom', :id => @game.id %>">custom stats</a></li>
@@ -20,7 +20,7 @@
     </ul>
     <% end -%>
   </li>
-  <li><a href="<%= url_for(:controller => 'errors', :action => 'index', :id => @game.id)%>">logged errors</a></li>
-  <li><a href="<%= url_for(:controller => 'assets', :action => 'index', :id => @game.id)%>">assets</a></li>
-  <li><a href="<%= url_for(:controller => 'twitter', :action => 'index', :id => @game.id)%>">twitter</a></li>
+  <li><a href="<%= url_for(:controller => 'errors', :action => :index, :id => @game.id)%>">logged errors</a></li>
+  <li><a href="<%= url_for(:controller => 'assets', :action => :index, :id => @game.id)%>">assets</a></li>
+  <li><a href="<%= url_for(:controller => 'tweets', :action => :index, :id => @game.id)%>">twitter</a></li>
 </ul>

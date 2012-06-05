@@ -1,7 +1,7 @@
 class Game
   include MongoLight::Document
   include ActiveModel::Validations
-  mongo_accessor({:name => :name, :secret => :secret, :version => :v, :stats => :s, :twitter_token => :tt, :twitter_secret => :ts})
+  mongo_accessor({:name => :name, :secret => :secret, :version => :v, :stats => :s})
 
   validates_length_of :name, :minimum => 1, :maximum => 50, :allow_blank => false, :message => 'please enter a name'
 
@@ -29,12 +29,6 @@ class Game
 
   def stat_name(index)
     stats && stats[index]
-  end
-
-  def set_twitter_auth(auth)
-    self.twitter_token = auth.token
-    self.twitter_secret = auth.secret
-    save!
   end
 
   def destroy

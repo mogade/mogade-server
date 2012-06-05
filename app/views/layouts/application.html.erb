@@ -4,7 +4,7 @@
   <title>mogade <%= yield :title %></title>
   <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" %>
   <%= stylesheet_link_tag 'main' %>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <% if content_for?(:head)%><%= yield :head -%><% end %>
   <script type="text/javascript">
 
@@ -38,7 +38,7 @@
     </div>
   </div>
   <%= yield :content %>
-  <div id="footer" class="r">       
+  <div id="footer" class="r">
     <a href="http://twitter.com/mogade">@mogade</a><span class="sep">&bull;</span>
     <a href="/manage/drivers">platform libraries</a><span class="sep">&bull;</span>
     <a href="http://github.com/mogade">source code</a><span class="sep">&bull;</span>

@@ -74,4 +74,11 @@ FactoryGirl.define do
     enabled true
     description 'mind blowing'
   end
+
+  factory :twitter do
+    token 'tkk'
+    secret 'see'
+    game_id Id.from_string('111111111111111111111111')
+
+  end
 end

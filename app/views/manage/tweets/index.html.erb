@@ -1,0 +1,45 @@
+<% content_for :title, @game.name + ' twitter integration' -%>
+<% content_for :section_title,  @game.name + ' .. twitter integration' -%>
+
+<% if @twitter.nil? -%>
+  <p>To proceed, you must grant mogade access to your twitter account.</p>
+  <a href="<%= url_for(:controller => 'twitter', :action => 'access', :id => @game.id)%>" class="button">grant access</a>
+<% else -%>
+
+  <%= form_for :tweets, :url => {:action => :update} do |f| -%>
+    <input type="hidden" name="id" value="<%=@twitter.id%>" />
+    <input type="hidden" name="game_id" value="<%=@game.id%>" />
+    <div class="field">
+      <label for="leaderboard_id">leaderboard</label>
+      <select name="leaderboard_id" id="leaderboard_id">
+        <% @leaderboards.each do |leaderboard| -%>
+        <option value="<%=leaderboard.id%>"<% if leaderboard.id == @twitter.leaderboard_id %> selected="selected"<% end %>><%=leaderboard.name%> (<%=leaderboard.id%>)</option>
+        <% end -%>
+      </select>
+      <label for="leaderboard_id" class="tip">the leaderboard to monitor</label>
+    </div>
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea name="message" id="message" rows="4" cols="40"><%=@twitter.message || "%user% is now in first place with a score of %score%" %></textarea>
+    </div>
+    <div class="buttons">
+      <input type="submit" class="button" value="save" />
+      <a href="#" class="button" id="disable">disable</a>
+    </div>
+  <% end -%>
+<% end -%>
+
+
+<% content_for :right do -%>
+  <%= render :partial => 'shared/menu'%>
+  <h3>Tips</h3>
+  <p>Currently only 1 leaderboard can be monitored</p>
+  <p>Use the <em>%user</em> and <em>%score%</em> placeholders to build your message</p>
+  <p>Take care to build a short message. Consider 30 characters for a username (the maximum) + however long your scores are. 140 - 30 - score_length.
+<% end -%>
+
+<script>
+$('#disable').on('click', function(){
+  return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
+});
+</script>

@@ -1,9 +1,0 @@
-<% content_for :title, @game.name + ' twitter integration' -%>
-<% content_for :section_title,  @game.name + ' .. twitter integration' -%>
-
-<h2>Step 1</h2>
-<a href="<%= url_for(:controller => 'twitter', :action => 'access', :id => @game.id)%>" class="button">Grant Access</a>
-
-<% content_for :right do -%>
-  <%= render :partial => 'shared/menu'%>
-<% end -%>
