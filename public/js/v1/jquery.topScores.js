@@ -1,17 +1,17 @@
-(function($) 
+(function($)
 {
   var defaults = {lids: null, baseUrl: 'http://mogade.com/api/gamma/scores/'}
-  $.fn.topScores = function(opts) 
+  $.fn.topScores = function(opts)
   {
-    var options = $.extend({}, defaults, opts); 
-    return this.each(function() 
+    var options = $.extend({}, defaults, opts);
+    return this.each(function()
     {
       if (this.topScores) { return false; }
       var $container = $(this);
       var data = {lid: options.lids[0][0]};
       var self =
       {
-        initialize: function() 
+        initialize: function()
         {
           self.buildLeaderboardChoice($container);
           $container.show();
@@ -22,7 +22,7 @@
           if (options.lids.length == 1)
           {
             return $('<div class="leaderboard_name">').text(options.lids[0][1]).appendTo($container);
-          }     
+          }
           var $select = $('<select class="leaderboard_name">').appendTo($container)
           for(var i = 0; i < options.lids.length; ++i)
           {

@@ -14,9 +14,7 @@
   </div>
   <% end -%>
 </div>
-
 <div id="topscores"></div>
-
 <% content_for :js do -%>
 var baseUrl = '<%= request.local? ? 'http://' + request.host_with_port : 'http://mogade.com'%>';
 $('#thumbs a').colorbox({overlay:0.2, initialWidth: 480, initialHeight:320});

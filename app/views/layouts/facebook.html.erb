@@ -3,7 +3,7 @@
 <head>
   <title><%= yield :title %></title>
   <%= stylesheet_link_tag 'facebook' %>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="/js/v1/jquery.purdySelect.js"></script>
   <script type="text/javascript" src="/js/v1/jquery.leaderboard.js"></script>
   <script type="text/javascript" src="/js/v1/jquery.topScores.js"></script>
@@ -13,12 +13,9 @@
 <% unless Rails.env == 'production' %><div id="environment"><%= Rails.env %></div><% end -%>
 <div id="site"><%= yield %></div>
 <% if content_for?(:js) %>
-<script type="text/javascript">
-$(document).ready(function(){
-  <%= yield(:js) %>
-})
+<script>
+<%= yield(:js) %>
 </script>
 <% end %>
 </body>
 </html>
-
