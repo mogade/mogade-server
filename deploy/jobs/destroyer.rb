@@ -2,11 +2,11 @@ require 'store.rb'
 require 'aws/s3'
 
 class Destroyer
-  
+
   def initialize
     @redis = Store.redis
   end
-  
+
   def destroy_games
     count = 0
     while count < 50
@@ -21,19 +21,19 @@ class Destroyer
       count += 1
     end
   end
-  
+
   def destroy_leaderboards
     count = 0
     while count < 50
       value = @redis.srandmember('cleanup:leaderboards')
       leaderboard_id = BSON::ObjectId.legal?(value) ? BSON::ObjectId.from_string(value) : nil
       destroy_leaderboard(leaderboard_id)
-      
+
       @redis.srem('cleanup:leaderboards', leaderboard_id)
       count += 1
     end
   end
-  
+
   def destroy_profile_images(bucket, connect_to_aws = true)
     if connect_to_aws #for testing
       AWS::S3::Base.establish_connection!(:access_key_id => Settings.aws['key'], :secret_access_key => Settings.aws['secret'])
@@ -48,7 +48,7 @@ class Destroyer
       @redis.del(key)
     end
   end
-  
+
   private
   def destroy_leaderboard(leaderboard_id)
     return if leaderboard_id.nil?
@@ -60,11 +60,11 @@ class Destroyer
     delete_keys(@redis.keys("lb:?:#{leaderboard_id}:*"))
     delete_keys(@redis.keys("lb:o:#{leaderboard_id}"))
   end
-  
+
   def destroy_stats(game_id)
     delete_keys(@redis.keys("s:*:#{game_id}:*"))
   end
-  
+
   def delete_keys(keys)
     @redis.del *keys unless keys.length == 0
   end
