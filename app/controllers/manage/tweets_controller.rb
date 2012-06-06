@@ -20,8 +20,11 @@ class Manage::TweetsController < Manage::ManageController
 
   def callback
     return unless load_game_as_owner
-    token = session.delete(:rt).get_access_token
-    Twitter.create(@game, token.token, token.secret)
+    begin
+      token = session.delete(:rt).get_access_token
+      Twitter.create(@game, token.token, token.secret)
+    rescue
+    end
     redirect_to :action => :index, :id => @game.id
   end
 
