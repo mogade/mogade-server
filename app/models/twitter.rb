@@ -20,6 +20,12 @@ class Twitter
     Store.redis.sadd("twitter:daily", leaderboard.id)
   end
 
+  def self.new_overall_leader(leaderboard)
+    c = count({:leaderboard_id => leaderboard.id, :overall_message  => {'$ne' => nil}})
+    return if c == 0
+    Store.redis.sadd("twitter:overall", leaderboard.id)
+  end
+
   def update(daily_message, overall_message, leaderboard_id)
     self.daily_message = daily_message.blank? ? nil : daily_message
     self.overall_message = overall_message.blank? ? nil : overall_message

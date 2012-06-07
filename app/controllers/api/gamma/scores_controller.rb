@@ -52,6 +52,7 @@ class Api::Gamma::ScoresController < Api::Gamma::ApiController
     high_scores = Score.save(@leaderboard, @player, points, params[:data])
     ranks =  Rank.get_for_score(@leaderboard, points)
     Twitter.new_daily_leader(@leaderboard) if ranks[LeaderboardScope::Daily] == 1
+    Twitter.new_overall_leader(@leaderboard) if ranks[LeaderboardScope::Overall] == 1
     render :json => {:ranks => ranks, :highs => high_scores}
   end
 end
