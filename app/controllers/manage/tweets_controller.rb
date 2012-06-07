@@ -31,7 +31,7 @@ class Manage::TweetsController < Manage::ManageController
   def update
     return unless load_game_as_owner
     return unless ensure_twitter
-    @twitter.update(params[:message], Id.from_string(params[:leaderboard_id]))
+    @twitter.update(params[:daily_message].nil? ? nil : params[:daily_message].strip, params[:overall_message].nil? ? nil : params[:overall_message].strip, Id.from_string(params[:leaderboard_id]))
     set_info("Twitter settings have been updated", false)
     redirect_to :action => 'index', :id => @game.id
   end

@@ -7,7 +7,6 @@
   <p>To proceed, you must grant mogade access to your twitter account.</p>
   <a href="<%= url_for(:controller => 'tweets', :action => 'access', :id => @game.id)%>" class="button">grant access</a>
 <% else -%>
-
   <%= form_for :tweets, :url => {:action => :update} do |f| -%>
     <input type="hidden" name="id" value="<%=@twitter.id%>" />
     <input type="hidden" name="game_id" value="<%=@game.id%>" />
@@ -21,8 +20,16 @@
       <label for="leaderboard_id" class="tip">the leaderboard to monitor</label>
     </div>
     <div class="field">
-      <label for="message">Message</label>
-      <textarea name="message" id="message" rows="4" cols="40"><%=@twitter.message || "%user% is now in first place with a score of %score%" %></textarea>
+      <label for="daily_message">Daily</label>
+      <textarea name="daily_message" id="daily_message" rows="2" cols="40"><%=@twitter.daily_message %></textarea>
+    </div>
+    <div class="field">
+      <label for="overall_message">Overall</label>
+      <textarea name="overall_message" id="overall_message" rows="2" cols="40"><%=@twitter.overall_message %></textarea>
+    </div>
+    <div class="field">
+      <label>Example</label>
+      <input type="text" style="border:none;width:400px" value="%user% is now today's leader with a score of %score%" />
     </div>
     <div class="buttons">
       <input type="submit" class="button" value="save" />
@@ -36,6 +43,7 @@
   <%= render :partial => 'shared/menu'%>
   <h3>Tips</h3>
   <p>Currently only 1 leaderboard can be monitored</p>
+  <p>Leave the message blank to disable that specific notification</p>
   <p>Use the <em>%user</em> and <em>%score%</em> placeholders to build your message</p>
   <p>Take care to build a short message. Consider 30 characters for a username (the maximum) + however long your scores are. 140 - 30 - score_length.
 <% end -%>

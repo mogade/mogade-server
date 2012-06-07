@@ -1,6 +1,6 @@
 class Twitter
   include MongoLight::Document
-  mongo_accessor({:token => :token, :secret => :secret, :game_id => :gid, :leaderboard_id => :lid, :message => :message})
+  mongo_accessor({:token => :token, :secret => :secret, :game_id => :gid, :leaderboard_id => :lid, :daily_message => :dm, :overall_message => :om})
 
   def self.create(game, token, secret)
     update({:game_id => game.id}, {'$set' => {:token => token, :secret => secret}}, {:upsert => true})
@@ -15,13 +15,14 @@ class Twitter
   end
 
   def self.new_daily_leader(leaderboard)
-    c = count({:leaderboard_id => leaderboard.id})
+    c = count({:leaderboard_id => leaderboard.id, :daily_message  => {'$ne' => nil}})
     return if c == 0
     Store.redis.sadd("twitter:daily", leaderboard.id)
   end
 
-  def update(message, leaderboard_id)
-    self.message = message
+  def update(daily_message, overall_message, leaderboard_id)
+    self.daily_message = daily_message.blank? ? nil : daily_message
+    self.overall_message = overall_message.blank? ? nil : overall_message
     self.leaderboard_id = leaderboard_id
     save!
   end
