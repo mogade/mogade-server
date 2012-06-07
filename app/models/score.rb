@@ -20,7 +20,7 @@ class Score
       score
     end
 
-    def save(leaderboard, player, points, data = nil)
+    def save(leaderboard, player, points, data = nil, attempt = 1)
       data = data[0..49] unless data.nil? || data.length < 50
 
       score = Score.load(leaderboard, player)
@@ -32,8 +32,15 @@ class Score
       changed[LeaderboardScope::Overall] = score.update_if_better(LeaderboardScope::Overall, points, data, now)
 
       if changed.has_value?(true)
-        #todo still not sure about this
-        score.save! unless score.overall == 0
+        begin
+          score.save! unless score.overall == 0
+        rescue Mongo::OperationFailure
+          if attempt == 1 && $!.duplicate?
+            save(leaderboard, player, points, data, 2)
+          else
+            raise
+          end
+        end
       end
       ScoreDaily.save(leaderboard, player, points, data) if changed[LeaderboardScope::Daily]
       changed

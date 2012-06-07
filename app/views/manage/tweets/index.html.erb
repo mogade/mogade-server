@@ -2,6 +2,8 @@
 <% content_for :section_title,  @game.name + ' .. twitter integration' -%>
 
 <% if @twitter.nil? -%>
+  <p>Twitter integration lets you use twitter to post a message whenever a user gets a new high score.</p>
+  <p>The feature is still being worked out and will be expanded.</p>
   <p>To proceed, you must grant mogade access to your twitter account.</p>
   <a href="<%= url_for(:controller => 'tweets', :action => 'access', :id => @game.id)%>" class="button">grant access</a>
 <% else -%>
