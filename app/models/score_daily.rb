@@ -11,9 +11,9 @@ class ScoreDaily
       selector = {:leaderboard_id => leaderboard.id, :unique => player.unique, :stamp => leaderboard.daily_stamp}
       update(selector, selector.merge({:username => player.username, :data => data, :dated => Time.now.utc, :points => points}), {:upsert => true})
     end
-    
+
     def get_by_stamp_and_page(leaderboard, stamp, records, offset)
-      options = {:sort => [:points, leaderboard.sort], :fields => {:username => 1, :data => 1, :dated => 1, :points => 1, :_id => -1}, :skip => offset, :limit => records, :raw => true}
+      options = {:sort => [:points, leaderboard.sort], :fields => {:username => true, :data => true, :dated => true, :points => true, :_id => false}, :skip => offset, :limit => records, :raw => true}
       find({:leaderboard_id => leaderboard.id, :stamp => stamp}, options)
     end
   end

@@ -5,12 +5,12 @@ class Score
     :daily => {:field => :d, :class => ScoreData},
     :weekly => {:field => :w, :class => ScoreData},
     :overall => {:field => :o, :class => ScoreData}})
-  
+
   @@prefixes = {LeaderboardScope::Daily => 'd', LeaderboardScope::Weekly => 'w', LeaderboardScope::Overall => 'o'}
-  
+
   class << self
     def load(leaderboard, player)
-      score = find_one({:leaderboard_id => leaderboard.id, :unique => player.unique}) 
+      score = find_one({:leaderboard_id => leaderboard.id, :unique => player.unique})
       if score.nil?
         score = Score.new({:leaderboard_id => leaderboard.id, :unique => player.unique, :userkey => player.userkey, :username => player.username, :daily => ScoreData.blank, :weekly => ScoreData.blank, :overall => ScoreData.blank})
       else
@@ -19,18 +19,18 @@ class Score
       score.leaderboard = leaderboard
       score
     end
-    
+
     def save(leaderboard, player, points, data = nil)
       data = data[0..49] unless data.nil? || data.length < 50
 
       score = Score.load(leaderboard, player)
       now = Time.now.utc
       changed = {}
-      
+
       changed[LeaderboardScope::Daily] = score.update_if_better(LeaderboardScope::Daily, points, data, now)
       changed[LeaderboardScope::Weekly] = score.update_if_better(LeaderboardScope::Weekly, points, data, now)
       changed[LeaderboardScope::Overall] = score.update_if_better(LeaderboardScope::Overall, points, data, now)
-      
+
       if changed.has_value?(true)
         #todo still not sure about this
         score.save! unless score.overall == 0
@@ -43,22 +43,22 @@ class Score
       records = 50 if records > 50
       offset = ((page-1) * records).floor
       offset = 0 if offset < 0
-      
+
       if scope == LeaderboardScope::Yesterday
         return { :page => page, :scores => ScoreDaily.get_by_stamp_and_page(leaderboard, leaderboard.yesterday_stamp, records, offset)}
       end
-      
+
       prefix = Score.scope_to_prefix(scope)
       name = Score.scope_to_name(scope)
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
-      options = {:fields => {prefix + '.p' => 1, :username => 1, prefix + '.d' => 1, prefix + '.dt' => 1, :_id => 0}, :sort => [prefix + '.p', leaderboard.sort], :skip => offset, :limit => records, :raw => true}
-      
+      options = {:fields => {prefix + '.p' => true, :username => true, prefix + '.d' => true, prefix + '.dt' => true, :_id => false}, :sort => [prefix + '.p', leaderboard.sort], :skip => offset, :limit => records, :raw => true}
+
       found = find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}
       fix_names(found) if leaderboard.id.to_s == '4e657c876d574806b1000002'
       {:page => page,  :scores => found}
     end
-    
+
     def fix_names(scores)
       scores.each do |s|
         s[:username] = s[:username].scan(/[A-z0-9]/).join()
@@ -72,23 +72,23 @@ class Score
       page = rank == 0 ? 1 : (rank / records.to_f).ceil
       get_by_page(leaderboard, page, records, scope)
     end
-    
+
     def find_for_player(game, player)
       leaderboards = Leaderboard.find({:game_id => game.id})
       leaderboards.map{|leaderboard| Score.load(leaderboard, player)}
     end
-    
-    def get_rivals(leaderboard, player, scope)    
+
+    def get_rivals(leaderboard, player, scope)
       score = Score.load(leaderboard, player).for_scope(scope)
       return unless score.dated
-      
+
       prefix = Score.scope_to_prefix(scope)
       name = Score.scope_to_name(scope)
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
       conditions[prefix + '.p'] = {leaderboard.score_comparer => score.points}
       options = {:fields => {prefix + '.p' => 1, :username => 1, prefix + '.d' => 1, prefix + '.dt' => 1, :_id => 0}, :sort => [prefix + '.p', leaderboard.sort], :limit => 3, :raw => true}
-      
+
       find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}
     end
 
@@ -116,7 +116,7 @@ class Score
         return {'d.s' => leaderboard.daily_stamp}
       end
     end
-    
+
     def daily_collection
       Store['scores_daily']
     end
@@ -132,7 +132,7 @@ class Score
       return daily
     end
   end
-  
+
   def scrub!(leaderboard)
     self.daily = ScoreData.blank if daily.nil?
     self.daily.points = 0 if daily.stamp.nil? || daily.stamp < leaderboard.daily_stamp
@@ -142,7 +142,7 @@ class Score
     self.overall.points = 0 if overall.points.nil?
     self
   end
-  
+
   def update_if_better(scope, points, data, date)
     name = Score.scope_to_name(scope)
     score_data = send(name)
