@@ -1,5 +1,10 @@
 <% content_for :title, @game.name + ' twitter integration' -%>
 <% content_for :section_title,  @game.name + ' .. twitter integration' -%>
+<style>
+#interval{overflow:auto;}
+#interval span{float:left;width:150px;}
+#interval input{float:left;width:50px;margin-right:83px;}
+</style>
 
 <% if @twitter.nil? -%>
   <p>Twitter integration lets you use twitter to post a message whenever a user gets a new high score.</p>
@@ -19,17 +24,12 @@
       </select>
       <label for="leaderboard_id" class="tip">the leaderboard to monitor</label>
     </div>
-    <div class="field">
-      <label for="daily_message">Daily</label>
-      <textarea name="daily_message" id="daily_message" rows="2" cols="40"><%=@twitter.daily_message %></textarea>
-    </div>
-    <div class="field">
-      <label for="overall_message">Overall</label>
-      <textarea name="overall_message" id="overall_message" rows="2" cols="40"><%=@twitter.overall_message %></textarea>
-    </div>
-    <div class="field">
-      <label>Example</label>
-      <input type="text" style="border:none;width:400px" value="%user% is now today's leader with a score of %score%" />
+    <div class="field" id="interval">
+      <label>Interval</label>
+      <span>Daily</span><span>Weekly</span><span>Overall</span>
+      <input type="text" name="daily[interval]" maxlength="4" class="numeric" value="<%= @twitter.daily.nil? ? 0 : @twitter.daily.interval %>" />
+      <input type="text" name="weekly[interval]" maxlength="4" class="numeric" value="<%= @twitter.weekly.nil? ? 0 : @twitter.weekly.interval %>"  />
+      <input type="text" name="overall[interval]" maxlength="4" class="numeric" value="<%= @twitter.overall.nil? ? 0 : @twitter.overall.interval %>"  />
     </div>
     <div class="buttons">
       <input type="submit" class="button" value="save" />
@@ -43,7 +43,7 @@
   <%= render :partial => 'shared/menu'%>
   <h3>Tips</h3>
   <p>Currently only 1 leaderboard can be monitored</p>
-  <p>Leave the message blank to disable that specific notification</p>
+  <p>The interval limits how frequently, in minutes, the system will tweet. Use 0/blank to disable tweets for the scope. <%= Twitter::MinimumInterval %> is the miminum allowed value (resulting in a theoretical maximum of 144 tweets per day!</p>
   <p>Use the <em>%user</em> and <em>%score%</em> placeholders to build your message</p>
   <p>Take care to build a short message. Consider 30 characters for a username (the maximum) + however long your scores are. 140 - 30 - score_length.
 <% end -%>

@@ -25,18 +25,13 @@ describe Manage::TweetsController, :update do
     lid = Id.new
     twitter = FactoryGirl.create(:twitter, {:game_id => @game.id})
     Twitter.stub!(:find_by_id).and_return(twitter)
-    twitter.should_receive(:update).with('new message', 'new overall', lid)
-
-    put :update, {:id => twitter.id, :game_id => @game.id, :daily_message => 'new message', :overall_message => 'new overall', :leaderboard_id => lid.to_s}
+    twitter.should_receive(:update) do |params|
+      params[:leaderboard_id].should == lid.to_s
+      params[:daily].should == {'interval' => "20"}
+      params[:weekly].should == {'interval' => "25"}
+      params[:overall].should == {'interval' => "30"}
+    end
+    put :update, {:id => twitter.id, :game_id => @game.id, :leaderboard_id => lid.to_s, :daily => {:interval => "20"}, :weekly => {:interval => "25"}, :overall => {:interval => "30"}}
     response.should redirect_to("http://test.host/manage/tweets?id=#{@game.id}")
-  end
-
-  it "nils the twitter settings" do
-    lid = Id.new
-    twitter = FactoryGirl.create(:twitter, {:game_id => @game.id})
-    Twitter.stub!(:find_by_id).and_return(twitter)
-    twitter.should_receive(:update).with('', '', lid)
-
-    put :update, {:id => twitter.id, :game_id => @game.id, :daily_message => '  ', :overall_message => '  ', :leaderboard_id => lid.to_s}
   end
 end
