@@ -14,9 +14,9 @@ describe Manage::TweetsController, :update_message do
   it "updates the message" do
     twitter = FactoryGirl.create(:twitter, {:game_id => @game.id})
     Twitter.stub!(:find_by_id).with(twitter.id).and_return(twitter)
-    twitter.should_receive(:update_message).with(1, 3, 'new message').and_return(true)
+    twitter.should_receive(:update_message).with(1, 2, 3, 'new message').and_return(true)
 
-    put :update_message, {:id => twitter.id, :game_id => @game.id, :scope => '1', :index => '3', :message => 'new message'}
+    put :update_message, {:id => twitter.id, :game_id => @game.id, :old_scope => '1', :scope => '2', :index => '3', :message => 'new message'}
     response.should redirect_to("http://test.host/manage/tweets?id=#{@game.id}")
   end
 

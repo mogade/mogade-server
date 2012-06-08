@@ -60,6 +60,7 @@
     <input type="hidden" name="id" value="<%=@twitter.id%>" />
     <input type="hidden" name="game_id" value="<%=@game.id%>" />
     <input type="hidden" name="index" id="index" />
+    <input type="hidden" name="old_scope" id="old_scope" />
     <div class="field">
       <label for="message">example</label>
       <input type="text" disabled="disabled" style="border:none;width:400px" value="%user% is now today's leader with a score of %score%" />
@@ -81,7 +82,7 @@ $('#disable').on('click', function(){
   return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
 });
 $('#message_list').simpleList({})
-  .editTo({ to: '#add', map: {0: 'message', 'data-scope': 'scope', 'data-index': 'index'}, url: '<%= url_for :action => 'update_message' %>' })
+  .editTo({ to: '#add', map: {0: 'message', 'data-scope': 'scope, #old_scope', 'data-index': 'index'}, url: '<%= url_for :action => 'update_message' %>' })
   .confirm('td.delete', 'Delete this message?', 'This message will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/tweets/remove?index=' + $td.closest('tr').data('index') + '&scope=' +  $td.closest('tr').data('scope') + '&game_id=<%=@game.id%>&id=<%=@twitter.id%>'); });
 </script>
 <% end -%>

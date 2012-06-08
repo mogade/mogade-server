@@ -45,8 +45,8 @@ class Twitter
     save!
   end
 
-  def add_message(scope, message)
-    return false if message_count >= Twitter::TotalMessages
+  def add_message(scope, message, skip_check = false)
+    return false if message_count >= Twitter::TotalMessages && skip_check == false
     field = "#{@@field_lookup[scope]}.m"
     Twitter.update({:_id => id}, {'$push' => {field => message}}, {:upsert => true})
     true
@@ -58,9 +58,9 @@ class Twitter
     Twitter.update({:_id => id}, {'$pull' => {field => nil}}, {:upsert => true})
   end
 
-  def update_message(scope, index, message)
-    field = "#{@@field_lookup[scope]}.m"
-    Twitter.update({:_id => id}, {'$set' => {"#{field}.#{index}" => message}}, {:upsert => true})
+  def update_message(old_scope, scope, index, message)
+    remove_message(old_scope, index)
+    add_message(scope, message, true)
   end
 
   def message_count

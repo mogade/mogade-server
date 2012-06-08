@@ -61,7 +61,7 @@ class Manage::TweetsController < Manage::ManageController
   def update_message
     return unless load_game_as_owner
     return unless ensure_twitter
-    @twitter.update_message(params[:scope].to_i, params[:index].to_i, params[:message])
+    @twitter.update_message(params[:old_scope].to_i, params[:scope].to_i, params[:index].to_i, params[:message])
     redirect_to :action => 'index', :id => @game.id
   end
 
