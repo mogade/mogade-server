@@ -4,6 +4,7 @@
 #interval{overflow:auto;}
 #interval span{float:left;width:150px;}
 #interval input{float:left;width:50px;margin-right:83px;}
+#message_list {margin-top:50px;}
 </style>
 
 <% if @twitter.nil? -%>
@@ -36,6 +37,53 @@
       <a href="#" class="button" id="disable">disable</a>
     </div>
   <% end -%>
+
+  <div class="list" id="message_list">
+    <table>
+     <thead>
+       <th>message</th>
+       <th>scope</th>
+       <th></th>
+       <th></th>
+     </thead>
+     <tbody>
+      <% {:daily => 1, :weekly => 2, :overall => 3}.each do |scope, value| %>
+       <%= render :partial => 'message_row', :collection => @twitter.send(scope).messages, :locals => {:scope => scope, :scope_value => value}, :as => :message unless @twitter.send(scope).blank?-%>
+      <% end %>
+     </tbody>
+    </table>
+    <h3>You don't have any messages.</h3>
+  </div>
+
+  <%= form_for :TwitterData, :url => {:action => 'message' }, :html => {:id => 'add'} do |f| -%>
+    <h3>Add Message</h3>
+    <input type="hidden" name="id" value="<%=@twitter.id%>" />
+    <input type="hidden" name="game_id" value="<%=@game.id%>" />
+    <input type="hidden" name="index" id="index" />
+    <div class="field">
+      <label for="message">example</label>
+      <input type="text" disabled="disabled" style="border:none;width:400px" value="%user% is now today's leader with a score of %score%" />
+    </div>
+    <div class="field">
+      <label for="message">message</label>
+      <textarea name="message" id="message" rows="2" cols="40" maxlength="140"></textarea>
+    </div>
+    <div class="field">
+      <label for="type">scope</label>
+      <%= enum_drop_down('scope', LeaderboardScope, LeaderboardScope::Daily, LeaderboardScope::Yesterday)%>
+    </div>
+    <div class="buttons">
+      <%= f.submit 'add', {:class => 'button'} %>
+    </div>
+  <% end -%>
+<script>
+$('#disable').on('click', function(){
+  return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
+});
+$('#message_list').simpleList({})
+  .editTo({ to: '#add', map: {0: 'message', 'data-scope': 'scope', 'data-index': 'index'}, url: '<%= url_for :action => 'update_message' %>' })
+  .confirm('td.delete', 'Delete this message?', 'This message will be permanently deleted and cannot be recovered. Are you sure?', function($td){ return do_delete('/manage/tweets/remove?index=' + $td.closest('tr').data('index') + '&scope=' +  $td.closest('tr').data('scope') + '&game_id=<%=@game.id%>&id=<%=@twitter.id%>'); });
+</script>
 <% end -%>
 
 
@@ -44,12 +92,7 @@
   <h3>Tips</h3>
   <p>Currently only 1 leaderboard can be monitored</p>
   <p>The interval limits how frequently, in minutes, the system will tweet. Use 0/blank to disable tweets for the scope. <%= Twitter::MinimumInterval %> is the miminum allowed value (resulting in a theoretical maximum of 144 tweets per day!</p>
+  <p>You can add up to <%= Twitter::TotalMessages %> messages, a random one will be selected from the appropriate scope.</p>
   <p>Use the <em>%user</em> and <em>%score%</em> placeholders to build your message</p>
   <p>Take care to build a short message. Consider 30 characters for a username (the maximum) + however long your scores are. 140 - 30 - score_length.
 <% end -%>
-
-<script>
-$('#disable').on('click', function(){
-  return do_delete('<%= url_for :action => 'destroy', :id => @game.id %>')
-});
-</script>

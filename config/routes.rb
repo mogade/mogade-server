@@ -50,6 +50,9 @@ Mogade::Application.routes.draw do
     resources :tweets, :only => [:index, :update, :destroy] do
       get 'access', :on => :collection
       get 'callback', :on => :collection
+      post 'message', :on => :collection
+      delete 'remove', :on => :collection
+      put 'update_message', :on => :collection
     end
 
     match '/:action', :controller => 'manage'

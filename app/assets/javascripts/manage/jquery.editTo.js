@@ -1,4 +1,4 @@
-(function($) 
+(function($)
 {
   var defaults = { to: null, map: {}, url: null, onEdit: null, onDone: null};
   $.fn.editTo = function(options, commandOptions) {
@@ -31,14 +31,16 @@
           if (opts.onEdit) { opts.onEdit($row); }
         },
         getValue: function($row, key) {
-          if (key.match(/^data\-/)) { return $row.attr(key); } 
+          if (key.match(/^data\-/)) { return $row.attr(key); }
           return $row.children(':eq(' + key + ')').text();
         },
         setSelect: function($field, value) {
           $field.val(value);
         },
         submitClicked: function() {
-          $to.attr('action', opts.url + '/' + $row.data('id'));
+          var url = opts.url;
+          if ($row.data('id') !== undefined) { url +=  '/' + $row.data('id'); }
+          $to.attr('action',  url);
           $to.append($('<input>', {type: 'hidden', name: '_method', value: 'put'}));
           $to.append($('<input>', {type: 'hidden', name: 'authenticity_token', value: AUTH_TOKEN}));
           return true;

@@ -42,6 +42,29 @@ class Manage::TweetsController < Manage::ManageController
     render :action => :index
   end
 
+  def remove
+    return unless load_game_as_owner
+    return unless ensure_twitter
+    @twitter.remove_message(params[:scope].to_i, params[:index].to_i)
+    redirect_to :action => 'index', :id => @game.id
+  end
+
+  def message
+    return unless load_game_as_owner
+    return unless ensure_twitter
+    unless @twitter.add_message(params[:scope].to_i, params[:message])
+      set_error("Cannot add more than #{Twitter::TotalMessages} messages", false)
+    end
+    redirect_to :action => 'index', :id => @game.id
+  end
+
+  def update_message
+    return unless load_game_as_owner
+    return unless ensure_twitter
+    @twitter.update_message(params[:scope].to_i, params[:index].to_i, params[:message])
+    redirect_to :action => 'index', :id => @game.id
+  end
+
   private
   def ensure_twitter
     id = params[:id]
