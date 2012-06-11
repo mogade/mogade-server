@@ -61,6 +61,17 @@ describe Api::Gamma::ScoresController, :create do
     post :create, GammaApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
   end
 
+  it "notifies twitter on a new weekly overall score" do
+    leaderboard = FactoryGirl.create(:leaderboard)
+    player = FactoryGirl.build(:player)
+
+    Score.stub!(:save)
+    Rank.stub!(:get_for_score).and_return({LeaderboardScope::Weekly => 1})
+    Twitter.should_receive(:new_weekly_leader).with(leaderboard)
+
+    post :create, GammaApiHelper.signed_params(@game, {:points => '323', :lid => leaderboard.id, :username => player.username, :userkey => player.userkey})
+  end
+
   it "notifies twitter on a new high overall score" do
     leaderboard = FactoryGirl.create(:leaderboard)
     player = FactoryGirl.build(:player)
