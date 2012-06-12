@@ -9,11 +9,6 @@ class HomeController < ApplicationController
     render :layout => 'manage_single'
   end
 
-  def breakit
-    raise StandardError.new("your error is #{params[:id].to_i}")
-  end
-
-
   def load_stats
     stats = Rails.cache.read('managecontroller:stats')
     if Rails.env.development? || stats.nil? || (Time.now - stats.dated) > 300
