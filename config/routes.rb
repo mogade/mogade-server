@@ -61,5 +61,6 @@ Mogade::Application.routes.draw do
   match '/facebook/leaderboard/:id' => 'facebook#leaderboard'
   match '/facebook/:id' => 'facebook#index'
   match '/who' => 'home#who'
+  match '/breakit' => 'home#breakit'
   root :to => 'home#index'
 end

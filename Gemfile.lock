@@ -43,7 +43,7 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (3.0.1)
-    bson (1.6.2)
+    bson (1.6.4)
     bson_ext (1.6.2)
       bson (~> 1.6.2)
     builder (3.0.0)
@@ -54,11 +54,14 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
     diff-lcs (1.1.3)
-    error_notifier (0.0.2)
+    error_notifier (0.0.5)
+      json (~> 1.7.3)
+      rack (~> 1.4.1)
+      rest-client (~> 1.6.7)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    factory_girl (3.3.0)
+    factory_girl (3.4.0)
       activesupport (>= 3.0.0)
     highline (1.6.12)
     hike (1.2.1)
@@ -114,6 +117,8 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     redis (3.0.1)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.10.0)
       rspec-core (~> 2.10.0)
       rspec-expectations (~> 2.10.0)
@@ -154,7 +159,7 @@ DEPENDENCIES
   bcrypt-ruby
   bson_ext (= 1.6.2)
   capistrano (= 2.12.0)
-  error_notifier (= 0.0.2)
+  error_notifier (= 0.0.5)
   erubis
   execjs
   factory_girl

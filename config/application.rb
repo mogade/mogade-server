@@ -1,7 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
-require "action_controller/railtie"
-require "sprockets/railtie"
+require 'action_controller/railtie'
+require 'sprockets/railtie'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 if defined?(Bundler)

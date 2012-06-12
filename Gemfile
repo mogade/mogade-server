@@ -19,7 +19,7 @@ gem 'rspec', '2.10.0'
 gem 'oauth'
 gem 'rspec-rails', '2.10.1'
 gem 'newrelic_rpm'
-gem 'error_notifier', '0.0.2'
+gem 'error_notifier', '0.0.5'
 
 group :assets do
   gem 'uglifier'
