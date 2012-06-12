@@ -10,7 +10,6 @@ gem 'bcrypt-ruby'
 gem 'erubis'
 gem 'hiredis', '0.4.5'
 gem 'redis', '3.0.1', :require => ['redis/connection/hiredis', 'redis']
-gem 'hoptoad_notifier'
 gem 'postmark'
 gem 'mail'
 gem 'aws-s3'
@@ -20,6 +19,7 @@ gem 'rspec', '2.10.0'
 gem 'oauth'
 gem 'rspec-rails', '2.10.1'
 gem 'newrelic_rpm'
+gem 'error_notifier', '0.0.2'
 
 group :assets do
   gem 'uglifier'

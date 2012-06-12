@@ -37,7 +37,6 @@ production:
   <<: *defaults
   cdn_url: http://0.0.0.0:3000
   ssl_cdn_url: http://0.0.0.0:3000
-  #hoptoad_key: optional_hoptoad_key
   ruby_inline_directory: '/home/blah/tmp' #where rubyinline should load its tmp files
   postmark_key: postmark_api_key
   aws:
