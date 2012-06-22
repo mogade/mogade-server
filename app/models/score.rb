@@ -94,8 +94,9 @@ class Score
       conditions = Score.time_condition(leaderboard, scope)
       conditions[:leaderboard_id] = leaderboard.id
       conditions[prefix + '.p'] = {leaderboard.score_comparer => score.points}
-      options = {:fields => {prefix + '.p' => 1, :username => 1, prefix + '.d' => 1, prefix + '.dt' => 1, :_id => 0}, :sort => [prefix + '.p', leaderboard.sort], :limit => 3, :raw => true}
+      options = {:fields => {prefix + '.p' => 1, :username => 1, prefix + '.d' => 1, prefix + '.dt' => 1, :_id => 0}, :sort => [prefix + '.p', leaderboard.inverse_sort], :limit => 3, :raw => true}
 
+      #p conditions
       find(conditions, options).map{|s| {:username => s[:username], :points => s[name][:points], :data => s[name][:data], :dated => s[name][:dated]}}
     end
 
