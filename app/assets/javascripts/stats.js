@@ -100,7 +100,9 @@ $(document).ready(function() {
       series[i] = [];
       for(var j = 0; j < r.days; ++j) {
        var value = r.data[i][j] == null ? 0 : r.data[i][j];
-       series[i].push([new Date(from.getTime() + (j * 86400000)), value]);
+       d = new Date(from.getTime() + (j * 86400000))
+       d = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+       series[i].push([d, value]);
       }
     }
 
