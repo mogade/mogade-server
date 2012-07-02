@@ -95,6 +95,7 @@ $(document).ready(function() {
     }
     var series = [];
     var from = new Date(r.from * 1000);
+    from = new Date(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate());
     for(var i = 0; i < numberOfSeries; ++i) {
       series[i] = [];
       for(var j = 0; j < r.days; ++j) {
@@ -120,7 +121,6 @@ $(document).ready(function() {
     for(var i = 0; i < r.days; ++i) {
       var $row = $('<tr>').appendTo($raw);
       var date = new Date(from.getTime() + (i * 86400000));
-      date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
       $('<td>').attr('nowrap', 'nowrap').text(new Date(date).ymd()).appendTo($row);
       for(var j = 0; j < numberOfSeries; ++j) {
         var value = r.data[j][i] == null ? 0 : r.data[j][i];
