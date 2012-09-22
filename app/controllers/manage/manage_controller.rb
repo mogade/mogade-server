@@ -8,6 +8,9 @@ class Manage::ManageController < ApplicationController
   def tos
   end
 
+  def privacy
+  end
+
   def drivers
     render :layout => 'manage_single'
   end
