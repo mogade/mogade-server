@@ -1,48 +1,8 @@
 <% content_for :title, 'registration' -%>
-<% content_for :section_title, 'Registration' -%>
-<h2>Create Your Account</h2>
-<%= form_for :signup, :url => {:action => 'create'}, :html => {:id => 'signup'} do |f| %>
-  <div class="field">
-    <label for="name">name</label>
-    <input type="text" id="name" name="name" value="<%= @signup.name %>" />
-    <label for="name" class="tip">how should we address you?</label>
-  </div>
-  <div class="field">
-    <label for="email">email</label>
-    <input type="text" id="email" name="email" value="<%= @signup.email %>" />
-    <label for="email" class="tip">enter a valid email</label>
-  </div>
-  <div class="field">
-    <label for="password">password</label>
-    <input type="password" id="password" name="password" />
-    <label for="password" class="tip">8 characters incl 2+ non-letters</label>
-  </div>
-  <div class="field">
-    <label for="confirm">confirm</label>
-    <input type="password" id="confirm_password" name="confirm_password" />
-    <label for="confirm" class="tip">retype your password</label>
-  </div>
-  <div class="field">
-    <label for="human">Enter <em>luigi</em></label>
-    <input type="text" id="human" name="human" />
-    <label for="human" class="tip">enter <em>luigi</em> into the field</label>
-  </div>
-  <div class="links">
-    <a href="/manage/tos">By using this service you agree to our Terms of Use</a>
-  </div>
-  <div class="buttons">
-    <input type="submit" class="button" value="register" />
-  </div>
-<% end -%>
+<% content_for :section_title, 'Changes' -%>
 
-<% content_for :js do -%>
-var rules = <%= validation_of(Signup).html_safe%>;	
-var init = <%= validation_init(@signup).html_safe%>;
-$('#signup').validator({rules: rules, init: init});
-<% end -%>
+<p>All things must come to an end, and so it is with Mogade.</p>
 
-<% content_for :right do -%>
-<h2>Let's succeed together</h2>
-<p>We want to help you build the most successful and engaging games possible. We hope you'll help us build the most compelling platform. We're <a href="http://groups.google.com/group/mogadedev">eager to hear from you</a>.</p>
-<p>Don't forget that <a href="https://github.com/mogade">mogade is open source</a>. New features and improvement can be contributed to the drivers or even to the core mogade.com service.</p>
-<% end -%>
+<p>Running mogade has been a great experience, and hopefully we've managed to help developers. But when you combine Microsoft's poor performance, the fact that many alternatives exist, and our changing focus, it's just the right decision for us to make.</p>
+
+<p>Existing games and accounts will continue to be supported</p>

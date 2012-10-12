@@ -11,21 +11,13 @@
    <%= render :partial => 'game_row', :collection => @games, :as => :game unless @games.blank?%>
  </tbody>
 </table>
-<h3>You don't have any games. Why don't you create one?</h3>
+<h3>You don't have any games.</h3>
 </div>
 
-
-<h3>Add Game</h3>
-<%= form_for :game_input, :url => {:action => 'create' }, :html => {:id => 'add'} do |f| -%>
-  <div class="field">
-    <label for="name">name</label>
-    <input type="text" name="name" id="name" />
-  </div>
-  <div class="buttons">
-    <%= f.submit 'add', {:class => 'button'} %>
-  </div>
-<% end -%>
-
+<h3>Important Notice</h3>
+<p>All things must come to an end, and so it is with Mogade.</p>
+<p>Running mogade has been a great experience, and hopefully we've managed to help developers. But when you combine Microsoft's poor performance, the fact that many alternatives exist, and our changing focus, it's just the right decision for us to make.</p>
+<p>Existing games and accounts will continue to be supported</p>
 
 <% content_for :js do -%>
 $('#game_list').simpleList({viewUrl: '<%= ssl_url('/manage/games') %>'});

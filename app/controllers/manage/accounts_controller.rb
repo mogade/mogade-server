@@ -10,20 +10,20 @@ class Manage::AccountsController < Manage::ManageController
     redirect_to :action => :new
   end
 
-  def create
-    @signup = Signup.new(params)
-    begin
-      developer = @signup.to_developer
-      if !developer.nil? && developer.save!
-        url = url_for :action => 'activate', :key => developer.action, :only_path => false
-        Notifier.welcome(developer, url)
-        return
-      end
-    rescue Mongo::OperationFailure
-      @signup.errors.add('email', 'email is already taken') if $!.duplicate?
-    end
-    render :action => 'new'
-  end
+  # def create
+  #   @signup = Signup.new(params)
+  #   begin
+  #     developer = @signup.to_developer
+  #     if !developer.nil? && developer.save!
+  #       url = url_for :action => 'activate', :key => developer.action, :only_path => false
+  #       Notifier.welcome(developer, url)
+  #       return
+  #     end
+  #   rescue Mongo::OperationFailure
+  #     @signup.errors.add('email', 'email is already taken') if $!.duplicate?
+  #   end
+  #   render :action => 'new'
+  # end
 
   def activate
     id = Id.from_string(params[:key])
