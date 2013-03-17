@@ -9,7 +9,7 @@ gem 'mongo_light', '0.1.4'
 gem 'bcrypt-ruby'
 gem 'erubis'
 gem 'hiredis', '0.4.5'
-gem 'redis', '3.0.1', :require => ['redis/connection/hiredis', 'redis']
+gem 'redis', '3.0.3', :require => ['redis/connection/hiredis', 'redis']
 gem 'postmark'
 gem 'mail'
 gem 'aws-s3'

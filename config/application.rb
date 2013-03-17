@@ -15,6 +15,6 @@ module Mogade
     config.filter_parameters += [:password]
     config.assets.enabled = true
     config.assets.precompile += %w(*.js  *.css)
-    config.middleware.use ErrorNotifier::Rack
+#    config.middleware.use ErrorNotifier::Rack
   end
 end

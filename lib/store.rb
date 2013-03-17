@@ -19,7 +19,7 @@ module Store
       config.database = Settings.mongo['name']
     end
 
-    @@redis = Redis.new(:host => Settings.redis['host'], :port => Settings.redis['port'])
+    @@redis = Redis.new(:host => Settings.redis['host'], :port => Settings.redis['port'], :driver => :hiredis)
     @@redis.select(Settings.redis['database'])
     @@aws_bucket = Settings.aws['bucket']
     handle_passenger_forking
